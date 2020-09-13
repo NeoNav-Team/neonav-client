@@ -6,7 +6,7 @@ export const userLogin = data => {
     console.log('OMG LOGIN INNNSSS');
     if (!isBrowser) return false;
 
-    axios.defaults.port = 3000;
+    axios.defaults.port = 6000;
     axios({
         method: 'post',
         url: '/api/auth/signin',
