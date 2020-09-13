@@ -24,6 +24,7 @@ const tailLayout = {
 function FormLogin(props) {
     
     const onFinish = values => {
+        console.log('FINISHED FILLIN OUT MAH FORM');
         console.log(`userLogin(${values})`);
         userLogin(values);
     };

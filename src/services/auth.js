@@ -3,6 +3,7 @@ import axios from 'axios';
 const isBrowser = typeof window !== `undefined`;
 
 export const userLogin = data => {
+    console.log('OMG LOGIN INNNSSS');
     if (!isBrowser) return false;
 
     axios.defaults.port = 3000;
@@ -11,13 +12,13 @@ export const userLogin = data => {
         url: '/api/auth/signin',
         data
     }).then(
-    function (response) {
-        console.log(response.data);
-        console.log(response.status);
-        console.log(response.statusText);
-        console.log(response.headers);
-        console.log(response.config);
-    }
+        function (response) {
+            console.log(response.data);
+            console.log(response.status);
+            console.log(response.statusText);
+            console.log(response.headers);
+            console.log(response.config);
+        }
     ).catch(function (error) {
         if (error.response) {
           // The request was made and the server responded with a status code
