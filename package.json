@@ -14,8 +14,10 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
+    "antd": "^4.6.3",
     "babel-plugin-styled-components": "^1.11.1",
     "gatsby": "^2.24.54",
+    "gatsby-plugin-antd": "^2.2.0",
     "gatsby-plugin-styled-components": "^3.3.10",
     "gatsby-plugin-web-font-loader": "^1.0.4",
     "react": "^16.12.0",

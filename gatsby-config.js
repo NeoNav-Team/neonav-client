@@ -14,11 +14,15 @@ module.exports = {
       }
     },
     {
+      resolve: 'gatsby-plugin-antd',
+      options: {}
+    },
+    {
       resolve: `gatsby-plugin-web-font-loader`,
       options: {
         custom: {
           families: ["Orbitron"],
-          urls: ["/fonts/fonts.css"],
+          urls: ["/fonts/fonts.css"]
         },
       },
     }
