@@ -1,16 +1,13 @@
 import React from 'react';
 import Layout from '../components/layout';
 import Logo from '../components/logo';
+import FormLogin from '../components/formLogin';
 
 export default function Home() {
   return (
     <Layout>
-      <div class="center">
         <Logo />
-        <h1>This is a place holder until <sup>[neonav]</sup> is running.</h1>
-        <h3>PS... sWeDe r00lZ</h3>
-        <h1>MERDEE BUILT THIS IN GATSBY.</h1>
-      </div>
+        <FormLogin />
     </Layout>
   )
 }
