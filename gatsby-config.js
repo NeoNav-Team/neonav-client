@@ -12,6 +12,15 @@ module.exports = {
       options: {
         // Add any options here
       }
+    },
+    {
+      resolve: `gatsby-plugin-web-font-loader`,
+      options: {
+        custom: {
+          families: ["Orbitron"],
+          urls: ["/fonts/fonts.css"],
+        },
+      },
     }
   ]
 }
