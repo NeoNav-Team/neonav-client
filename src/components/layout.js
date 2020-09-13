@@ -1,5 +1,5 @@
 import React from 'react';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
     html, body {
@@ -22,13 +22,14 @@ const GlobalStyle = createGlobalStyle`
         font-size: 0.5em;
     }
     .center {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%);
         text-align: center;
     }
+`;
+
+const Portrait = styled.div`
+    max-width: 75vh;
+    min-height: 100vh;
+    margin: 0 auto;
 `;
 
 
@@ -36,7 +37,9 @@ export default function Layout({ children }) {
   return (
     <>
         <GlobalStyle theme="neonav" />
-            {children}
+            <Portrait>
+                {children}
+            </Portrait>
     </>
   )
 }
