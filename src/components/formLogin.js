@@ -6,6 +6,9 @@ const StyledForm  = styled.form`
     background: #090F44;
     padding: 2vh;
     color: #fff;
+    .ant-checkbox + span {
+        color: #fff;  
+    }
 `;
 
 const layout = {
