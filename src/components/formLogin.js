@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import userLogin from '../services/auth';
 import { Form, Input, Button, Checkbox } from 'antd';
 
 const StyledForm  = styled.form`
@@ -21,8 +22,10 @@ const tailLayout = {
   };
 
 function FormLogin(props) {
+    
     const onFinish = values => {
-        console.log('Success:', values);
+        console.log(`userLogin(${values})`);
+        userLogin(values);
     };
 
     const onFinishFailed = errorInfo => {

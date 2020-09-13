@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "antd": "^4.6.3",
+    "axios": "^0.20.0",
     "babel-plugin-styled-components": "^1.11.1",
     "gatsby": "^2.24.54",
     "gatsby-plugin-antd": "^2.2.0",
