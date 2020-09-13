@@ -3,19 +3,17 @@ import styled from 'styled-components';
 import { userLogin } from '../services/auth';
 import { Form, Input, Button, Checkbox } from 'antd';
 
-const StyledForm  = styled.form`
+const StyledDiv  = styled.div`
     background: #090F44;
-    padding: 2vh;
+    margin: 0 auto;
+    max-width: 500px;
+    padding: 4vh;
     color: #fff;
     .ant-checkbox + span {
         color: #fff;  
     }
 `;
 
-const layout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 16 },
-  };
 
 function FormLogin(props) {
     
@@ -30,9 +28,8 @@ function FormLogin(props) {
     };
 
   return (
-    <StyledForm>
+    <StyledDiv>
         <Form
-            {...layout}
             name="basic"
             initialValues={{ remember: true }}
             onFinish={onFinish}
@@ -62,7 +59,7 @@ function FormLogin(props) {
                 </Button>
             </Form.Item>
         </Form>
-    </StyledForm>
+    </StyledDiv>
   )
 }
 export default FormLogin;
