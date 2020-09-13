@@ -5,7 +5,7 @@ const GlobalStyle = createGlobalStyle`
     html, body {
         color: #0EBCC6;
         background: rgb(113,29,145);
-        background: linear-gradient(0deg, rgba(113,29,145,1) 0%, rgba(234,2,217,1) 100%);
+        background: radial-gradient(circle, rgba(35,22,56,1) 0%, rgba(18,18,18,1) 100%);
         min-height: 100vh;
         min-width: 100vw;
         font-family: 'Orbitron', sans-serif;
