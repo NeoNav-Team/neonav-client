@@ -17,10 +17,6 @@ const layout = {
     wrapperCol: { span: 16 },
   };
 
-const tailLayout = {
-    wrapperCol: { offset: 8, span: 16 },
-  };
-
 function FormLogin(props) {
     
     const onFinish = values => {

@@ -9,7 +9,7 @@ const StyledLogoDiv  = styled.div`
         position: relative;
         height: 25vh;
         margin: 2.25vh auto;
-        filter: drop-shadow(0 0 10px #ff0098);
+        filter: drop-shadow(0 0 10px #42c6ff);
         .cls-1{
             fill: #42c6ff;
         }
