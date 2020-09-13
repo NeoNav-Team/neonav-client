@@ -35,12 +35,11 @@ const StyledDiv  = styled.div`
 function FormLogin(props) {
     const [errMsg, setErrMsg] = useState(false);
     
-    const onFinish = async values => {
-       const loginResponse = promisify.userLogin(values);
-       loginResponse.then(res => {
-           console.log('loginResponse', res);
-           res.status !== 200 && setErrMsg(res.message);
-       })
+    const onFinish = async (values) => {
+       const loginResponse = await userLogin(values).then(res => {
+                console.log('loginResponse', res);
+                res.status !== 200 && setErrMsg(res.message);
+            })
     };
 
     const onFinishFailed = errorInfo => {

@@ -3,7 +3,6 @@ import axios from 'axios';
 const isBrowser = typeof window !== `undefined`;
 
 export const userLogin = data => {
-    console.log('OMG LOGIN INNNSSS');
     if (!isBrowser) return false;
     axios.defaults.port = 6001;
     axios({
@@ -38,6 +37,6 @@ export const userLogin = data => {
           console.log('Error', error.message);
         }
         console.log(error.config);
-        return error.response;
+        return error;
       });
 };
