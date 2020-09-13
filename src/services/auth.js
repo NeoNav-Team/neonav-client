@@ -12,14 +12,17 @@ export const userLogin = data => {
         data
     }).then(
         function (response) {
+            console.log('RESPONSE SUCESSFUL');
             console.log(response.data);
             console.log(response.status);
             console.log(response.statusText);
             console.log(response.headers);
             console.log(response.config);
+            return response;
         }
     ).catch(function (error) {
         if (error.response) {
+          console.log('RESPONSE ERRORED');
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
           console.log(error.response.data);
@@ -35,5 +38,6 @@ export const userLogin = data => {
           console.log('Error', error.message);
         }
         console.log(error.config);
+        return error.response;
       });
 };
