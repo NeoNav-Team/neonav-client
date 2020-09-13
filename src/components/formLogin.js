@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import userLogin from '../services/auth';
+import { userLogin } from '../services/auth';
 import { Form, Input, Button, Checkbox } from 'antd';
 
 const StyledForm  = styled.form`
@@ -25,7 +25,7 @@ function FormLogin(props) {
     
     const onFinish = values => {
         console.log('FINISHED FILLIN OUT MAH FORM');
-        console.log(`userLogin(${values})`);
+        console.log(`userLogin(${JSON.stringify(values)})`);
         userLogin(values);
     };
 
