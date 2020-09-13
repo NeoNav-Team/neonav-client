@@ -34,12 +34,21 @@ const StyledDiv  = styled.div`
 
 function FormLogin(props) {
     const [errMsg, setErrMsg] = useState(false);
+
     
-    const onFinish = async (values) => {
-       const loginResponse = await userLogin(values).then(res => {
-                console.log('loginResponse', res);
-                res.status !== 200 && setErrMsg(res.message);
-            })
+    const goLogin = async values => {
+        console.log('goLogin');
+        const response = userLogin(values);
+        return await response;
+    };
+
+    const onFinish = values => {
+        console.log('onFinish');
+        goLogin(values).then(res => {
+            console.log('res', res);
+        }).catch(err => {
+            console.log('err', err)
+        });
     };
 
     const onFinishFailed = errorInfo => {
@@ -66,10 +75,6 @@ function FormLogin(props) {
                 rules={[{ required: true, message: 'Please input your password!' }]}
             >
                 <Input.Password />
-            </Form.Item>
-
-            <Form.Item name="remember" valuePropName="checked">
-                <Checkbox>Remember me</Checkbox>
             </Form.Item>
 
             <Form.Item>
