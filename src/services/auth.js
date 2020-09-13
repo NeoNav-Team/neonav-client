@@ -5,12 +5,11 @@ const isBrowser = typeof window !== `undefined`;
 export const userLogin = data => {
     console.log('OMG LOGIN INNNSSS');
     if (!isBrowser) return false;
-
+    const bseUrl = window.location.protocol + "//" + location.host.split(":")[0];
     axios.defaults.port = 6001;
     axios({
         method: 'post',
-        url: '/api/auth/signin',
-        port: 6001,
+        url: `${bseUrl}:6001/api/auth/signin`,
         data
     }).then(
         function (response) {
