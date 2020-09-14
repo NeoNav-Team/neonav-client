@@ -2,7 +2,12 @@ import { promisify } from 'util';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { userLogin } from '../services/auth';
-import { Form, Input, Button, Checkbox } from 'antd';
+import {
+    Alert,
+    Button,
+    Form,
+    Input
+} from 'antd';
 
 const StyledDiv  = styled.div`
     background: #090F44;
@@ -33,19 +38,20 @@ const StyledDiv  = styled.div`
 
 
 function FormLogin(props) {
-    const [errMsg, setErrMsg] = useState(false);
+    const [errMsg, setErrMsg] = useState(null);
 
     
     const goLogin = async values => {
-        console.log('goLogin');
         const response = userLogin(values);
         return await response;
     };
 
     const onFinish = values => {
-        console.log('onFinish');
+        setErrMsg(null);
         goLogin(values).then(res => {
-            console.log('res', res);
+            if (res.status !== 200 && res.data.message) {
+                setErrMsg(res.data.message || res.statusText);
+            }
         }).catch(err => {
             console.log('err', err)
         });
@@ -77,6 +83,11 @@ function FormLogin(props) {
                 <Input.Password />
             </Form.Item>
 
+            {errMsg && 
+              <Form.Item>
+                  <Alert message={errMsg} type="error" />
+              </Form.Item>  
+            }
             <Form.Item>
                 <Button type="primary" htmlType="submit">
                 Submit

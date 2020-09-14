@@ -2,6 +2,15 @@ import axios from 'axios';
 
 const isBrowser = typeof window !== `undefined`;
 
+export const getUser = () =>
+  isBrowser() && window.localStorage.getItem('nnUser')
+    ? JSON.parse(window.localStorage.getItem('nnUser'))
+    : {};
+
+const setUser = user => {
+  window.localStorage.setItem('nnUser', JSON.stringify(user));
+}
+
 export const userLogin = data => {
     if (!isBrowser) return false;
     axios.defaults.port = 6001;
@@ -12,6 +21,7 @@ export const userLogin = data => {
     }).then(
         function (response) {
             console.log('RESPONSE SUCESSFUL');
+            console.log('setUser', response);
             return response;
         }
     ).catch(function (error) {
