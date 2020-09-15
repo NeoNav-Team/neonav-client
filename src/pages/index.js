@@ -3,6 +3,7 @@ import { navigate } from 'gatsby';
 import Layout from '../components/layout';
 import Logo from '../components/logo';
 import FormLogin from '../components/formLogin';
+import FooterNav from '../components/footerNav';
 import { isLoggedIn, logout } from '../services/auth';
 
 export default function Home() {
@@ -12,10 +13,11 @@ export default function Home() {
       navigate('/', { replace: true });
     });
   };
+  const loggedIn = isLoggedIn();
 
   return (
     <Layout>
-        {isLoggedIn() ?
+        {loggedIn ?
           <>
             <h1 style={{color: 'white'}}>Logged in yo!!</h1>
             <button onClick={handeLogout}>logout</button>
@@ -26,6 +28,7 @@ export default function Home() {
             <FormLogin />
           </>
         }
+        {loggedIn && <FooterNav />}
     </Layout>
   )
 }

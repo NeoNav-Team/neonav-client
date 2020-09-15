@@ -27,6 +27,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Portrait = styled.div`
+    position: relative;
     max-width: 75vh;
     min-height: 100vh;
     margin: 0 auto;
