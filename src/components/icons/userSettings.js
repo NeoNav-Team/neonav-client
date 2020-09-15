@@ -6,6 +6,7 @@ const StyledLogoDiv  = styled.div`
     height: ${props => props.height}px;
     margin: 0 auto;
     cursor: pointer;
+    overflow: hidden;
     & svg {
         position: relative;
         wisth: 100%;
@@ -22,8 +23,8 @@ function UserSettings(props) {
     const {width, height} = props;
     return (
         <StyledLogoDiv
-            width={width}
-            height={height}
+            width={width || 0}
+            height={height|| 0}
         >
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 		        <path d="M13,8.6c-0.8,0-1.4,0.6-1.4,1.4s0.6,1.4,1.4,1.4s1.4-0.6,1.4-1.4S13.8,8.6,13,8.6z" />
