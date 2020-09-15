@@ -1,9 +1,10 @@
 import axios from 'axios';
+import _ from 'lodash';
 
-const isBrowser = typeof window !== `undefined`;
+export const isBrowser = typeof window !== 'undefined';
 
 export const getUser = () =>
-  isBrowser() && window.localStorage.getItem('nnUser')
+  isBrowser && window.localStorage.getItem('nnUser')
     ? JSON.parse(window.localStorage.getItem('nnUser'))
     : {};
 
@@ -16,12 +17,13 @@ export const userLogin = data => {
     axios.defaults.port = 6001;
     return axios({
         method: 'post',
-        url: `https://neonav.net:6001/api/auth/signin`,
+        url: `https://neonav.net:6001/api/auth`,
         data
     }).then(
         function (response) {
             console.log('RESPONSE SUCESSFUL');
-            console.log('setUser', response);
+            console.log('setUser', response.data);
+            setUser(response.data);
             return response;
         }
     ).catch(function (error) {
@@ -38,3 +40,14 @@ export const userLogin = data => {
         return error;
       });
 };
+
+export const isLoggedIn = () => {
+  const user = getUser();
+  const loginBool = _.get(user, 'userid', '').length >= 1;
+  return loginBool;
+}
+
+export const logout = callback => {
+  setUser({});
+  callback();
+}

@@ -1,5 +1,5 @@
-import { promisify } from 'util';
 import React, { useState } from 'react';
+import { navigate } from 'gatsby';
 import styled from 'styled-components';
 import { userLogin } from '../services/auth';
 import {
@@ -39,7 +39,6 @@ const StyledDiv  = styled.div`
 
 function FormLogin(props) {
     const [errMsg, setErrMsg] = useState(null);
-
     
     const goLogin = async values => {
         const response = userLogin(values);
@@ -49,8 +48,12 @@ function FormLogin(props) {
     const onFinish = values => {
         setErrMsg(null);
         goLogin(values).then(res => {
+            console.log('this is a response to login');
             if (res.status !== 200 && res.data.message) {
                 setErrMsg(res.data.message || res.statusText);
+            } else {
+                console.log('we redirect now');
+                navigate('/', { replace: true });
             }
         }).catch(err => {
             console.log('err', err)
