@@ -45,7 +45,6 @@ function FormRegister(props) {
     const onFinish = values => {
         setErrMsg(null);
         goRegister(values).then(res => {
-            console.log('this is a response to login');
             if (res.status !== 200 && res.data.message) {
                 setErrMsg(res.data.message || res.statusText);
             } else {
