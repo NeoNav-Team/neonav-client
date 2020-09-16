@@ -4,10 +4,10 @@ import axios from 'axios';
 import _ from 'lodash';
 
 export const userProfile = () => {
-    if (!isBrowser) return false;
     axios.defaults.port = 6001;
     const url = formatEnpoint('profile');
     const nnUser = getUser();
+    console.log('nnUser', nnUser);
     const token = nnUser.accessToken;
     return axios({
         headers: {"Authorization" : `Bearer ${token}`},

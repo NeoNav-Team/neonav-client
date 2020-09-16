@@ -1,8 +1,7 @@
 import { formatEnpoint } from '../utils/format';
+import { isBrowser } from '../utils/checks';
 import axios from 'axios';
 import _ from 'lodash';
-
-export const isBrowser = typeof window !== 'undefined';
 
 export const getUser = () =>
   isBrowser && window.localStorage.getItem('nnUser')
