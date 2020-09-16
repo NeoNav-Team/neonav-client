@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import useDimensions from 'react-use-dimensions';
 import UserSettings from './icons/userSettings';
+import ButtonIcon from './buttonIcon';
 
 const StyledPaneDiv  = styled.div`
     position: absolute;
@@ -9,28 +9,26 @@ const StyledPaneDiv  = styled.div`
     border: 1px solid #41C5FF;
     filter: drop-shadow(0 0 10px #41C5FF);
     bottom: 4px;
-    height: ${props => props.panelHeight};
+    height: 12vh;
     width: 100%;
     text-align: center;
     border-radius: 50px 50px 10px 10px;
+    & button {
+        height: 12vh;
+        width: 12vh;
+    }
 `;
 
 function FooterNav(props) {
-    const [ref, { width }] = useDimensions();
     const { children } = props;
-    const iconSize = width / 5;
 
-    const navtoPanel = route => {
-
-    };
- 
     return (
-        <StyledPaneDiv ref={ref} panelHeight={`${iconSize}px`}>
-            <UserSettings
-                width={iconSize}
-                height={iconSize}
-                onClick={navtoPanel}
-            />
+        <StyledPaneDiv>
+            <ButtonIcon
+                navTo={'/profile'}
+            >
+                <UserSettings />
+            </ButtonIcon>
             {children}
         </StyledPaneDiv>
     )
