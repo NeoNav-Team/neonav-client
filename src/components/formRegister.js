@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { navigate } from 'gatsby';
+import { navigate } from 'gatsby';
 import Pane from './pane';
 import { userRegister } from '../services/auth';
 import styled from 'styled-components';
@@ -49,9 +49,7 @@ function FormRegister(props) {
             if (res.status !== 200 && res.data.message) {
                 setErrMsg(res.data.message || res.statusText);
             } else {
-                console.log('res', res);
-                console.log('we redirect now');
-               // navigate('/', { replace: true });
+                navigate('/', { replace: true });
             }
         }).catch(err => {
             console.log('err', err)

@@ -6,5 +6,5 @@ export const apis = {
     },
     login: '/api/auth',
     profile: '/api/user',
-    register: '/api/auth'
+    register: '/api/auth/user'
 };
