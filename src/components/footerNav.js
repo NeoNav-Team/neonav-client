@@ -29,7 +29,7 @@ function FooterNav(props) {
             <UserSettings
                 width={iconSize}
                 height={iconSize}
-
+                onClick={navtoPanel}
             />
             {children}
         </StyledPaneDiv>
