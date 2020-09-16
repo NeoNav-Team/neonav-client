@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <Layout>
-      <HeaderBar noMenu={true}>
+      <HeaderBar noMenu={'true'}>
           N  E O N A V
       </HeaderBar>
       <StyledAntLayout>

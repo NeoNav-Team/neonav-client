@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import UserSettings from './icons/userSettings';
 import ButtonIcon from './buttonIcon';
 
-const StyledPaneDiv  = styled.div`
+const StyledFooterDiv  = styled.div`
     position: absolute;
     background: #090F44;
     border: 1px solid #41C5FF;
@@ -23,14 +23,14 @@ function FooterNav(props) {
     const { children } = props;
 
     return (
-        <StyledPaneDiv>
+        <StyledFooterDiv>
             <ButtonIcon
                 navTo={'/profile'}
             >
                 <UserSettings />
             </ButtonIcon>
             {children}
-        </StyledPaneDiv>
+        </StyledFooterDiv>
     )
 }
 export default FooterNav;

@@ -8,6 +8,9 @@ const Title  = styled.h1`
     line-height: 10vh;
     filter: drop-shadow(0 0 5px #fff);
     width: calc(100% - 10vh);
+    & span {
+        font-size: 1rem;
+    }
 `;
 
 const RightMenu  = styled.div`
@@ -24,7 +27,7 @@ function HeaderBar(props) {
  
     return (
         <div>
-            {typeof noMenu !== undefined &&
+            {typeof noMenu === 'undefined' &&
                 <RightMenu>
                     <ButtonIcon
                         navTo={'/'}

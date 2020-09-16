@@ -9,7 +9,7 @@ export default ({ pageContext: { profile } }) => {
         <HeaderBar>
             Profile Page
         </HeaderBar>
-        <p styles={{fontSize:'4rem'}}>{JSON.stringify(profile)}</p>
+        <p>{JSON.stringify(profile)}</p>
     </Layout>
   )
 }

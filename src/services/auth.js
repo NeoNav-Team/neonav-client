@@ -30,11 +30,11 @@ export const userLogin = data => {
         if (error.response) {
           return error.response;
         } else if (error.request) {
-          console.log(error.request);
+          console.log('Error', error.request);
         } else {
           console.log('Error', error.message);
         }
-        console.log(error.config);
+        console.log('Error', error.config);
         return error;
       });
 };
@@ -46,7 +46,6 @@ export const isLoggedIn = () => {
 }
 
 export const logout = callback => {
-  console.log('logging out');
   setUser({});
   callback();
 }
