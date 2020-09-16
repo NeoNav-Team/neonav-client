@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { navigate } from 'gatsby';
-import styled from 'styled-components';
+import Pane from './pane';
 import { userLogin } from '../services/auth';
+import styled from 'styled-components';
 import {
     Alert,
     Button,
@@ -9,33 +10,33 @@ import {
     Input
 } from 'antd';
 
-const StyledDiv  = styled.div`
-    background: #090F44;
+const RegisterBtn = styled.div`
+    left: 15%;
     margin: 0 auto;
-    max-width: 500px;
-    padding: 4vh;
-    color: #fff;
-    border: 1px solid #41C5FF;
-    filter: drop-shadow(0 0 10px #41C5FF);
-    border-radius: 5px;
-    .ant-checkbox + span {
-        color: #fff;
+    height: 4vh;
+    width: 70%;
+    background-color: #ff00a0;
+    color: #120458;
+    cursor:pointer;
+    text-align: center;
+    line-height: 4.25vh;
+    filter: drop-shadow(0 0 5px #ff00a0);
+    background-image: linear-gradient(45deg, #ff00a0 25%, #000000 25%, #000000 50%, #ff00a0 50%, #ff00a0 75%, #000000 75%, #000000 100%);
+    background-size: 2vh 2vh;
+    & span {
+        display:inline-block;
+        border-radius: 2px;
+        width:80%;
+        height:100%;
+        border-bottom: 1px solid #fe75fe;
+        background-color: #ff00a0;
     }
-    .ant-input, .ant-input-password {
-        border-radius: 10px 0 10px 0;
-    }
-    .ant-btn {
-        background: #41C5FF;
-        filter: drop-shadow(0 0 5px #41C5FF);
-        width: 80%;
-        left: 50%;
-        transform: translate(-50%, 0);
-        height: 60px;
-        border-radius: 20px 0 20px 0;
-        font-size: 2rem;
+    &:hover, &:active, &:selected, &:focus {
+        color: #000;
+        background-color: #ff00a0 !important;
+        filter: drop-shadow(0 0 10px #ff00a0);
     }
 `;
-
 
 function FormLogin(props) {
     const [errMsg, setErrMsg] = useState(null);
@@ -65,7 +66,8 @@ function FormLogin(props) {
     };
 
   return (
-    <StyledDiv>
+    <>
+    <Pane title="Login">
         <Form
             name="basic"
             initialValues={{ remember: true }}
@@ -92,12 +94,24 @@ function FormLogin(props) {
               </Form.Item>  
             }
             <Form.Item>
-                <Button type="primary" htmlType="submit">
+                <Button
+                    type="primary"
+                    htmlType="submit"
+                >
                 Submit
                 </Button>
             </Form.Item>
         </Form>
-    </StyledDiv>
+    </Pane>
+    <RegisterBtn
+        type="primary"
+        onClick={() => {
+            navigate('/register', { replace: true });
+        }}
+    >
+    <span>☢  R E G I S T E R 	☢</span>
+    </RegisterBtn>
+    </>
   )
 }
 export default FormLogin;

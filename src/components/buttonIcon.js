@@ -11,6 +11,8 @@ const StyledButton  = styled.button`
     cursor:pointer;
     overflow: hidden;
     outline:none;
+    height: ${props => props.height};
+    width: ${props => props.width};
     &:disabled {
         opacity:.5
         pointer-events: none;
@@ -18,7 +20,7 @@ const StyledButton  = styled.button`
 `;
 
 function ButtonIcon(props) {
-    const { navTo, children } = props;
+    const { height, width, navTo, children } = props;
     const navtoPage = route => {
         if (route === '/logout') {
             logout(() => {
@@ -31,6 +33,8 @@ function ButtonIcon(props) {
 
   return (
     <StyledButton
+        height={height}
+        width={width}
         onClick={navTo && _.partial(navtoPage, navTo)}
     >
         {children}

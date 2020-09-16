@@ -12,6 +12,32 @@ const setUser = user => {
   window.localStorage.setItem('nnUser', JSON.stringify(user));
 }
 
+export const userRegister = data => {
+  if (!isBrowser) return false;
+  axios.defaults.port = 6001;
+  const url = formatEnpoint('register');
+  return axios({
+      method: 'post',
+      url,
+      data
+  }).then(
+      function (response) {
+          return response;
+      }
+  ).catch(function (error) {
+      if (error.response) {
+        console.log('Error', error.response);
+        return error.response;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log('Error', error.config);
+      return error;
+    });
+};
+
 export const userLogin = data => {
     if (!isBrowser) return false;
     axios.defaults.port = 6001;

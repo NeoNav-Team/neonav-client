@@ -36,14 +36,14 @@ export default function Profile() {
         <HeaderBar>
             {_.get(profileData, 'profile.username', null)}<span>#{_.get(profileData, 'auth.userid', null)}</span>
         </HeaderBar>
-        <Pane>
+        <Pane title={'User profile'}>
             {_.get(profileData, 'profile', null) &&
                 Object.entries(_.get(profileData, 'profile', [])).map((item, index) => {
                     return <StyledP key={`_profileItem_00${index}`}><label>{item[0]}</label><span>{item[1]}</span></StyledP>
                 })
             }
         </Pane>
-        <Pane>
+        <Pane title={'User Security'}>
             {_.get(profileData, 'auth', null) &&
                 Object.entries(_.get(profileData, 'auth', [])).map((item,index) => {
                     return <StyledP key={`_profileItem_11${index}`}><label>{item[0]}</label><span>{item[1].toString()}</span></StyledP>

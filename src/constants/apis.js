@@ -5,5 +5,6 @@ export const apis = {
         port: '6001'
     },
     login: '/api/auth',
-    profile: '/api/user'
+    profile: '/api/user',
+    register: '/api/auth'
 };

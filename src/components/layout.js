@@ -20,6 +20,7 @@ const GlobalStyle = createGlobalStyle`
     h1 {
         font-size: 2em;
         line-height: 2.25em;
+        margin: 0;
     }
     h3 {
         font-size: 1em;
@@ -41,7 +42,7 @@ const Portrait = styled.div`
 `;
 
 
-export default function Layout({ children }) {
+export default function Layout({ children, unlocked }) {
     const loggedIn = isLoggedIn();
     return (
         <>
@@ -50,12 +51,12 @@ export default function Layout({ children }) {
             </Helmet>
             <GlobalStyle theme="neonav" />
                 <Portrait>
-                    {loggedIn === 'true' &&
+                    {(loggedIn === 'true' || typeof unlocked !== 'undefined') &&
                         <>
                             {children}
                         </>
                     }
-                    {loggedIn === 'false' &&
+                    {(loggedIn === 'false' && typeof unlocked === 'undefined') &&
                         <>
                             <Logo />
                             <FormLogin />

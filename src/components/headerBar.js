@@ -5,7 +5,10 @@ import ButtonIcon from './buttonIcon';
 
 const Title  = styled.h1`
     color: #fff;
-    line-height: 10vh;
+    font-size: 2.5rem;
+    line-height: 6vh;
+    margin-left: 4vh;
+    margin-bottom: 0;
     filter: drop-shadow(0 0 5px #fff);
     width: calc(100% - 10vh);
     & span {
@@ -17,19 +20,25 @@ const RightMenu  = styled.div`
   position: absolute;
   right: 0;
   top:0;
+  height: 6vh;
   svg {
-      height: 10vh;
+      height: 6vh;
   }
+`;
+const Bar = styled.div`
+  margin: 0;
+  border: 0;
 `;
 
 function HeaderBar(props) {
     const { children, noMenu } = props;
  
     return (
-        <div>
+        <Bar>
             {typeof noMenu === 'undefined' &&
                 <RightMenu>
                     <ButtonIcon
+                        height={'6vh'}
                         navTo={'/'}
                     >
                         <AppMenu />
@@ -37,7 +46,7 @@ function HeaderBar(props) {
                 </RightMenu>
             }
             <Title>{children}</Title>
-        </div>
+        </Bar>
     )
 }
 export default HeaderBar;
