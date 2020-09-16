@@ -1,5 +1,9 @@
 import React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
+import { isLoggedIn } from '../services/auth';
+import Logo from './logo';
+import FormLogin from './formLogin';
+import FooterNav from './footerNav';
 
 const GlobalStyle = createGlobalStyle`
     html, body {
@@ -35,12 +39,23 @@ const Portrait = styled.div`
 
 
 export default function Layout({ children }) {
-  return (
-    <>
-        <GlobalStyle theme="neonav" />
-            <Portrait>
-                {children}
-            </Portrait>
-    </>
-  )
+    const loggedIn = isLoggedIn();
+    return (
+        <>
+            <GlobalStyle theme="neonav" />
+                <Portrait>
+                        {loggedIn ?
+                        <>
+                            {children}
+                        </>
+                        :
+                        <>
+                            <Logo />
+                            <FormLogin />
+                        </>
+                    }
+                    {loggedIn && <FooterNav />}
+                </Portrait>
+        </>
+    )
 }

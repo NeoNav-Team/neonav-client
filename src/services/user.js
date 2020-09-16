@@ -1,20 +1,21 @@
 import { formatEnpoint } from '../utils/format';
+import { getUser } from './auth';
 import axios from 'axios';
 import _ from 'lodash';
 
-export const userProfile = data => {
+export const userProfile = () => {
     if (!isBrowser) return false;
     axios.defaults.port = 6001;
     const url = formatEnpoint('profile');
+    const nnUser = getUser();
+    const token = nnUser.accessToken;
     return axios({
+        headers: {"Authorization" : `Bearer ${token}`},
         method: 'get',
-        url,
-        data
+        url
     }).then(
         function (response) {
             console.log('RESPONSE SUCESSFUL');
-            console.log('setUser', response.data);
-            setUser(response.data);
             return response;
         }
     ).catch(function (error) {
