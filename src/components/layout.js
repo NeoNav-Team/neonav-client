@@ -4,6 +4,7 @@ import { isLoggedIn } from '../services/auth';
 import Logo from './logo';
 import FormLogin from './formLogin';
 import FooterNav from './footerNav';
+import PageSpinner from './pageSpinner';
 
 const GlobalStyle = createGlobalStyle`
     html, body {
@@ -44,17 +45,23 @@ export default function Layout({ children }) {
         <>
             <GlobalStyle theme="neonav" />
                 <Portrait>
-                        {loggedIn ?
+                    {loggedIn === 'true' &&
                         <>
                             {children}
                         </>
-                        :
+                    }
+                    {loggedIn === 'false' &&
                         <>
                             <Logo />
                             <FormLogin />
                         </>
                     }
-                    {loggedIn && <FooterNav />}
+                    {loggedIn === 'true' && <FooterNav />}
+                    {typeof loggedIn === 'undefined' &&
+                        <>
+                            <PageSpinner />
+                        </>
+                    }
                 </Portrait>
         </>
     )

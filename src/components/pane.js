@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import useDimensions from "react-use-dimensions";
 
 const StyledPaneDiv  = styled.div`
     #090F44

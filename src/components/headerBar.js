@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import AppMenu from './icons/appMenu';
 import ButtonIcon from './buttonIcon';
 
-
-
 const Title  = styled.h1`
     color: #fff;
     line-height: 10vh;
+    filter: drop-shadow(0 0 5px #fff);
+    width: calc(100% - 10vh);
 `;
 
 const RightMenu  = styled.div`
@@ -24,7 +24,7 @@ function HeaderBar(props) {
  
     return (
         <div>
-            {!noMenu &&
+            {typeof noMenu !== undefined &&
                 <RightMenu>
                     <ButtonIcon
                         navTo={'/'}

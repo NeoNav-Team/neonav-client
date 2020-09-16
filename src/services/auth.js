@@ -43,7 +43,7 @@ export const userLogin = data => {
 export const isLoggedIn = () => {
   const user = getUser();
   const loginBool = _.get(user, 'userid', '').length >= 1;
-  return loginBool;
+  return loginBool.toString();
 }
 
 export const logout = callback => {
