@@ -1,4 +1,6 @@
 import React from 'react';
+import { withPrefix } from 'gatsby';
+import {Helmet} from 'react-helmet';
 import styled, { createGlobalStyle } from 'styled-components';
 import { isLoggedIn } from '../services/auth';
 import Logo from './logo';
@@ -43,6 +45,9 @@ export default function Layout({ children }) {
     const loggedIn = isLoggedIn();
     return (
         <>
+            <Helmet title={'N E O N A V'}>
+                <link href={withPrefix('css/augmented-ui.min.css')} rel="stylesheet" type="text/css" />
+            </Helmet>
             <GlobalStyle theme="neonav" />
                 <Portrait>
                     {loggedIn === 'true' &&

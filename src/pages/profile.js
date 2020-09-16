@@ -38,15 +38,15 @@ export default function Profile() {
         </HeaderBar>
         <Pane>
             {_.get(profileData, 'profile', null) &&
-                Object.entries(_.get(profileData, 'profile', [])).map(key => {
-                    return <StyledP><label>{key[0]}</label><span>{key[1]}</span></StyledP>
+                Object.entries(_.get(profileData, 'profile', [])).map((item, index) => {
+                    return <StyledP key={`_profileItem_00${index}`}><label>{item[0]}</label><span>{item[1]}</span></StyledP>
                 })
             }
         </Pane>
         <Pane>
             {_.get(profileData, 'auth', null) &&
-                Object.entries(_.get(profileData, 'auth', [])).map(key => {
-                    return <StyledP><label>{key[0]}</label><span>{key[1].toString()}</span></StyledP>
+                Object.entries(_.get(profileData, 'auth', [])).map((item,index) => {
+                    return <StyledP key={`_profileItem_11${index}`}><label>{item[0]}</label><span>{item[1].toString()}</span></StyledP>
                 })
             }
         </Pane>

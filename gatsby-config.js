@@ -7,15 +7,13 @@
 module.exports = {
   /* Your site config here */
   plugins: [
-    {
-      resolve: `gatsby-plugin-styled-components`,
-      options: {
-        // Add any options here
-      }
+    {  resolve: `gatsby-plugin-react-helmet`
     },
     {
-      resolve: 'gatsby-plugin-antd',
-      options: {}
+      resolve: `gatsby-plugin-styled-components`
+    },
+    {
+      resolve: `gatsby-plugin-antd`
     },
     {
       resolve: `gatsby-plugin-web-font-loader`,

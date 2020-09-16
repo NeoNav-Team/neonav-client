@@ -2,37 +2,35 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledPaneDiv = styled.div`
-  background: #090F44;
+  background: transparent;
   margin: 0 auto;
-  max-width: 500px;
+  filter: drop-shadow(3px 3px 15px #fe75fe);
+  padding: 1.5vh;
+  .pitch-mixin {
+    --aug-tr: 25px;
+    --aug-b-extend1: 50%;
+
+    --aug-border-all: 2px;
+    --aug-border-bg: radial-gradient(#ff00a0, #fe75fe) 50% 50% / 100% 100%;
+    
+    --aug-inlay-all: 8px;
+    --aug-inlay-bg: radial-gradient(#7a04eb, #120458)  50% 50% / 100% 100%;
+    --aug-inlay-opacity: 0.5;
+  }
+`;
+const Content = styled.div`
   padding: 4vh;
-  color: #fff;
-  border: 1px solid #41C5FF;
-  filter: drop-shadow(0 0 10px #41C5FF);
-  border-radius: 5px;
-  .ant-checkbox + span {
-      color: #fff;
-  }
-  .ant-input, .ant-input-password {
-      border-radius: 10px 0 10px 0;
-  }
-  .ant-btn {
-      background: #41C5FF;
-      filter: drop-shadow(0 0 5px #41C5FF);
-      width: 80%;
-      left: 50%;
-      transform: translate(-50%, 0);
-      height: 60px;
-      border-radius: 20px 0 20px 0;
-      font-size: 2rem;
-  }
 `;
 
 function Pane(props) {
   const { children } = props;
   return (
     <StyledPaneDiv>
-        {children}
+      <div className="pitch-mixin" data-augmented-ui={'tl-clip tr-clip-x br-clip b-scoop bl-clip both'}>
+        <Content>
+          {children}
+        </Content>
+      </div>
     </StyledPaneDiv>
   )
 }
