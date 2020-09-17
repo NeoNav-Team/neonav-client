@@ -2,3 +2,22 @@
     font-family: "Orbitron";
     src: url("orbitron/Orbitron-Regular.ttf");
 }
+
+
+@font-face {
+    font-family: "Roboto";
+    src: url("roboto/Roboto-Regular.ttf");
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("roboto/Roboto-Bold.ttf");
+    font-style: bold;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("roboto/Roboto-Thin.ttf");
+    font-style: 100;
+}

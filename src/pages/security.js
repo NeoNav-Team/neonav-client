@@ -9,7 +9,7 @@ import { userProfile } from '../services/user';
 
 const StyledP = styled.p`
     color: white;
-    font-size: 1.25rem;
+    font-size: 1em;
     label {
         display: inline-block;
         width: 30%;
