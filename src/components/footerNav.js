@@ -4,12 +4,13 @@ import UserSettings from './icons/userSettings';
 import ButtonIcon from './buttonIcon';
 
 const StyledFooterDiv  = styled.div`
-    position: absolute;
+    position: sticky;
     background: transparent;
     bottom: 0;
     height: 12vh;
-    width: 100%;
+    width: 100vw;
     text-align: center;
+    overflow: hidden;
     & button {
         height: 12vh;
         width: 12vh;
