@@ -5,14 +5,14 @@ import ButtonIcon from './buttonIcon';
 
 const Title  = styled.h1`
     color: #fff;
-    font-size: 2.5rem;
+    font-size: 1rem;
     line-height: 6vh;
     margin-left: 4vh;
     margin-bottom: 0;
     filter: drop-shadow(0 0 5px #fff);
     width: calc(100% - 10vh);
     & span {
-        font-size: 1rem;
+        font-size: 0.66rem;
     }
 `;
 
