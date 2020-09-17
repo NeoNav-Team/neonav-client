@@ -17,18 +17,6 @@ const GlobalStyle = createGlobalStyle`
         min-width: 100vw;
         font-family: 'Orbitron', sans-serif;
     }
-    h1 {
-        font-size: 2em;
-        line-height: 2.25em;
-        margin: 0;
-    }
-    h3 {
-        font-size: 1em;
-        line-height: 2em;
-    }
-    p {
-        font-size: 0.5em;
-    }
     .center {
         text-align: center;
     }

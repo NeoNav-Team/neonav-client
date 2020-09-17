@@ -9,6 +9,16 @@ import { userProfile } from '../services/user';
 
 const StyledP = styled.p`
     color: white;
+    font-size: 1.25rem;
+    label {
+        display: inline-block;
+        width: 30%;
+        opacity: 0.5;
+    }
+    span {
+        display: inline-block;
+        width: 70%;
+    }
 `;
 
 export default function Profile() {

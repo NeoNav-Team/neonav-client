@@ -9,6 +9,16 @@ import { userProfile } from '../services/user';
 
 const StyledP = styled.p`
     color: white;
+    font-size: 1.25rem;
+    label {
+        display: inline-block;
+        width: 30%;
+        opacity: 0.5;
+    }
+    span {
+        display: inline-block;
+        width: 70%;
+    }
 `;
 
 export default function Profile() {
@@ -38,7 +48,7 @@ export default function Profile() {
         >
             {_.get(profileData, 'profile', null) &&
                 Object.entries(_.get(profileData, 'auth', [])).map((item, index) => {
-                    return <StyledP key={`_profileItem_01${index}`}><label>{item[0]}</label><span>{item[1]}</span></StyledP>
+                    return <StyledP key={`_profileItem_01${index}`}><label>{item[0]}</label><span>{item[1].toString()}</span></StyledP>
                 })
             }
         </Pane>
