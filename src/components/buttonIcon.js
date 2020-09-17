@@ -9,7 +9,6 @@ const StyledButton  = styled.button`
     background-repeat:no-repeat;
     border: none;
     cursor:pointer;
-    overflow: hidden;
     outline:none;
     height: ${props => props.height};
     width: ${props => props.width};

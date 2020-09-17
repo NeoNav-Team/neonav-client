@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { navigate } from 'gatsby';
 
 const StyledPaneDiv = styled.div`
   background: transparent;
   margin: 0 auto;
-  filter: drop-shadow(0px 0px 15px ${props => props.colors[1]});
+  filter: drop-shadow(0px 0px 5px ${props => props.colors[1]});
   padding: 1.5vh;
   .pitch-mixin {
     --aug-tr: 25px;
@@ -25,7 +26,7 @@ const StyledPaneDiv = styled.div`
   }
   .ant-btn {
       background: #41C5FF;
-      filter: drop-shadow(0 0 5px #41C5FF);
+      filter: drop-shadow(0 0 8px #41C5FF);
       width: 80%;
       left: 50%;
       transform: translate(-50%, 0);
@@ -50,23 +51,48 @@ const PaneTitle = styled.h2`
   bottom-bottom 2vh;
 `;
 
+const BackButton = styled.div`
+  position: absolute;
+  right: 1.75vh;
+  border: 2px solid ${props => props.colors[1]};
+  height: 2vh;
+  width: 2vh;
+  cursor: pointer;
+  user-select: none;
+  & div {
+    cursor: pointer;
+    margin: 0;
+    line-height: 1.5vh;
+    font-size: 1.5vh;
+    color: ${props => props.colors[1]};
+  }
+`
+
 const frames = [
   {
     colors: ['#ff00a0', '#fe75fe', '#7a04eb', '#120458'],
     aguments: 'tl-clip tr-clip-x br-clip b-scoop bl-clip both'
   },
   {
-    colors: ['#ff124f', '#ff00a0', 'trnasparent', '#120458'],
+    colors: ['#ff124f', '#ff00a0', 'transparent', '#120458'],
     aguments: 'tl-2-rect-y tr-rect br-clip bl-clip both'
   }
 ]
 
 function Pane(props) {
-  const { title, children, frameId, padding } = props;
+  const { title, children, frameId, padding, back } = props;
   const frameTheme = frameId ? frames[frameId] : frames[0];
   const pad = padding ? padding : '4vh';
   return (
     <StyledPaneDiv colors={frameTheme.colors}>
+      {back && (
+        <BackButton
+          colors={frameTheme.colors}
+          onClick={()=>{navigate(back, { replace: true })}}
+        >
+          <div>&rarr;</div>
+          </BackButton>
+      )}
       <div className="pitch-mixin" data-augmented-ui={frameTheme.aguments}>
           <Content padding={pad}>
           {title ? 
