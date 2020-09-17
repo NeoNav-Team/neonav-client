@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import UserSettings from './icons/userSettings';
 import ButtonIcon from './buttonIcon';
+import FixedBottom from 'react-fixed-bottom';
 
-const StyledFooterDiv  = styled.div`
-    position: sticky;
+const StyledFooterDiv  = styled(FixedBottom)`
+    display: block;
     background: transparent;
-    bottom: 0;
     height: 12vh;
-    width: 100vw;
+    width: 100%;
     text-align: center;
     overflow: hidden;
     & button {

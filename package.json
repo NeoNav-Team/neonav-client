@@ -28,6 +28,7 @@
     "npm": "^6.14.8",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-fixed-bottom": "^1.0.6",
     "react-helmet": "^6.1.0",
     "react-use-dimensions": "^1.2.1",
     "styled-components": "^5.2.0"
