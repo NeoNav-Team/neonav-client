@@ -6,7 +6,12 @@ import Home from '../components/sections/home';
 import Security from '../components/sections/security';
 import Profile from '../components/sections/profile'; 
 import FooterNav from '../components/footerNav';
-import HeaderBar from '../components/headerBar'
+import HeaderBar from '../components/headerBar';
+import styled from 'styled-components';
+
+const BodyContainer  = styled.div`
+    position: relative;
+`;
 
 export default function Index({ location }) {
   const isHome = location && location.pathname === "/";
@@ -16,11 +21,13 @@ export default function Index({ location }) {
       <HeaderBar noMenu={isHome}>
             N E O N A V
       </HeaderBar>
-      <Router basepath="/">
-          <PrivateRoute location={location} path="/" component={Home} />
-          <PrivateRoute path="/profile" component={Profile} />
-          <PrivateRoute path="/security" component={Security} />
-      </Router>
+      <BodyContainer>
+        <Router basepath="/">
+            <PrivateRoute location={location} path="/" component={Home} />
+            <PrivateRoute path="/profile" component={Profile} />
+            <PrivateRoute path="/security" component={Security} />
+        </Router>
+      </BodyContainer>
       <FooterNav />
     </Layout>
   )

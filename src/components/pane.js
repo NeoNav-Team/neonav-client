@@ -80,7 +80,7 @@ const frames = [
 ]
 
 function Pane(props) {
-  const { title, children, frameId, padding, back } = props;
+  const { title, children, frameId, padding, back, noSpace } = props;
   const frameTheme = frameId ? frames[frameId] : frames[0];
   const pad = padding ? padding : '4vh';
   return (
@@ -98,7 +98,7 @@ function Pane(props) {
           {title ? 
           <PaneTitle>{title}</PaneTitle>
           : 
-          <Spacer />
+          <>{typeof noSpace === 'undefined ' && <Spacer />}</>
           }
           {children}
         </Content>

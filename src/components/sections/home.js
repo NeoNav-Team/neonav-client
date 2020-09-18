@@ -78,6 +78,7 @@ export default function Home({ location }) {
         <StyledModal
             title={null}
             visible={modal}
+            closable={false}
             onCancel={closeModal}
             bodyStyle={{padding:0, background:'transparent'}}
             footer={null}

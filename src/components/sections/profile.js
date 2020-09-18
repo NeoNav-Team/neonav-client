@@ -8,7 +8,7 @@ import { userProfile } from '../../services/user';
 
 const StyledP = styled.p`
     color: white;
-    font-size: 1em;
+    font-size: 2vh;
     label {
         display: inline-block;
         width: 30%;
