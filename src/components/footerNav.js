@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import UserSettings from './icons/userSettings';
+import Profile from './icons/profile';
 import ButtonIcon from './buttonIcon';
 
 const StyledFooterDiv  = styled.div`
@@ -45,9 +45,9 @@ function FooterNav(props) {
         <StyledFooterDiv>
             <div className="grid-container" />
                 <ButtonIcon
-                    navTo={'/user_settings'}
+                    navTo={'/profile'}
                 >
-                    <UserSettings />
+                    <Profile fill={'#00b8ff'} />
                 </ButtonIcon>
                 {children}
         </StyledFooterDiv>

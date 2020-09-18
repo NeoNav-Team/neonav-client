@@ -2,11 +2,6 @@ import React from 'react';
 import { withPrefix } from 'gatsby';
 import {Helmet} from 'react-helmet';
 import styled, { createGlobalStyle } from 'styled-components';
-import { isLoggedIn } from '../services/auth';
-import Logo from './logo';
-import FormLogin from './formLogin';
-import FooterNav from './footerNav';
-import PageSpinner from './pageSpinner';
 
 const GlobalStyle = createGlobalStyle`
     html, body {
@@ -30,34 +25,16 @@ const Portrait = styled.div`
     margin: 0 auto;
 `;
 
-
-export default function Layout({ children, unlocked }) {
-    const loggedIn = isLoggedIn();
+export default function Layout({ children }) {
     return (
         <>
             <Helmet title={'N E O N A V'}>
                 <link href={withPrefix('css/augmented-ui.min.css')} rel="stylesheet" type="text/css" />
             </Helmet>
             <GlobalStyle theme="neonav" />
-                <Portrait>
-                    {(loggedIn === 'true' || typeof unlocked !== 'undefined') &&
-                        <>
-                            {children}
-                        </>
-                    }
-                    {(loggedIn === 'false' && typeof unlocked === 'undefined') &&
-                        <>
-                            <Logo />
-                            <FormLogin />
-                        </>
-                    }
-                    {loggedIn === 'true' && <FooterNav />}
-                    {typeof loggedIn === 'undefined' &&
-                        <>
-                            <PageSpinner />
-                        </>
-                    }
-                </Portrait>
+            <Portrait>
+                {children}
+            </Portrait>
         </>
     )
 }

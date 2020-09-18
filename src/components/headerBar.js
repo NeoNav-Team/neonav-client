@@ -35,7 +35,7 @@ function HeaderBar(props) {
  
     return (
         <Bar>
-            {typeof noMenu === 'undefined' &&
+            {!noMenu &&
                 <RightMenu>
                     <ButtonIcon
                         height={'6vh'}

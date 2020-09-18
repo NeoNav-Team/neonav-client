@@ -1,11 +1,10 @@
 import React, { useEffect, useState }from 'react';
 import _ from 'lodash';
 import styled from 'styled-components';
-import Layout from '../components/layout';
-import HeaderBar from '../components/headerBar';
-import Pane from '../components/pane';
+import Layout from '../layout';
+import Pane from '../pane';
 
-import { userProfile } from '../services/user';
+import { userProfile } from '../../services/user';
 
 const StyledP = styled.p`
     color: white;
@@ -39,16 +38,13 @@ export default function Profile() {
 
   return (
     <Layout>
-        <HeaderBar>
-            {_.get(profileData, 'profile.username', null)}<span>#{_.get(profileData, 'auth.userid', null)}</span>
-        </HeaderBar>
         <Pane
-            title={'User Profile'}
-            back={'/user_settings'}
+            title={'User Security'}
+            back={'/#userSettings'}
         >
             {_.get(profileData, 'profile', null) &&
-                Object.entries(_.get(profileData, 'profile', [])).map((item, index) => {
-                    return <StyledP key={`_profileItem_00${index}`}><label>{item[0]}</label><span>{item[1]}</span></StyledP>
+                Object.entries(_.get(profileData, 'auth', [])).map((item, index) => {
+                    return <StyledP key={`_profileItem_01${index}`}><label>{item[0]}</label><span>{item[1].toString()}</span></StyledP>
                 })
             }
         </Pane>

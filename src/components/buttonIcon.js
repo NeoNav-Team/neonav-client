@@ -23,7 +23,7 @@ function ButtonIcon(props) {
     const navtoPage = route => {
         if (route === '/logout') {
             logout(() => {
-                navigate('/', { replace: true });
+                navigate('/login', { replace: true });
             });
         } else {
             navigate(route, { replace: true });
