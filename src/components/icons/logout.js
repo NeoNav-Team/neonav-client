@@ -6,8 +6,9 @@ const StyledLogoDiv  = styled.div`
     cursor: pointer;
     & svg {
         position: relative;
-        width: 100%;
-        height: 100%;
+        width: 80%;
+        height: 80%;
+        margin: 8% 10% 2%;
         fill: #fff;
         filter: drop-shadow(0 0 5px #fff);
         &:hover {
