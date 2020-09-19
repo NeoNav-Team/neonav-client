@@ -99,7 +99,7 @@ function Pane(props) {
           {title ? 
           <PaneTitle>{title}</PaneTitle>
           : 
-          <>{typeof noSpace === 'undefined ' && <Spacer />}</>
+          <>{typeof noSpace === 'undefined' && <Spacer />}</>
           }
           {children}
         </Content>
