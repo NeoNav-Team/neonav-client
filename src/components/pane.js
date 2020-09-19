@@ -45,7 +45,7 @@ const Spacer = styled.div`
 
 const PaneTitle = styled.h2`
   color: #fff;
-  font-size: 1.75rem;
+  font-size: 2.125vh;
   filter: drop-shadow(3px 3px 15px #fff);
   border-bottom: 2px solid #fe75fe;
   bottom-bottom 2vh;
@@ -84,6 +84,7 @@ function Pane(props) {
   const frameTheme = frameId ? frames[frameId] : frames[0];
   const pad = padding ? padding : '4vh';
   return (
+    <>
     <StyledPaneDiv colors={frameTheme.colors}>
       {back && (
         <BackButton
@@ -104,6 +105,7 @@ function Pane(props) {
         </Content>
       </div>
     </StyledPaneDiv>
+    </>
   )
 }
 export default Pane;

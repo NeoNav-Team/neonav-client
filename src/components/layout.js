@@ -7,7 +7,6 @@ const GlobalStyle = createGlobalStyle`
     html, body {
         margin: 0;
         height: 100%;
-        overflow: hidden;
         color: #0EBCC6;
         background: rgb(113,29,145);
         background: radial-gradient(circle, rgba(35,22,56,1) 0%, rgba(18,18,18,1) 100%);
@@ -25,7 +24,6 @@ const Portrait = styled.div`
     position: relative;
     max-width: 75vh;
     min-height: 100vh;
-    overflow: hidden;
     margin: 0 auto;
 `;
 

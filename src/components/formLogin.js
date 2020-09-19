@@ -55,6 +55,7 @@ function FormLogin(props) {
                 navigate('/', { replace: true });
             }
         }).catch(err => {
+            setErrMsg('Connection error. Please try again later.');
             console.log('err', err)
         });
     };

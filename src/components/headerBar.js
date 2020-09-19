@@ -26,8 +26,10 @@ const RightMenu  = styled.div`
   }
 `;
 const Bar = styled.div`
-  margin: 0;
-  border: 0;
+    margin: 0;
+    border: 0;
+    width: 100%;
+    height: 6vh;
 `;
 
 function HeaderBar(props) {

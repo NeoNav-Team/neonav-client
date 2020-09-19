@@ -26,7 +26,7 @@ function ModalQRCode(props) {
     const {value} = props;
     return (
         <SyledDiv className="pitch-mixin" data-augmented-ui={'tl-2-round-y tr-clip r-scoop-y br-clip bl-2-round-y l-rect both'}>
-            <QRCode size="420" renderAs="svg" value={value} />
+            <QRCode size={420} renderAs="svg" value={value} />
         </SyledDiv>
     )
 }

@@ -1,0 +1,3 @@
+     <UserAvatar>
+                    <AvatarImg data={data} />
+                </UserAvatar>
