@@ -154,7 +154,7 @@ export default function Profile({ location }) {
         navigate(`/?p=profile&k=${objKey}#editField`);
     };
 
-    const fetchThenSetProfile = () => {
+    useEffect(() => {
         getProfile().then(res => {
             res.data.profile = _.get(res, 'data.profile', false) ? res.data.profile : profileSchema;
             setProfile(res.data);
@@ -162,11 +162,7 @@ export default function Profile({ location }) {
         }).catch(err => {
             console.log('err', err);
         });
-    }
-
-    useEffect(() => {
         setModal(stubFromLocation(location));
-        fetchThenSetProfile();
     }, [location]);
 
     const userStub = <>{username}<span>#{userId}</span></>;

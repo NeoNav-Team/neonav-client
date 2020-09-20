@@ -26,6 +26,9 @@ function ModalEditField({fieldKey}) {
     const [form] = Form.useForm();
     const isName = fieldKey && fieldKey.includes('name');
     let value = _.get(profileData, `profile.${fieldKey}`, 'N/A');
+    let firstname = _.get(profileData, `profile.firstname`, 'N/A');
+    let lastname = _.get(profileData, `profile.lastname`, 'N/A');
+    let username = _.get(profileData, `profile.username`, 'N/A');
 
     const goUpdate = async updates => {
         const response = updateProfile(updates);
@@ -63,16 +66,22 @@ function ModalEditField({fieldKey}) {
     useEffect(() => {
         if(isName) {
             form.setFieldsValue({
-                firstname: profileData.profile.firstname,
-                lastname: profileData.profile.lastname,
-                username: profileData.profile.username,
+                firstname,
+                lastname,
+                username,
             });
         } else {
             form.setFieldsValue({
                 editable: value
             });
         }
-    }, [form, value]);
+    }, [
+        isName,
+        firstname,
+        lastname,
+        username,
+        form, 
+        value]);
 
   return (
     <>
