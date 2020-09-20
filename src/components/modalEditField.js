@@ -11,8 +11,8 @@ import { updateProfile } from '../services/user';
 import { formatDoc } from '../utils/format';
 
 const labels = {
-    firstname: 'First Name',
-    lastname: 'Last Name',
+    firstname: 'Name',
+    lastname: 'Name',
     username: 'Alias',
     status: 'Status',
     skills: 'Skills',
@@ -24,6 +24,7 @@ function ModalEditField({fieldKey}) {
     const [errMsg, setErrMsg] = useState(null);
     const profileData = JSON.parse(localStorage.getItem('profileData')) || {};
     const [form] = Form.useForm();
+    const isName = fieldKey && fieldKey.includes('name');
     let value = _.get(profileData, `profile.${fieldKey}`, 'N/A');
 
     const goUpdate = async updates => {
@@ -34,8 +35,13 @@ function ModalEditField({fieldKey}) {
     const onFinish = values => {
         setErrMsg(null);
         const profile = profileData.profile;
-        profile[fieldKey] = values.editable;
-        console.log('profile', profile);
+        if (isName){
+            profile['firstname'] = values.firstname;
+            profile['lastname'] = values.lastname;
+            profile['username'] = values.username;
+        } else {
+            profile[fieldKey] = values.editable;
+        }
         const updates = formatDoc(profileData._id, profileData._rev,  {profile});
         goUpdate(updates).then(res => {
             if (res.status !== 200 && res.data.message) {
@@ -55,9 +61,17 @@ function ModalEditField({fieldKey}) {
     };
 
     useEffect(() => {
-        form.setFieldsValue({
-            editable: value
-          });
+        if(isName) {
+            form.setFieldsValue({
+                firstname: profileData.profile.firstname,
+                lastname: profileData.profile.lastname,
+                username: profileData.profile.username,
+            });
+        } else {
+            form.setFieldsValue({
+                editable: value
+            });
+        }
     }, [form, value]);
 
   return (
@@ -68,11 +82,35 @@ function ModalEditField({fieldKey}) {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
         >
-        <Form.Item
-            name="editable"
-            >
-                <Input />
-            </Form.Item>
+            {isName && 
+                <>
+                    <Form.Item
+                    name="username"
+                    label="Alias"
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                    name="firstname"
+                    label="First"
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                    name="lastname"
+                    label="Last"
+                    >
+                        <Input />
+                    </Form.Item>
+                </>
+            }
+            {!isName &&
+                <Form.Item
+                    name="editable"
+                    >
+                    <Input />
+                </Form.Item>
+            }
             {errMsg && 
               <Form.Item>
                   <Alert message={errMsg} type="error" />

@@ -104,6 +104,12 @@ const StyledModal = styled(Modal)`
     .ant-btn-primary {
         background-color: #00b8ff;
     }
+    .ant-form-item-label {
+        label {
+            color: #fff;
+            font-size: 3vh;
+        }
+    }
 `;
 
 
