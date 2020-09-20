@@ -8,3 +8,11 @@ export const formatEnpoint = endpoint => {
     apiObject.url.pathname = apis[endpoint];
     return url.format(apiObject.url);
 }
+
+export const formatDoc = (_id, _rev, updateObj) =>{
+    let obj = {doc: {_id, _rev}};
+    const updateKey = Object.keys(updateObj)[0];
+    console.log('updateObj', JSON.stringify(updateObj));
+    obj[updateKey] = updateObj[updateKey];
+    return obj;
+}

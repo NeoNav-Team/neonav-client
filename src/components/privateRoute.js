@@ -7,9 +7,9 @@ import { isLoggedIn } from '../services/auth';
 const PrivateRoute = ({ component: Component, location, ...rest }) => {
     const [show] = useState(true)
     const transitions = useTransition(show, null, {
-        from: { transform: 'translate3d(0,-40px,0)', opacity:0 },
+        from: { transform: 'translate3d(-40px, 0,0)', opacity:0 },
         enter: { transform: 'translate3d(0,0px,0)', opacity:1 },
-        leave: { transform: 'translate3d(0,-40px,0)', opacity:0 },
+        leave: { transform: 'translate3d(4px, 0,0)', opacity:0 },
         trail: 2
     })
     const loggedInStatus = isLoggedIn();

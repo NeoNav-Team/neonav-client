@@ -16,7 +16,7 @@ const StyledPaneDiv = styled.div`
     
     --aug-inlay-all: 8px;
     --aug-inlay-bg: radial-gradient(${props => props.colors[2]}, ${props => props.colors[3]})  50% 50% / 100% 100%;
-    --aug-inlay-opacity: 0.5;
+    --aug-inlay-opacity: ${props => props.opacity ? props.opacity : 0.5};
   }
   .ant-checkbox + span {
     color: #fff;
@@ -74,8 +74,9 @@ const frames = [
     aguments: 'tl-clip tr-clip-x br-clip b-scoop bl-clip both'
   },
   {
-    colors: ['#ff124f', '#ff00a0', 'transparent', '#120458'],
-    aguments: 'tl-2-rect-y tr-rect br-clip bl-clip both'
+    colors: ['#ff124f', '#7a04eb', '#fe75fe', '#120458'],
+    aguments: 'tl-clip-x tr-rect br-2-clip-x bl-clip-x both',
+    opacity: '0.75'
   }
 ]
 
@@ -85,7 +86,10 @@ function Pane(props) {
   const pad = padding ? padding : '4vh';
   return (
     <>
-    <StyledPaneDiv colors={frameTheme.colors}>
+    <StyledPaneDiv
+      colors={frameTheme.colors}
+      opacity={frameTheme.opacity}  
+    >
       {back && (
         <BackButton
           colors={frameTheme.colors}
@@ -94,7 +98,10 @@ function Pane(props) {
           <div>&rarr;</div>
           </BackButton>
       )}
-      <div className="pitch-mixin" data-augmented-ui={frameTheme.aguments}>
+      <div
+        className="pitch-mixin"
+        data-augmented-ui={frameTheme.aguments}
+      >
           <Content padding={pad}>
           {title ? 
           <PaneTitle>{title}</PaneTitle>

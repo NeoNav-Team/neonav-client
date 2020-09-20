@@ -7,11 +7,11 @@ import Logout from '../icons/logout';
 import Kitty from '../icons/kitty';
 import MenuUserSettings from '../menuUserSettings';
 import { 
-  Layout as AntLayout,
-  Row,
-  Col,
-  Modal
-} from 'antd';
+    Layout as AntLayout,
+    Row,
+    Col,
+    Modal
+  } from 'antd';
 import ButtonIcon from '../buttonIcon';
 import UserSettings from '../icons/userSettings';
 import ModalKitty from '../modalKitty';
@@ -51,6 +51,7 @@ export default function Home({ location }) {
 
     useEffect(() => {
         setModal(stubFromLocation(location))
+        console.log('location', location);
     }, [location]);
 
   return (
