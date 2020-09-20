@@ -1,5 +1,6 @@
 import React, { useEffect, useState }from 'react';
 import { modals }  from '../../constants/defaults';
+import queryString from 'query-string';
 import _ from 'lodash';
 import { navigate } from 'gatsby';
 import styled from 'styled-components';
@@ -116,14 +117,15 @@ export default function Profile({ location }) {
         return modals.includes(stub) ? stub : null;
     };
     const stubFromSearch = location => {
-        return location.search.split('=').pop();
+        const params = queryString.parse(location.search);
+        return params.k;
     };
     const defaultModal = stubFromLocation(location);
     const [modal, setModal] = useState(defaultModal);
 
     const closeModal = () => {
         setModal(null);
-        navigate('/profile');
+        navigate('/?p=profile');
     }
 
     const getProfile = async () => {
@@ -136,7 +138,7 @@ export default function Profile({ location }) {
     };
 
     const setProfileObjKey = objKey => {
-        navigate(`/profile?key=${objKey}#editField`);
+        navigate(`/?p=profile&k=${objKey}#editField`);
     };
 
     useEffect(() => {

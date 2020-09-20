@@ -1,5 +1,5 @@
 import React, { useEffect }from 'react';
-import { Router } from '@reach/router';
+import queryString from 'query-string';
 import Layout from '../components/layout';
 import PrivateRoute from '../components/privateRoute';
 import Home from '../components/sections/home';
@@ -7,27 +7,22 @@ import Security from '../components/sections/security';
 import Profile from '../components/sections/profile'; 
 import FooterNav from '../components/footerNav';
 import HeaderBar from '../components/headerBar';
-import styled from 'styled-components';
-
-const BodyContainer  = styled.div`
-    position: relative;
-`;
 
 export default function Index({ location }) {
-  const isHome = location && location.pathname === "/";
-  useEffect(() => {}, [location]);
+  const isHome = location && location.search.length <= 1;
+  const params = queryString.parse(location.search);
+  const p = !isHome && params.p;
+  useEffect(() => {
+    console.log('location', location);
+  }, [location]);
   return (
     <Layout>
       <HeaderBar noMenu={isHome}>
             N E O N A V
       </HeaderBar>
-      <BodyContainer>
-        <Router basepath="/">
-            <PrivateRoute location={location} path="/" component={Home} />
-            <PrivateRoute path="/profile" component={Profile} />
-            <PrivateRoute path="/security" component={Security} />
-        </Router>
-      </BodyContainer>
+          {isHome && <PrivateRoute location={location} component={Home} />}
+          {p === 'profile' && <PrivateRoute location={location} component={Profile} />}
+          {p === 'security' && <PrivateRoute location={location} component={Security} />}
       <FooterNav />
     </Layout>
   )

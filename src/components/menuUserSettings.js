@@ -21,12 +21,12 @@ export default function MenuUserSettings() {
             <StyledAntLayout>
             <Row gutter={[24, 24]}>
                 <Col span={6}>
-                    <ButtonIcon navTo='/profile'>
+                    <ButtonIcon navTo='/?p=profile'>
                         <Profile />
                     </ButtonIcon>
                 </Col>
                 <Col span={6}>
-                    <ButtonIcon navTo='/security'>
+                    <ButtonIcon navTo='/?p=security'>
                         <Security />
                     </ButtonIcon>
                 </Col>

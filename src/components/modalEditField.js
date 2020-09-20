@@ -41,7 +41,7 @@ function ModalEditField({fieldKey}) {
                 setErrMsg(res.data.message || res.statusText);
             } else {
                 console.log('200 res', res);
-                navigate('/profile', { replace: true });
+                navigate('/?p=profile', { replace: true });
             }
         }).catch(err => {
             setErrMsg('Connection error. Please try again later.');

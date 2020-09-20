@@ -45,7 +45,7 @@ function FooterNav(props) {
         <StyledFooterDiv>
             <div className="grid-container" />
                 <ButtonIcon
-                    navTo={'/profile'}
+                    navTo={'/?p=profile'}
                 >
                     <Profile fill={'#00b8ff'} />
                 </ButtonIcon>

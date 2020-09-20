@@ -51,7 +51,6 @@ export default function Home({ location }) {
 
     useEffect(() => {
         setModal(stubFromLocation(location))
-        console.log('location', location);
     }, [location]);
 
   return (
