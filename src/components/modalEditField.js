@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { navigate } from 'gatsby';
+
 import _ from 'lodash';
 import {
     Alert,
     Button,
     Form,
-    Input
+    Input,
+    Select
 } from 'antd';
 import { updateProfile } from '../services/user';
 import { formatDoc } from '../utils/format';
+import { statusIcons } from '../constants/defaults';
 
 const labels = {
     firstname: 'Name',
@@ -25,6 +28,10 @@ function ModalEditField({fieldKey}) {
     const profileData = JSON.parse(localStorage.getItem('profileData')) || {};
     const [form] = Form.useForm();
     const isName = fieldKey && fieldKey.includes('name');
+    const isStatus = fieldKey && fieldKey === 'status';
+    const isLong = fieldKey && fieldKey === 'bio';
+    const isImage = fieldKey && fieldKey === 'avatar';
+    const isInput = !isName && !isStatus && !isImage;
     let value = _.get(profileData, `profile.${fieldKey}`, 'N/A');
     let firstname = _.get(profileData, `profile.firstname`, 'N/A');
     let lastname = _.get(profileData, `profile.lastname`, 'N/A');
@@ -113,11 +120,23 @@ function ModalEditField({fieldKey}) {
                     </Form.Item>
                 </>
             }
-            {!isName &&
+            {isStatus &&
+            <Form.Item name="editable">
+                <Select>
+                    <Select.Option value="available">{statusIcons['available']} Available</Select.Option>
+                    <Select.Option value="away">{statusIcons['away']} Away</Select.Option>
+                    <Select.Option value="busy">{statusIcons['busy']} Busy</Select.Option>
+                    <Select.Option value="arriving">{statusIcons['arriving']} Arriving</Select.Option>
+                    <Select.Option value="en_route">{statusIcons['en_route']} En Route</Select.Option>
+                    <Select.Option value="departing">{statusIcons['departing']} Departing</Select.Option>
+                </Select>
+              </Form.Item>
+            }
+            {isInput &&
                 <Form.Item
                     name="editable"
                     >
-                    <Input />
+                    {isLong ? <Input.TextArea /> : <Input />}
                 </Form.Item>
             }
             {errMsg && 

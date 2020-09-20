@@ -1,5 +1,5 @@
 import React, { useEffect, useState }from 'react';
-import { modals }  from '../../constants/defaults';
+import { modals, statusIcons }  from '../../constants/defaults';
 import { profileSchema } from '../../constants/schemas';
 import queryString from 'query-string';
 import _ from 'lodash';
@@ -18,8 +18,6 @@ import Lock from '../icons/lock';
 import Unlock from '../icons/unlock';
 import ModalEditField from '../modalEditField';
 import { EditOutlined } from '@ant-design/icons';
-
-
 
 const StyledP = styled.p`
     display:block;
@@ -187,9 +185,9 @@ export default function Profile({ location }) {
                     <Styledlabel>Alias</Styledlabel>
                     <StyledValue>{username}<EBtn /></StyledValue>
                 </StyledP>
-                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'status') })}>
+                <StyledP style={{cursor: 'pointer'}} onClick={_.partial(setProfileObjKey, 'status')}>
                     <Styledlabel>Status</Styledlabel>
-                    <StyledValue>{status}<EBtn /></StyledValue>
+                    <StyledValue>{statusIcons[status]} {status}<EditOutlined style={{opacity: 0.6}}/></StyledValue>
                 </StyledP>
             </StyledCol>
         </Row>
