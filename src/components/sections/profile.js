@@ -1,5 +1,6 @@
 import React, { useEffect, useState }from 'react';
 import { modals }  from '../../constants/defaults';
+import { profileSchema } from '../../constants/schemas';
 import queryString from 'query-string';
 import _ from 'lodash';
 import { navigate } from 'gatsby';
@@ -65,6 +66,12 @@ const MiniIconBtn = styled.div`
     fill: #fff;
     svg {
         opacity: 0.5;
+    }
+`;
+
+const StyledCol = styled(Col)`
+    ${StyledP} {
+        cursor: ${props => props.locked ? 'inherit' : 'pointer'};
     }
 `;
 
@@ -141,19 +148,20 @@ export default function Profile({ location }) {
         navigate(`/?p=profile&k=${objKey}#editField`);
     };
 
-    useEffect(() => {
-        setModal(stubFromLocation(location))
-    }, [location]);
-
-    useEffect(() => {
+    const fetchThenSetProfile = () => {
         getProfile().then(res => {
+            res.data.profile = _.get(res, 'data.profile', false) ? res.data.profile : profileSchema;
             setProfile(res.data);
-            console.log('res.data', JSON.stringify(res.data));
             localStorage.setItem('profileData', JSON.stringify(res.data));
         }).catch(err => {
             console.log('err', err);
         });
-    }, []);
+    }
+
+    useEffect(() => {
+        setModal(stubFromLocation(location));
+        fetchThenSetProfile();
+    }, [location]);
 
     const userStub = <>{username}<span>#{userId}</span></>;
     const EBtn = ({ objKey }) => (!locked && <EditOutlined style={{cursor: 'pointer', opacity: 0.6}}/>);
@@ -168,7 +176,7 @@ export default function Profile({ location }) {
             <Col span={8}>
                 <UserAvatar data={avatar} alt={username} />
             </Col>
-            <Col span={15}>
+            <StyledCol span={15}  locked={locked}>
                 <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'fullname') })}>
                     <Styledlabel>Name</Styledlabel>
                     <StyledValue>{lastname && `${lastname}, `}<EBtn />{firstname}<EBtn /></StyledValue>
@@ -181,17 +189,17 @@ export default function Profile({ location }) {
                     <Styledlabel>Status</Styledlabel>
                     <StyledValue>{status}<EBtn /></StyledValue>
                 </StyledP>
-            </Col>
+            </StyledCol>
         </Row>
         <Row>
-            <Col span={24}>
+            <StyledCol span={24} locked={locked}>
                 <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'occupation')})}><Styledlabel>Occupation</Styledlabel></StyledP>
                 <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'occupation')})}><StyledBlurb>{occupation}<EBtn /></StyledBlurb></StyledP>
                 <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'skills')})}><Styledlabel>Skills</Styledlabel></StyledP>
                 <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'skills')})}><StyledBlurb>{skills}<EBtn /></StyledBlurb></StyledP>
                 <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'bio')})}><Styledlabel>Bio</Styledlabel></StyledP>
                 <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'bio')})}><StyledBlurb>{bio}<EBtn /></StyledBlurb></StyledP>
-            </Col>
+            </StyledCol>
         </Row>
         <Row>
             <Col span={14}>

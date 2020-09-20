@@ -35,6 +35,7 @@ function ModalEditField({fieldKey}) {
         setErrMsg(null);
         const profile = profileData.profile;
         profile[fieldKey] = values.editable;
+        console.log('profile', profile);
         const updates = formatDoc(profileData._id, profileData._rev,  {profile});
         goUpdate(updates).then(res => {
             if (res.status !== 200 && res.data.message) {

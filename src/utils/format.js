@@ -12,7 +12,7 @@ export const formatEnpoint = endpoint => {
 export const formatDoc = (_id, _rev, updateObj) =>{
     let obj = {doc: {_id, _rev}};
     const updateKey = Object.keys(updateObj)[0];
-    console.log('updateObj', JSON.stringify(updateObj));
-    obj[updateKey] = updateObj[updateKey];
+    obj.doc[updateKey] = updateObj[updateKey];
+    console.log('object', obj);
     return obj;
 }
