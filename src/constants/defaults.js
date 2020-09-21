@@ -10,7 +10,8 @@ export const modals = [
     'kitty',
     'userSettings',
     'myQRCode',
-    'editField'
+    'editField',
+    'editAvatar'
 ];
 
 export const statusIcons = {

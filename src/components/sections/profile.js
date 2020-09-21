@@ -17,6 +17,7 @@ import { userProfile } from '../../services/user';
 import Lock from '../icons/lock';
 import Unlock from '../icons/unlock';
 import ModalEditField from '../modalEditField';
+import ModalEditAvatar from  '../modalEditAvatar';
 import { EditOutlined } from '@ant-design/icons';
 
 const StyledP = styled.p`
@@ -65,6 +66,12 @@ const MiniIconBtn = styled.div`
     svg {
         opacity: 0.5;
     }
+`;
+
+const EditBtnHolder = styled.div`
+    position: absolute;
+    bottom: 1.75vh;
+    right: 2vh;
 `;
 
 const StyledCol = styled(Col)`
@@ -152,6 +159,10 @@ export default function Profile({ location }) {
         navigate(`/?p=profile&k=${objKey}#editField`);
     };
 
+    const changeAvatar = () => {
+        navigate(`/?p=profile&#editAvatar`);
+    };
+
     useEffect(() => {
         getProfile().then(res => {
             res.data.profile = _.get(res, 'data.profile', false) ? res.data.profile : profileSchema;
@@ -164,7 +175,7 @@ export default function Profile({ location }) {
     }, [location]);
 
     const userStub = <>{username}<span>#{userId}</span></>;
-    const EBtn = ({ objKey }) => (!locked && <EditOutlined style={{cursor: 'pointer', opacity: 0.6}}/>);
+    const EBtn = ({ style }) => (!locked && <EditOutlined style={{...style, ...{cursor: 'pointer', opacity: 0.6}}}/>);
 
   return (
     <Layout>
@@ -173,8 +184,11 @@ export default function Profile({ location }) {
             back={'/#userSettings'}
         >
         <Row justify="space-between" align="middle">
-            <Col span={8}>
+            <Col span={8}  {...(!locked && { onClick: changeAvatar })}>
                 <UserAvatar data={avatar} alt={username} />
+                <EditBtnHolder>
+                <EBtn style={{color: 'pink', width: '40px', height:'40px', fontSize:'4vh'}}/>
+                </EditBtnHolder>
             </Col>
             <StyledCol span={15}  locked={locked}>
                 <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'fullname') })}>
@@ -187,7 +201,7 @@ export default function Profile({ location }) {
                 </StyledP>
                 <StyledP style={{cursor: 'pointer'}} onClick={_.partial(setProfileObjKey, 'status')}>
                     <Styledlabel>Status</Styledlabel>
-                    <StyledValue>{statusIcons[status]} {status}<EditOutlined style={{opacity: 0.6}}/></StyledValue>
+                    <StyledValue>{statusIcons[status]} {status} <EditOutlined style={{opacity: 0.6}}/></StyledValue>
                 </StyledP>
             </StyledCol>
         </Row>
@@ -226,6 +240,7 @@ export default function Profile({ location }) {
             >
             <Pane frameId={1}>
                 {modal === 'editField' && <ModalEditField fieldKey={stubFromSearch(location)} />}
+                {modal === 'editAvatar' && <ModalEditAvatar />}
             </Pane>
         </StyledModal>
     </Layout>

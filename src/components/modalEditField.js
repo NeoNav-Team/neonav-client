@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { navigate } from 'gatsby';
-
 import _ from 'lodash';
 import {
     Alert,
@@ -30,8 +29,7 @@ function ModalEditField({fieldKey}) {
     const isName = fieldKey && fieldKey.includes('name');
     const isStatus = fieldKey && fieldKey === 'status';
     const isLong = fieldKey && fieldKey === 'bio';
-    const isImage = fieldKey && fieldKey === 'avatar';
-    const isInput = !isName && !isStatus && !isImage;
+    const isInput = !isName && !isStatus;
     let value = _.get(profileData, `profile.${fieldKey}`, 'N/A');
     let firstname = _.get(profileData, `profile.firstname`, 'N/A');
     let lastname = _.get(profileData, `profile.lastname`, 'N/A');
@@ -136,7 +134,7 @@ function ModalEditField({fieldKey}) {
                 <Form.Item
                     name="editable"
                     >
-                    {isLong ? <Input.TextArea /> : <Input />}
+                    {isLong ? <Input.TextArea rows={5} /> : <Input />}
                 </Form.Item>
             }
             {errMsg && 
