@@ -109,7 +109,6 @@ export const userLogin = data => {
     if (!isBrowser) return false;
     axios.defaults.port = 6001;
     const url = formatEnpoint('login');
-    console.log('url', url);
     return axios({
         method: 'post',
         url,

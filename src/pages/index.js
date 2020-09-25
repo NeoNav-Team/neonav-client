@@ -12,9 +12,6 @@ export default function Index({ location }) {
   const isHome = location && location.search.length <= 1;
   const params = queryString.parse(location.search);
   const p = !isHome && params.p;
-  useEffect(() => {
-    console.log('location', location);
-  }, [location]);
   return (
     <Layout>
       <HeaderBar noMenu={isHome}>

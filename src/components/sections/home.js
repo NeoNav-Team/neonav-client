@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { navigate } from 'gatsby';
 import { getUser } from '../../services/auth';
-import { modals }  from '../../constants/defaults';
 import {stubFromLocation } from '../../utils/navigation';
 import styled from 'styled-components';
 import Logout from '../icons/logout';

@@ -34,9 +34,8 @@ export default function Layout({ children, unlocked }) {
     const isUnlocked = typeof unlocked !== 'undefined' && unlocked;
     const [isValidToken, setValidToken] = useState(isUnlocked);
 
-    console.log('isUnlocked', isUnlocked);
-
     const checkToken = async () => {
+        //check if the user has a valid token if we are a locked page
         const response = validateToken();
         return await response;
     };
