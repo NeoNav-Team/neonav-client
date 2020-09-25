@@ -1,9 +1,9 @@
 import React, { useState }from 'react';
 import { navigate } from 'gatsby';
 import { Alert } from 'antd';
-import { updateProfile } from '../services/user';
-import { formatDoc } from '../utils/format';
+import { userChangePass } from '../services/auth';
 import {
+    Input,
     Button,
     Form
 } from 'antd';
@@ -15,19 +15,16 @@ function ModalEditPass() {
     const [form] = Form.useForm();
 
     const goUpdate = async updates => {
-        const response = updateProfile(updates);
+        const response = userChangePass(updates);
         return await response;
     };
 
-    const onFinish = () => {
-        const auth = profileData.auth;
-        const updates = formatDoc(profileData._id, profileData._rev,  {auth});
-        goUpdate(updates).then(res => {
+    const onFinish = values => {
+        goUpdate(values).then(res => {
             if (res.status !== 200 && res.data.message) {
                 setErrMsg(res.data.message || res.statusText);
             } else {
-                console.log('200 res', res);
-                navigate('/?p=profile', { replace: true });
+                navigate('/?p=security', { replace: true });
             }
         }).catch(err => {
             setErrMsg('Connection error. Please try again later.');
@@ -41,11 +38,45 @@ function ModalEditPass() {
     return (
         <>
             <Form
-                    form={form}
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
+                form={form}
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+            >
+                <Form.Item
+                name="oldpass"
+                label="Old Password"
+                rules={[
+                    {
+                      required: true,
+                      message: 'Please input your old password!',
+                    },
+                  ]}
                 >
-                <Form.Item label={'Avatar'}>
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                name="newpass1"
+                label="New Password"
+                rules={[
+                    {
+                      required: true,
+                      message: 'Please input your new password!',
+                    },
+                  ]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                name="newpass2"
+                label="New Repated"
+                rules={[
+                    {
+                      required: true,
+                      message: 'Please input your new password again!',
+                    },
+                  ]}
+                >
+                    <Input />
                 </Form.Item>
                 {errMsg && 
                 <Form.Item>

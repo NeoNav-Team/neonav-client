@@ -55,7 +55,6 @@ function ModalEditField({fieldKey}) {
             if (res.status !== 200 && res.data.message) {
                 setErrMsg(res.data.message || res.statusText);
             } else {
-                console.log('200 res', res);
                 navigate('/?p=profile', { replace: true });
             }
         }).catch(err => {

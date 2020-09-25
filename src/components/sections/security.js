@@ -133,7 +133,7 @@ export default function Profile({ location }) {
     };
     const closeModal = () => {
         setModal(null);
-        navigate('/?p=profile');
+        navigate('/?p=security');
     }
 
     useEffect(() => {

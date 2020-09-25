@@ -11,7 +11,8 @@ export const modals = [
     'userSettings',
     'myQRCode',
     'editField',
-    'editAvatar'
+    'editAvatar',
+    'editPass'
 ];
 
 export const statusIcons = {

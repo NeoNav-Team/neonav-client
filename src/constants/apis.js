@@ -7,5 +7,6 @@ export const apis = {
     login: '/api/auth',
     profile: '/api/user',
     register: '/api/auth/user',
-    fakename: '/api/user/fake'
+    fakename: '/api/user/fake',
+    changePass: '/api/auth/users/',
 };
