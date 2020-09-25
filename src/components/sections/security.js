@@ -1,12 +1,10 @@
 import React, { useEffect, useState }from 'react';
-import { modals }  from '../../constants/defaults';
 import _ from 'lodash';
 import { navigate } from 'gatsby';
-import queryString from 'query-string';
+import {stubFromLocation } from '../../utils/navigation';
 import styled from 'styled-components';
 import Layout from '../layout';
 import Pane from '../pane';
-import ModalEditField from '../modalEditField';
 import ModalEditPass from '../modalEditPass';
 import Lock from '../icons/lock';
 import Unlock from '../icons/unlock';
@@ -113,14 +111,6 @@ const StyledModal = styled(Modal)`
 export default function Profile({ location }) {
     const [profileData, setProfile] = useState({});
     const [locked, setLock] = useState(true);
-    const stubFromLocation = location => {
-        const stub = location.hash.replace('#', '');
-        return modals.includes(stub) ? stub : null;
-    };
-    const stubFromSearch = location => {
-        const params = queryString.parse(location.search);
-        return params.k;
-    };
     const defaultModal = stubFromLocation(location);
     const [modal, setModal] = useState(defaultModal);
 
@@ -189,8 +179,7 @@ export default function Profile({ location }) {
             width="75vh"
             >
             <Pane frameId={1}>
-                {modal === 'editField' && <ModalEditField fieldKey={stubFromSearch(location)} />}
-                {modal === 'editPass' && <ModalEditPass />}
+                <ModalEditPass />
             </Pane>
         </StyledModal>
     </Layout>

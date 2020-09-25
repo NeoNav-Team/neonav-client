@@ -5,7 +5,7 @@ import { isBrowser }  from '../utils/checks';
 import { isLoggedIn } from '../services/auth';
 
 const PrivateRoute = ({ component: Component, location, ...rest }) => {
-    const [show] = useState(true)
+    const [show] = useState(true);
     const transitions = useTransition(show, null, {
         from: { transform: 'translate3d(-40px, 0,0)', opacity:0 },
         enter: { transform: 'translate3d(0,0px,0)', opacity:1 },
@@ -14,7 +14,7 @@ const PrivateRoute = ({ component: Component, location, ...rest }) => {
     })
     const loggedInStatus = isLoggedIn();
     if (isBrowser && loggedInStatus !== 'true' && location.pathname !== `/login`) {
-        navigate('/login');
+        navigate('/login#loggedOut');
         return null;
     }
     return transitions.map(({ item, key, props }) =>

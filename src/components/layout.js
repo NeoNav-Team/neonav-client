@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState }from 'react';
 import { withPrefix } from 'gatsby';
 import {Helmet} from 'react-helmet';
+import { navigate } from 'gatsby';
+import { logout, validateToken } from '../services/auth';
 import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
@@ -28,7 +30,27 @@ const Portrait = styled.div`
     margin: 0 auto;
 `;
 
-export default function Layout({ children }) {
+export default function Layout({ children, unlocked }) {
+    const isUnlocked = typeof unlocked !== 'undefined' && unlocked;
+    const [isValidToken, setValidToken] = useState(isUnlocked);
+
+    console.log('isUnlocked', isUnlocked);
+
+    const checkToken = async () => {
+        const response = validateToken();
+        return await response;
+    };
+
+    useEffect(() => {
+        !isUnlocked && checkToken().then(res => {
+            setValidToken(true);
+        }).catch(err => {
+            logout(() => {
+                navigate('/login#invalidToken');
+            });
+        });
+    }, []);
+
     return (
         <>
             <Helmet title={'N E O N A V'}>
@@ -43,7 +65,7 @@ export default function Layout({ children }) {
             </Helmet>
             <GlobalStyle theme="neonav" />
             <Portrait>
-                {children}
+                {isValidToken && children}
             </Portrait>
         </>
     )

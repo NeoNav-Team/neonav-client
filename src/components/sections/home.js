@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { navigate } from 'gatsby';
 import { getUser } from '../../services/auth';
 import { modals }  from '../../constants/defaults';
+import {stubFromLocation } from '../../utils/navigation';
 import styled from 'styled-components';
 import Logout from '../icons/logout';
 import Kitty from '../icons/kitty';
@@ -37,10 +38,6 @@ const StyledModal = styled(Modal)`
 export default function Home({ location }) {
     const nnUser = getUser();
     const userId = nnUser.userid;
-    const stubFromLocation = location => {
-        const stub = location.hash.replace('#', '');
-        return modals.includes(stub) ? stub : null;
-    };
     const defaultModal = stubFromLocation(location);
     const [modal, setModal] = useState(defaultModal);
 

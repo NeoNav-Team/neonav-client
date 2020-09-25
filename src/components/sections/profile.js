@@ -1,7 +1,6 @@
 import React, { useEffect, useState }from 'react';
-import { modals, statusIcons }  from '../../constants/defaults';
+import { statusIcons }  from '../../constants/defaults';
 import { profileSchema } from '../../constants/schemas';
-import queryString from 'query-string';
 import _ from 'lodash';
 import { navigate } from 'gatsby';
 import styled from 'styled-components';
@@ -13,6 +12,7 @@ import {
 import Layout from '../layout';
 import Pane from '../pane';
 import UserAvatar from '../userAvatar';
+import {stubFromLocation, stubFromSearch } from '../../utils/navigation';
 import { userProfile } from '../../services/user';
 import Lock from '../icons/lock';
 import Unlock from '../icons/unlock';
@@ -123,14 +123,6 @@ export default function Profile({ location }) {
     const skills = _.get(profileData, 'profile.skills', 'N/A');
     const bio = _.get(profileData, 'profile.bio', 'N/A');
     const avatar =_.get(profileData, 'profile.avatar', null);
-    const stubFromLocation = location => {
-        const stub = location.hash.replace('#', '');
-        return modals.includes(stub) ? stub : null;
-    };
-    const stubFromSearch = location => {
-        const params = queryString.parse(location.search);
-        return params.k;
-    };
     const defaultModal = stubFromLocation(location);
     const [modal, setModal] = useState(defaultModal);
 
@@ -183,7 +175,7 @@ export default function Profile({ location }) {
                 <EBtn style={{color: 'pink', width: '40px', height:'40px', fontSize:'4vh'}}/>
                 </EditBtnHolder>
             </Col>
-            <StyledCol span={15}  locked={locked}>
+            <StyledCol span={15} locked={locked}>
                 <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'fullname') })}>
                     <Styledlabel>Name</Styledlabel>
                     <StyledValue>{lastname && `${lastname}, `}<EBtn />{firstname}<EBtn /></StyledValue>
@@ -232,7 +224,7 @@ export default function Profile({ location }) {
             width="75vh"
             >
             <Pane frameId={1}>
-                {modal === 'editField' && <ModalEditField fieldKey={stubFromSearch(location)} />}
+                {modal === 'editField' && <ModalEditField fieldKey={stubFromSearch(location, 'k')} />}
                 {modal === 'editAvatar' && <ModalEditAvatar />}
             </Pane>
         </StyledModal>

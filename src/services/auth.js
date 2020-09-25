@@ -75,6 +75,36 @@ export const userChangePass = data => {
     });
 };
 
+export const validateToken = () => {
+  if (!isBrowser) return false;
+  axios.defaults.port = 6001;
+  const nnUser = getUser();
+  const token = nnUser.accessToken;
+  const url = formatEnpoint('validate');
+  return axios({
+      headers: {
+        'x-access-token': `${token}`,
+        'content-type': 'application/json'
+      },
+      method: 'get',
+      url
+  }).then(function (response) {}
+  ).catch(function (error) {
+      if (error.response) {
+        console.log('Error', error.response);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log('Error', error.config);
+      logout(() => {
+        navigate('/login#invalidToken');
+      });
+      return error;
+    });
+};
+
 export const userLogin = data => {
     if (!isBrowser) return false;
     axios.defaults.port = 6001;
@@ -107,6 +137,7 @@ export const isLoggedIn = () => {
   const loginBool = _.get(user, 'userid', '').length >= 1;
   return loginBool.toString();
 }
+
 
 export const logout = callback => {
   setUser({});

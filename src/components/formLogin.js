@@ -7,7 +7,8 @@ import {
     Alert,
     Button,
     Form,
-    Input
+    Input,
+    Message
 } from 'antd';
 
 const RegisterBtn = styled.div`

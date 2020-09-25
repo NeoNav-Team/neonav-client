@@ -10,7 +10,6 @@ import {
 
 
 function ModalEditPass() {
-    const profileData = JSON.parse(localStorage.getItem('profileData')) || {};
     const [errMsg, setErrMsg] = useState(null);
     const [form] = Form.useForm();
 
