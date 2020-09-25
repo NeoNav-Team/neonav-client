@@ -48,7 +48,7 @@ export default function Layout({ children, unlocked }) {
                 navigate('/login#invalidToken');
             });
         });
-    }, []);
+    }, [isUnlocked]);
 
     return (
         <>

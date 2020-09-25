@@ -175,12 +175,12 @@ export default function Profile({ location }) {
                 <EBtn style={{color: 'pink', width: '40px', height:'40px', fontSize:'4vh'}}/>
                 </EditBtnHolder>
             </Col>
-            <StyledCol span={15} locked={locked}>
-                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'fullname') })}>
+            <StyledCol span={15}>
+                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'fullname'), style:{cursor:'pointer'}})}>
                     <Styledlabel>Name</Styledlabel>
                     <StyledValue>{lastname && `${lastname}, `}<EBtn />{firstname}<EBtn /></StyledValue>
                 </StyledP>
-                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'username') })}>
+                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'username'), style:{cursor:'pointer'} })}>
                     <Styledlabel>Alias</Styledlabel>
                     <StyledValue>{username}<EBtn /></StyledValue>
                 </StyledP>
@@ -191,13 +191,13 @@ export default function Profile({ location }) {
             </StyledCol>
         </Row>
         <Row>
-            <StyledCol span={24} locked={locked}>
-                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'occupation')})}><Styledlabel>Occupation</Styledlabel></StyledP>
-                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'occupation')})}><StyledBlurb>{occupation}<EBtn /></StyledBlurb></StyledP>
-                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'skills')})}><Styledlabel>Skills</Styledlabel></StyledP>
-                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'skills')})}><StyledBlurb>{skills}<EBtn /></StyledBlurb></StyledP>
-                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'bio')})}><Styledlabel>Bio</Styledlabel></StyledP>
-                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'bio')})}><StyledBlurb>{bio}<EBtn /></StyledBlurb></StyledP>
+            <StyledCol span={24}>
+                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'occupation'), style:{cursor:'pointer'}})}><Styledlabel>Occupation</Styledlabel></StyledP>
+                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'occupation'), style:{cursor:'pointer'}})}><StyledBlurb>{occupation}<EBtn /></StyledBlurb></StyledP>
+                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'skills'), style:{cursor:'pointer'}})}><Styledlabel>Skills</Styledlabel></StyledP>
+                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'skills'), style:{cursor:'pointer'}})}><StyledBlurb>{skills}<EBtn /></StyledBlurb></StyledP>
+                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'bio'), style:{cursor:'pointer'}})}><Styledlabel>Bio</Styledlabel></StyledP>
+                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'bio'), style:{cursor:'pointer'}})}><StyledBlurb>{bio}<EBtn /></StyledBlurb></StyledP>
             </StyledCol>
         </Row>
         <Row>

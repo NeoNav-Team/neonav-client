@@ -1,4 +1,4 @@
-import React, { useEffect }from 'react';
+import React from 'react';
 import queryString from 'query-string';
 import Layout from '../components/layout';
 import PrivateRoute from '../components/privateRoute';

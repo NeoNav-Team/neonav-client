@@ -72,9 +72,9 @@ function FormLogin(props) {
         if (typeof stub !== 'undefined') {
             console.log('stub', stub);
             const messages = {
-                'invalidToken': 'Your token is old or invalid. Please Login again.',
-                'loggedOut': 'You have been logged out. Please Login again.',
-                'changePass': 'Your password has been chsanged. Please Login again.',
+                'invalidToken': 'Your token is old or invalid. Please login again.',
+                'loggedOut': 'You have been logged out. Please login again.',
+                'changePass': 'Your password has been changed. Please login again.',
                 'newUser': 'Thank you for joining! Please login with your credentials.'
             };
             message.warning(messages[stub]);
