@@ -19,9 +19,9 @@ export default function MenuUserSettings() {
             title={'User Settings'}
         >
             <StyledAntLayout>
-            <Row gutter={[24, 24]}>
+            <Row gutter={{ xs: 0, sm: 0, md: 0, lg: 24 }}>
                 <Col span={6}>
-                    <ButtonIcon navTo='/?p=profile'>
+                    <ButtonIcon width="100%" style={{width:'100%', border:'1px solid red'}} navTo='/?p=profile'>
                         <Profile />
                     </ButtonIcon>
                 </Col>

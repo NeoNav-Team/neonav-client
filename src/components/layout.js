@@ -59,7 +59,7 @@ export default function Layout({ children, unlocked }) {
                 <meta name="robots" content="noindex, nofollow" />
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta name="language" content="English" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                < meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0" />
                 <link href={withPrefix('css/augmented-ui.min.css')} rel="stylesheet" type="text/css" />
             </Helmet>
             <GlobalStyle theme="neonav" />
