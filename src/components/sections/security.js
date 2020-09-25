@@ -1,7 +1,7 @@
 import React, { useEffect, useState }from 'react';
 import _ from 'lodash';
 import { navigate } from 'gatsby';
-import {stubFromLocation } from '../../utils/navigation';
+import {modalFromLocation } from '../../utils/navigation';
 import styled from 'styled-components';
 import Layout from '../layout';
 import Pane from '../pane';
@@ -111,7 +111,7 @@ const StyledModal = styled(Modal)`
 export default function Profile({ location }) {
     const [profileData, setProfile] = useState({});
     const [locked, setLock] = useState(true);
-    const defaultModal = stubFromLocation(location);
+    const defaultModal = modalFromLocation(location);
     const [modal, setModal] = useState(defaultModal);
 
     const getProfile = async () => {

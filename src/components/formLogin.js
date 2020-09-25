@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { navigate } from 'gatsby';
+import {stubFromLocation } from '../utils/navigation';
 import Pane from './pane';
 import { userLogin } from '../services/auth';
 import styled from 'styled-components';
@@ -8,7 +9,7 @@ import {
     Button,
     Form,
     Input,
-    Message
+    message
 } from 'antd';
 
 const RegisterBtn = styled.div`
@@ -40,6 +41,8 @@ const RegisterBtn = styled.div`
 `;
 
 function FormLogin(props) {
+    const {location} = props;
+    console.log('location', location);
     const [errMsg, setErrMsg] = useState(null);
     
     const goLogin = async values => {
@@ -64,6 +67,24 @@ function FormLogin(props) {
     const onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo);
     };
+
+    const setMessage = stub => {
+        if (typeof stub !== 'undefined') {
+            console.log('stub', stub);
+            const messages = {
+                'invalidToken': 'Your token is old or invalid. Please Login again.',
+                'loggedOut': 'You have been logged out. Please Login again.',
+                'changePass': 'Your password has been chsanged. Please Login again.',
+                'newUser': 'Thank you for joining! Please login with your credentials.'
+            };
+            message.warning(messages[stub]);
+        }
+    }
+
+    useEffect(() => {
+        console.log('stubFromLocation(location)', stubFromLocation(location));
+        setMessage(stubFromLocation(location));
+    }, [location]);
 
   return (
     <>

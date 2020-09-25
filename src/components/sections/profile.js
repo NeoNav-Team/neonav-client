@@ -12,7 +12,7 @@ import {
 import Layout from '../layout';
 import Pane from '../pane';
 import UserAvatar from '../userAvatar';
-import {stubFromLocation, stubFromSearch } from '../../utils/navigation';
+import { modalFromLocation, stubFromSearch } from '../../utils/navigation';
 import { userProfile } from '../../services/user';
 import Lock from '../icons/lock';
 import Unlock from '../icons/unlock';
@@ -123,7 +123,7 @@ export default function Profile({ location }) {
     const skills = _.get(profileData, 'profile.skills', 'N/A');
     const bio = _.get(profileData, 'profile.bio', 'N/A');
     const avatar =_.get(profileData, 'profile.avatar', null);
-    const defaultModal = stubFromLocation(location);
+    const defaultModal = modalFromLocation(location);
     const [modal, setModal] = useState(defaultModal);
 
     const closeModal = () => {
@@ -156,7 +156,7 @@ export default function Profile({ location }) {
         }).catch(err => {
             console.log('err', err);
         });
-        setModal(stubFromLocation(location));
+        setModal(modalFromLocation(location));
     }, [location]);
 
     const userStub = <>{username}<span>#{userId}</span></>;

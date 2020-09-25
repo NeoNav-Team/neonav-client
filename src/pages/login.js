@@ -3,12 +3,12 @@ import Layout from '../components/layout';
 import Logo from '../components/logo';
 import FormLogin from '../components/formLogin';
 
-export default function Login() {
+export default function Login({location}) {
 
   return (
     <Layout unlocked>
         <Logo />
-        <FormLogin />
+        <FormLogin location={location} />
     </Layout>
   )
 }

@@ -22,9 +22,11 @@ export const userRegister = data => {
       url,
       data
   }).then(
-      function (response) {
-          return response;
-      }
+    function (response) {
+      logout(() => {
+        navigate('/login#newUser');
+      });
+    }
   ).catch(function (error) {
       if (error.response) {
         console.log('Error', error.response);
@@ -58,7 +60,7 @@ export const userChangePass = data => {
   }).then(
       function (response) {
         logout(() => {
-          navigate('/login');
+          navigate('/login#changePass');
         });
       }
   ).catch(function (error) {
