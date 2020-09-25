@@ -62,7 +62,6 @@ function ModalEditAvatar() {
             getBase64(info.file.originFileObj, imageUrl => {
                 setLoading(false);
                 setImageUrl(imageUrl);
-                console.log('imageUrl', imageUrl);
             });
         }
     };
@@ -75,7 +74,6 @@ function ModalEditAvatar() {
             if (res.status !== 200 && res.data.message) {
                 setErrMsg(res.data.message || res.statusText);
             } else {
-                console.log('200 res', res);
                 navigate('/?p=profile', { replace: true });
             }
         }).catch(err => {
