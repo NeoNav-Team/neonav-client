@@ -1,5 +1,6 @@
 import { formatEnpoint } from '../utils/format';
 import { isBrowser } from '../utils/checks';
+import { navigate } from 'gatsby';
 import axios from 'axios';
 import _ from 'lodash';
 
@@ -56,7 +57,9 @@ export const userChangePass = data => {
       data
   }).then(
       function (response) {
-          return response;
+        logout(() => {
+          navigate('/login');
+        });
       }
   ).catch(function (error) {
       if (error.response) {
