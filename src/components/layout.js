@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
         max-height: 100vh;
         min-width: 100vw;
         font-family: 'Orbitron', sans-serif;
+        overflow: hidden;
     }
     .center {
         text-align: center;
@@ -31,6 +32,13 @@ export default function Layout({ children }) {
     return (
         <>
             <Helmet title={'N E O N A V'}>
+                <meta name="title" content="N E O N A V" />
+                <meta name="description" content="NAVIGATE NEOTROPOLIS IN STYLE" />
+                <meta name="keywords" content="neonav, neotropolis.com" />
+                <meta name="robots" content="noindex, nofollow" />
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <meta name="language" content="English" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link href={withPrefix('css/augmented-ui.min.css')} rel="stylesheet" type="text/css" />
             </Helmet>
             <GlobalStyle theme="neonav" />

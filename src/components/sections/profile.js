@@ -23,26 +23,23 @@ import { EditOutlined } from '@ant-design/icons';
 const StyledP = styled.p`
     display:block;
     color: white;
-    font-size: 1.6vh;
-    line-height: 1.8vh;
-    margin: 1vh 0;
-    span {
-        display: inline-block;
-        width: auto;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+    font-size: 2vh;
+    line-height: 2.5vh;
+    margin: 1vh 1.25vh;
+    font-family: Roboto, sans-serif;
+    font-weight: 100;
 `;
 
 const Styledlabel = styled.span`
+    font-family: Orbitron, sans-serif;
     display: inline-block;
     min-width: 10vh;
-    opacity: 0.5;
     text-transform: uppercase;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-right: 2vh;
+    color: #00b8ff;
 `;
 const StyledValue = styled.span`
     display: inline-block;
@@ -53,11 +50,7 @@ const StyledValue = styled.span`
 `;
 const StyledBlurb = styled.span`
     margin-left: 1.5vh;
-    display: inline-block;
-    width: auto;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    display: block;
 `;
 
 const MiniIconBtn = styled.div`

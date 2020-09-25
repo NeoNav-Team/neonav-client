@@ -3,23 +3,23 @@ html,body,div,span,applet,object,iframe,blockquote,pre,a,abbr,acronym,address,bi
 @font-face {
     font-family: "Orbitron";
     src: url("../../static/fonts/orbitron/Orbitron-Regular.ttf");
-    font-style: normal;
+    font-weight: normal;
 }
 
 @font-face {
     font-family: "Roboto";
     src: url("../../static/fonts/roboto/Roboto-Regular.ttf");
-    font-style: normal;
+    font-weight: normal;
 }
 
 @font-face {
     font-family: "Roboto";
     src: url("../../static/fonts/roboto/Roboto-Bold.ttf");
-    font-style: bold;
+    font-weight: bold;
 }
 
 @font-face {
     font-family: "Roboto";
     src: url("../../static/fonts/roboto/Roboto-Thin.ttf");
-    font-style: 100;
+    font-weight: 100;
 }
