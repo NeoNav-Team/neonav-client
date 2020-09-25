@@ -99,6 +99,7 @@ function ModalEditAvatar() {
                         name="avatar"
                         listType="picture-card"
                         className="avatar-uploader"
+                        action={''}
                         showUploadList={false}
                         beforeUpload={beforeUpload}
                         onChange={handleChange}
