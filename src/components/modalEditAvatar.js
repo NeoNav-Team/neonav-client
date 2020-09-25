@@ -46,7 +46,7 @@ function ModalEditAvatar() {
         return isJpgOrPng && isLt2M;
     }
 
-    const handleAction  = ({ file, onSuccess }) => {
+    const handleAction = ({ file, onSuccess }) => {
         setTimeout(() => {
           onSuccess("ok");
         }, 0);
@@ -105,7 +105,7 @@ function ModalEditAvatar() {
                         name="avatar"
                         listType="picture-card"
                         className="avatar-uploader"
-                        action={handleAction}
+                        customRequest={handleAction}
                         showUploadList={false}
                         beforeUpload={beforeUpload}
                         onChange={handleChange}
