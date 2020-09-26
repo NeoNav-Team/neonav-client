@@ -3,6 +3,7 @@ import queryString from 'query-string';
 import Layout from '../components/layout';
 import PrivateRoute from '../components/privateRoute';
 import Home from '../components/sections/home';
+import Chat from '../components/sections/chat';
 import Security from '../components/sections/security';
 import Profile from '../components/sections/profile'; 
 import FooterNav from '../components/footerNav';
@@ -18,9 +19,10 @@ export default function Index({ location }) {
             N E O N A V
       </HeaderBar>
           {isHome && <PrivateRoute location={location} component={Home} />}
+          {p === 'chat' && <PrivateRoute location={location} component={Chat} />}
           {p === 'profile' && <PrivateRoute location={location} component={Profile} />}
           {p === 'security' && <PrivateRoute location={location} component={Security} />}
-      <FooterNav />
+          {p !== 'chat' && <FooterNav />}
     </Layout>
   )
 }

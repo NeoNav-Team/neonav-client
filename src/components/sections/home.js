@@ -5,6 +5,7 @@ import {modalFromLocation } from '../../utils/navigation';
 import styled from 'styled-components';
 import Logout from '../icons/logout';
 import Kitty from '../icons/kitty';
+import Chat from '../icons/chat';
 import MenuUserSettings from '../menuUserSettings';
 import { 
     Layout as AntLayout,
@@ -53,6 +54,11 @@ export default function Home({ location }) {
       <>
         <StyledAntLayout>
             <Row gutter={[24, 24]}>
+            <Col span={6}>
+                    <ButtonIcon navTo='/?p=chat'>
+                        <Chat />
+                    </ButtonIcon>
+                </Col>
                 <Col span={6}>
                     <ButtonIcon navTo='/#kitty'>
                         <Kitty />
@@ -68,7 +74,6 @@ export default function Home({ location }) {
                     <Logout />
                 </ButtonIcon>
                 </Col>
-                <Col span={6} />
             </Row>
         </StyledAntLayout>
         <StyledModal
