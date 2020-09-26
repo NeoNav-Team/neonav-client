@@ -3,6 +3,7 @@
  *
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
+const { getThemeVariables } = require('antd/dist/theme');
 
 module.exports = {
   /* Your site config here */
@@ -10,19 +11,25 @@ module.exports = {
     {  resolve: `gatsby-plugin-react-helmet`
     },
     {
-      resolve: `gatsby-plugin-styled-components`
-    },
-    {
-      resolve: `gatsby-plugin-antd`
-    },
-    {
-      resolve: `gatsby-plugin-web-font-loader`,
+      resolve: `gatsby-plugin-antd`,
       options: {
-        custom: {
-          families: ["Orbitron"],
-          urls: ["/fonts/fonts.css"]
-        },
-      },
+        style: true
+      }
+    },
+    {
+      resolve: `gatsby-plugin-less`,
+      options: {
+        lessOptions: {
+          javascriptEnabled: true,
+          modifyVars: getThemeVariables({
+                        dark: true, // 开启暗黑模式
+                        compact: true, // 开启紧凑模式
+          }),
+        }
+      }
+    },
+    {
+      resolve: `gatsby-plugin-styled-components`
     }
   ]
 }

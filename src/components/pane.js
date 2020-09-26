@@ -23,8 +23,17 @@ const StyledPaneDiv = styled.div`
   .ant-checkbox + span {
     color: #fff;
   }
-  .ant-input, .ant-input-password {
+  .ant-input, .ant-input-password, .ant-select {
       border-radius: 10px 0 10px 0;
+      border: 2px solid ${props => props.colors[2]};
+      line-height: 4vh;
+      background-color: rgba(0, 0, 0, .5);
+      filter: drop-shadow(0px 0px 8px ${props => props.colors[2]});
+      & .ant-input, & .ant-select-selector {
+        background-color: transparent;
+        border: 0;
+        line-height: 4vh;
+      }
   }
   .ant-btn {
       background: #41C5FF;
@@ -32,9 +41,9 @@ const StyledPaneDiv = styled.div`
       width: 80%;
       left: 50%;
       transform: translate(-50%, 0);
-      height: 60px;
+      height: 6vh;
       border-radius: 20px 0 20px 0;
-      font-size: 2rem;
+      font-size: 3vh;
   }
 `;
 const Content = styled.div`
