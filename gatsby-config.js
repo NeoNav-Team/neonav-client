@@ -3,7 +3,6 @@
  *
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
-const { getThemeVariables } = require('antd/dist/theme');
 
 module.exports = {
   /* Your site config here */
@@ -21,10 +20,20 @@ module.exports = {
       options: {
         lessOptions: {
           javascriptEnabled: true,
-          modifyVars: getThemeVariables({
-                        dark: true, // 开启暗黑模式
-                        compact: true, // 开启紧凑模式
-          }),
+          modifyVars: {
+            "primary-cyan":`#41C5FF`,
+            "primary-magenta":`#ff00a0`,
+            "primary-indigo":`#7a04eb`,
+            "primary-color": `#fff`,
+            "success-color":`#00ff9f`,
+            "info-color":`#00b8ff`,
+            "warning-color":``,
+            "error-color":``,
+            "highlight-color":``,
+            "text-color":`#fff`,
+            "border-color-base":`@primary-cyan`,
+            "component-background": `rgba(124, 4, 236, 0.75)`
+          }
         }
       }
     },

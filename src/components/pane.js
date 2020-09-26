@@ -7,8 +7,6 @@ const StyledPaneDiv = styled.div`
   margin: 0 auto;
   filter: drop-shadow(0px 0px 5px ${props => props.colors[1]});
   padding: 1.5vh;
-  max-height: 70vh;
-  overflow: scroll;
   .pitch-mixin {
     --aug-tr: 25px;
     --aug-b-extend1: 50%;
@@ -48,8 +46,6 @@ const StyledPaneDiv = styled.div`
 `;
 const Content = styled.div`
   padding: ${props => props.padding};
-  max-height: 65vh;
-  overflow: scroll;
 `;
 
 const Spacer = styled.div`
