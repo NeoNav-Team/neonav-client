@@ -12,6 +12,16 @@ import {
     message
 } from 'antd';
 
+const StyledForm = styled(Form)`
+    margin-top: 4vh;
+    & .ant-form-item-required {
+        font-size: 2vh;
+        line-height: 2vh;
+        color: rgba(65, 197, 255, 0.7);
+        filter: drop-shadow(0 0 3px #41c5ff);
+    }
+`;
+
 const RegisterBtn = styled.div`
     left: 15%;
     margin: 0 auto;
@@ -88,7 +98,7 @@ function FormLogin(props) {
   return (
     <>
     <Pane title="Login">
-        <Form
+        <StyledForm
             name="basic"
             initialValues={{ remember: true }}
             onFinish={onFinish}
@@ -96,6 +106,7 @@ function FormLogin(props) {
             >
             <Form.Item
                 name="username"
+                label="id or email"
                 rules={[{ required: true, message: 'Please input your username!' }]}
             >
                 <Input />
@@ -103,6 +114,7 @@ function FormLogin(props) {
 
             <Form.Item
                 name="password"
+                label="password"
                 rules={[{ required: true, message: 'Please input your password!' }]}
             >
                 <Input.Password />
@@ -121,7 +133,7 @@ function FormLogin(props) {
                 Submit
                 </Button>
             </Form.Item>
-        </Form>
+        </StyledForm>
     </Pane>
     <RegisterBtn
         type="primary"
