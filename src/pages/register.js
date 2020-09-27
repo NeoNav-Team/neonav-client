@@ -1,14 +1,14 @@
 import React from 'react';
-import Layout from '../components/layout';
+import SpaceSuit from '../components/spaceSuit';
 import Logo from '../components/logo';
 import FormRegister from '../components/formRegister';
 
 export default function Register() {
 
   return (
-    <Layout unlocked>
+    <SpaceSuit unlocked>
         <Logo />
         <FormRegister />
-    </Layout>
+    </SpaceSuit>
   )
 }

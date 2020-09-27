@@ -10,27 +10,40 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
         height: 100%;
         color: #0EBCC6;
-        background: rgb(113,29,145);
-        background: radial-gradient(circle, rgba(35,22,56,1) 0%, rgba(18,18,18,1) 100%);
         min-height: 100vh;
         max-height: 100vh;
         min-width: 100vw;
         font-family: 'Orbitron', sans-serif;
         overflow: hidden;
-    }
-    .center {
-        text-align: center;
+        background-color: #120458;
+        background-image: 
+            radial-gradient(rgba(18, 4, 88, 0), rgba(18, 4, 88, 1)),
+            linear-gradient(rgba(93, 28, 149, 0.8) 1px,transparent 0),
+            linear-gradient(#5d1c95 1px,transparent 0),
+            linear-gradient(90deg,rgba(93, 28, 149, 0.8) 1px,transparent 0),
+            linear-gradient(90deg,#5d1c95 1px,transparent 0),
+            linear-gradient(transparent 3px,#120458 0,#120458 94px,transparent 0),
+            linear-gradient(90deg,#5d1c95 3px,transparent 0,transparent 94px,#5d1c95 0);
+        background-size: 100vw, 100vh, 24px 24px,96px 96px,24px 24px,96px 96px,96px 96px,96px 96px;
     }
 `;
 
-const Portrait = styled.div`
+const ReponsiveContainer = styled.div`
     position: relative;
-    max-width: 75vh;
-    min-height: 150vh;
     margin: 0 auto;
+    max-width: 1200px;
+    /* laptop and table
+    @media screen and (max-width: 1200px) {
+        max-width: 900px;
+    }
+
+    /* phones */
+    @media screen and (max-width: 900px) {
+        max-width: 800px;
+    }
 `;
 
-export default function Layout({ children, unlocked }) {
+export default function SpaceSuit({ children, unlocked }) {
     const isUnlocked = typeof unlocked !== 'undefined' && unlocked;
     const [isValidToken, setValidToken] = useState(isUnlocked);
 
@@ -63,9 +76,9 @@ export default function Layout({ children, unlocked }) {
                 <link href={withPrefix('css/augmented-ui.min.css')} rel="stylesheet" type="text/css" />
             </Helmet>
             <GlobalStyle theme="neonav" />
-            <Portrait>
+            <ReponsiveContainer>
                 {isValidToken && children}
-            </Portrait>
+            </ReponsiveContainer>
         </>
     )
 }

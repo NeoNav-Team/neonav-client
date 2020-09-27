@@ -32,7 +32,9 @@ module.exports = {
             "highlight-color":`#1afe49`,
             "text-color":`#ffffff`,
             "border-color-base":`@primary-cyan`,
-            "component-background": `rgba(124, 4, 236, 0.75)`
+            "component-background": `rgba(124, 4, 236, 0.75)`,
+            "layout-body-background":`transparent`,
+            "layout-header-background":`transparent`
           }
         }
       }

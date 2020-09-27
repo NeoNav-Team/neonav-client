@@ -1,12 +1,12 @@
 import React from 'react';
-import Layout from '../components/layout';
+import SpaceSuit from '../components/spaceSuit';
 import PageSpinner from '../components/pageSpinner';
 
 export default function Loading() {
 
   return (
-    <Layout>
+    <SpaceSuit>
         <PageSpinner />
-    </Layout>
+    </SpaceSuit>
   )
 }

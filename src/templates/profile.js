@@ -1,15 +1,15 @@
 import React from 'react';
-import Layout from '../components/layout';
+import SpaceSuit from '../components/spaceSuit';
 import HeaderBar from '../components/headerBar';
 
 export default ({ pageContext: { profile } }) => {
 
   return (
-    <Layout>
+    <SpaceSuit>
         <HeaderBar>
             Profile Page
         </HeaderBar>
         <p>{JSON.stringify(profile)}</p>
-    </Layout>
+    </SpaceSuit>
   )
 }

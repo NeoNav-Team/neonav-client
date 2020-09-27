@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { navigate } from 'gatsby';
 import {modalFromLocation } from '../../utils/navigation';
 import styled from 'styled-components';
-import Layout from '../layout';
+import SpaceSuit from '../spaceSuit';
 import Pane from '../pane';
 import ModalEditPass from '../modalEditPass';
 import Lock from '../icons/lock';
@@ -135,7 +135,7 @@ export default function Profile({ location }) {
     }, []);
 
   return (
-    <Layout>
+    <SpaceSuit>
         <Pane
             title={'User Security'}
             back={'/#userSettings'}
@@ -182,6 +182,6 @@ export default function Profile({ location }) {
                 <ModalEditPass />
             </Pane>
         </StyledModal>
-    </Layout>
+    </SpaceSuit>
   )
 }

@@ -9,7 +9,7 @@ import {
         Col,
         Modal
     } from 'antd';
-import Layout from '../layout';
+import SpaceSuit from '../spaceSuit';
 import Pane from '../pane';
 import UserAvatar from '../userAvatar';
 import { modalFromLocation, stubFromSearch } from '../../utils/navigation';
@@ -163,7 +163,7 @@ export default function Profile({ location }) {
     const EBtn = ({ style }) => (!locked && <EditOutlined style={{...style, ...{cursor: 'pointer', opacity: 0.6}}}/>);
 
   return (
-    <Layout>
+    <SpaceSuit>
         <Pane
             title={userStub}
             back={'/#userSettings'}
@@ -228,6 +228,6 @@ export default function Profile({ location }) {
                 {modal === 'editAvatar' && <ModalEditAvatar />}
             </Pane>
         </StyledModal>
-    </Layout>
+    </SpaceSuit>
   )
 }
