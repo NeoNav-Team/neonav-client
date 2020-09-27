@@ -167,6 +167,7 @@ export default function Profile({ location }) {
         <Pane
             title={userStub}
             back={'/#userSettings'}
+            offset={'200'}
         >
         <Row justify="space-between" align="middle">
             <Col span={8}  {...(!locked && { onClick: changeAvatar })}>

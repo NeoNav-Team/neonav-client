@@ -1,21 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
 import { navigate } from 'gatsby';
+import { useWindowDimensions } from '../utils/responsive';
 
 const StyledPaneDiv = styled.div`
   background: transparent;
   margin: 0 auto;
-  filter: drop-shadow(0px 0px 5px ${props => props.colors[1]});
   padding: 1.5vh;
+  overflow: hidden;
   .pitch-mixin {
+    filter: drop-shadow(0px 0px 6px ${props => props.colors[0]});
+    max-height: ${props => props.height}px;
     --aug-tr: 25px;
     --aug-b-extend1: 50%;
 
-    --aug-border-all: 2px;
-    --aug-border-bg: radial-gradient(${props => props.colors[0]}, ${props => props.colors[1]}) 50% 50% / 100% 100%;
+    --aug-border-all: 1px;
+    --aug-border-bg: radial-gradient(#ffffff, ${props => props.colors[1]}) 100% 100% / 100% 100%;
     
-    --aug-inlay-all: 8px;
-    --aug-inlay-bg: radial-gradient(${props => props.colors[2]}, ${props => props.colors[3]})  50% 50% / 100% 100%;
+    --aug-inlay-all: 4px;
+    --aug-inlay-bg: radial-gradient(ellipse at top, ${props => props.colors[1]}, transparent)  50% 50% / 100% 100%;
     --aug-inlay-opacity: ${props => props.opacity ? props.opacity : 0.5};
   }
   .ant-checkbox + span {
@@ -55,7 +58,7 @@ const Spacer = styled.div`
 const PaneTitle = styled.h2`
   color: #fff;
   font-size: 2.125vh;
-  filter: drop-shadow(3px 3px 15px #fff);
+  filter: drop-shadow(0px 0px 15px #fff);
   border-bottom: 2px solid #fe75fe;
   bottom-bottom 2vh;
 `;
@@ -90,14 +93,20 @@ const frames = [
 ]
 
 function Pane(props) {
-  const { title, children, frameId, padding, back, noSpace } = props;
+  const { title, children, frameId, padding, back, noSpace, offset } = props;
   const frameTheme = frameId ? frames[frameId] : frames[0];
   const pad = padding ? padding : '4vh';
+  const { height } = useWindowDimensions();
+  const paneHeight = offset ? (height - offset) : height;
+
+  console.log('pane height', height);
+
   return (
     <>
     <StyledPaneDiv
       colors={frameTheme.colors}
-      opacity={frameTheme.opacity}  
+      opacity={frameTheme.opacity} 
+      height={paneHeight} 
     >
       {back && (
         <BackButton

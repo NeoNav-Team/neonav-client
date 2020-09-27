@@ -10,11 +10,11 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
         height: 100%;
         color: #0EBCC6;
+        overflow: hidden;
         min-height: 100vh;
         max-height: 100vh;
         min-width: 100vw;
         font-family: 'Orbitron', sans-serif;
-        overflow: hidden;
         background-color: #120458;
         background-image: 
             radial-gradient(rgba(18, 4, 88, 0), rgba(18, 4, 88, 1)),
@@ -63,9 +63,12 @@ export default function SpaceSuit({ children, unlocked }) {
         });
     }, [isUnlocked]);
 
-    useEffect(()=> {
-        window && window.scrollTo(0, 1);
-        setTimeout(function() { window.scrollTo(0, 1) }, 100);
+
+    useEffect(() => {
+        setTimeout(function(){
+            // Hide the address bar!
+            window.scrollTo(0, 1);
+        }, 100);
     }, []);
 
     return (
@@ -77,7 +80,8 @@ export default function SpaceSuit({ children, unlocked }) {
                 <meta name="robots" content="noindex, nofollow" />
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta name="language" content="English" />
-                < meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0" />
+                <meta name="apple-mobile-web-app-capable" content="yes" />
                 <link href={withPrefix('css/augmented-ui.min.css')} rel="stylesheet" type="text/css" />
             </Helmet>
             <GlobalStyle theme="neonav" />

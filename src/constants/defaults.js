@@ -6,6 +6,13 @@ import {
     SmileTwoTone
 } from '@ant-design/icons';
 
+export const colors = {
+    "primary-cyan":`#41c5ff`,
+    "primary-magenta":`#ff00a0`,
+    "primary-indigo":`#7a04eb`,
+    "primary-color": `#fff`
+};
+
 export const modals = [
     'kitty',
     'userSettings',
