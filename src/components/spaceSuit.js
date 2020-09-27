@@ -63,6 +63,11 @@ export default function SpaceSuit({ children, unlocked }) {
         });
     }, [isUnlocked]);
 
+    useEffect(()=> {
+        window && window.scrollTo(0, 1);
+        setTimeout(function() { window.scrollTo(0, 1) }, 100);
+    }, []);
+
     return (
         <>
             <Helmet title={'N E O N A V'}>
