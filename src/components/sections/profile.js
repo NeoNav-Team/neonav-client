@@ -167,7 +167,12 @@ export default function Profile({ location }) {
         <Pane
             title={userStub}
             back={'/#userSettings'}
-            offset={'200'}
+            offset={'128'}
+            footer={
+                <MiniIconBtn style={{width:'40px', right:'16px'}} onClick={toggleLock}>
+                    {locked ? <Lock /> : <Unlock />}
+                </MiniIconBtn>
+            }
         >
         <Row justify="space-between" align="middle">
             <Col span={8}  {...(!locked && { onClick: changeAvatar })}>
@@ -200,19 +205,6 @@ export default function Profile({ location }) {
                 <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'bio'), style:{cursor:'pointer'}})}><Styledlabel>Bio</Styledlabel></StyledP>
                 <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'bio'), style:{cursor:'pointer'}})}><StyledBlurb>{bio}<EBtn /></StyledBlurb></StyledP>
             </StyledCol>
-        </Row>
-        <Row>
-            <Col span={14}>
-            </Col>
-            <Col span={6}>
-            </Col>
-            <Col span={2}>
-            </Col>
-            <Col span={2}>
-                <MiniIconBtn onClick={toggleLock}>
-                    {locked ? <Lock /> : <Unlock />}
-                </MiniIconBtn>
-            </Col>
         </Row>
         </Pane>
         <StyledModal

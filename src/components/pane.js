@@ -2,20 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 import { navigate } from 'gatsby';
 import { useWindowDimensions } from '../utils/responsive';
+import SimpleBar from 'simplebar-react';
+import 'simplebar/dist/simplebar.min.css';
 
 const StyledPaneDiv = styled.div`
   background: transparent;
-  margin: 0 auto;
-  padding: 1.5vh;
+  margin: 0 auto 16px;
+  padding: 0;
   overflow: hidden;
+  position: relative;
+  filter: drop-shadow(0px 0px 6px ${props => props.colors[0]});
   .pitch-mixin {
-    filter: drop-shadow(0px 0px 6px ${props => props.colors[0]});
     max-height: ${props => props.height}px;
     --aug-tr: 25px;
     --aug-b-extend1: 50%;
 
     --aug-border-all: 1px;
-    --aug-border-bg: radial-gradient(#ffffff, ${props => props.colors[1]}) 100% 100% / 100% 100%;
+    --aug-border-bg: radial-gradient(${props => props.colors[0]}, ${props => props.colors[1]}) 100% 100% / 100% 100%;
     
     --aug-inlay-all: 4px;
     --aug-inlay-bg: radial-gradient(ellipse at top, ${props => props.colors[1]}, transparent)  50% 50% / 100% 100%;
@@ -47,26 +50,50 @@ const StyledPaneDiv = styled.div`
       font-size: 3vh;
   }
 `;
+
 const Content = styled.div`
-  padding: ${props => props.padding};
+  padding: 10px 16px;
+  filter: none;
 `;
 
-const Spacer = styled.div`
-  height: 2vh;
-`;
 
-const PaneTitle = styled.h2`
-  color: #fff;
-  font-size: 2.125vh;
+const PaneTitle = styled.div`
+  height: 40px;
+  margin: 8px 6px;
   filter: drop-shadow(0px 0px 15px #fff);
-  border-bottom: 2px solid #fe75fe;
-  bottom-bottom 2vh;
+  border-bottom: 1px solid #fe75fe;
+  h2 {
+    color: #fff;
+    text-indent: 32px;
+    font-size: 32px;
+    line-height: 40px;
+    @media screen and (max-width: 1200px) {
+      text-indent: 28px;
+      font-size: 28px;
+    }
+
+    /* phones */
+    @media screen and (max-width: 900px) {
+      text-indent: 20px;
+      font-size: 20px;
+    }
+  }
+`;
+
+const PaneFooter = styled.div`
+  display:block;  
+  height: 60px;
+  min-width: calc(100% - 80px);
+  margin: 0 40px;
+  & div {
+    margin-left: auto;
+  }
 `;
 
 const BackButton = styled.div`
   position: absolute;
   right: 1.75vh;
-  border: 2px solid ${props => props.colors[1]};
+  border: 1px solid ${props => props.colors[1]};
   height: 2vh;
   width: 2vh;
   cursor: pointer;
@@ -93,14 +120,12 @@ const frames = [
 ]
 
 function Pane(props) {
-  const { title, children, frameId, padding, back, noSpace, offset } = props;
+  const { title, children, frameId, back, footer, offset } = props;
   const frameTheme = frameId ? frames[frameId] : frames[0];
-  const pad = padding ? padding : '4vh';
   const { height } = useWindowDimensions();
+  const totesOffset = footer ? 130 : 40;
   const paneHeight = offset ? (height - offset) : height;
-
-  console.log('pane height', height);
-
+  
   return (
     <>
     <StyledPaneDiv
@@ -120,14 +145,13 @@ function Pane(props) {
         className="pitch-mixin"
         data-augmented-ui={frameTheme.aguments}
       >
-          <Content padding={pad}>
-          {title ? 
-          <PaneTitle>{title}</PaneTitle>
-          : 
-          <>{typeof noSpace === 'undefined' && <Spacer />}</>
-          }
-          {children}
+        <PaneTitle><h2>{title}</h2></PaneTitle>
+        <Content>
+          <SimpleBar style={{ maxHeight: `${paneHeight - totesOffset}px`}}>
+            {children}
+          </SimpleBar>
         </Content>
+        {footer && <PaneFooter>{footer}</PaneFooter>}
       </div>
     </StyledPaneDiv>
     </>

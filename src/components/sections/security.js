@@ -139,6 +139,11 @@ export default function Profile({ location }) {
         <Pane
             title={'User Security'}
             back={'/#userSettings'}
+            footer={
+                <MiniIconBtn style={{width:'40px', right:'16px'}} onClick={toggleLock}>
+                    {locked ? <Lock /> : <Unlock />}
+                </MiniIconBtn>
+            }
         >
             <Row>
                 <Col span={24}>
@@ -155,17 +160,8 @@ export default function Profile({ location }) {
                 </Col>
             </Row>
             <Row>
-                <Col span={14}>
+                <Col span={24}>
                     {!locked && <StyledP onClick={_.partial(setModal, 'editPass')}><StyledLink>CHANGE PASSWORD<EditOutlined style={{cursor: 'pointer', lineHeight: '2vh', opacity: 0.6}}/></StyledLink></StyledP>}
-                </Col>
-                <Col span={6}>
-                </Col>
-                <Col span={2}>
-                </Col>
-                <Col span={2}>
-                    <MiniIconBtn onClick={toggleLock}>
-                        {locked ? <Lock /> : <Unlock />}
-                    </MiniIconBtn>
                 </Col>
             </Row>
         </Pane>

@@ -9,13 +9,13 @@ const StyledFooterDiv  = styled.div`
     position: fixed;
     bottom: 0;
     left: 0;
-    height: 12vh;
+    height: 64px;
     width: 100%;
     text-align: center;
     overflow: hidden;
     & button {
-        height: 12vh;
-        width: 12vh;
+        height: 64px;
+        width: 64px;
     }
     .grid-container { width: 100%; position: absolute; bottom: 0; left: 0; }
 
