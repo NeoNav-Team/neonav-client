@@ -52,8 +52,8 @@ const RegisterBtn = styled.div`
 
 function FormLogin(props) {
     const {location} = props;
-    console.log('location', location);
     const [errMsg, setErrMsg] = useState(null);
+    const [stubMsg, setStubMsg] = useState(false);
     
     const goLogin = async values => {
         const response = userLogin(values);
@@ -91,9 +91,9 @@ function FormLogin(props) {
     }
 
     useEffect(() => {
-        console.log('stubFromLocation(location)', stubFromLocation(location));
-        setMessage(stubFromLocation(location));
-    }, [location]);
+        !stubMsg && setMessage(stubFromLocation(location));
+        setStubMsg(true);
+    }, [location, stubMsg]);
 
   return (
     <>

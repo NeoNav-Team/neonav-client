@@ -59,7 +59,8 @@ const Content = styled.div`
 
 const PaneTitle = styled.div`
   height: 40px;
-  margin: 8px 6px;
+  margin: 0 6px 8px;
+  padding-top: 8px;
   filter: drop-shadow(0px 0px 15px #fff);
   border-bottom: 1px solid #fe75fe;
   h2 {
