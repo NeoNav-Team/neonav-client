@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { navigate } from 'gatsby';
 import { useWindowDimensions } from '../utils/responsive';
@@ -65,18 +65,18 @@ const PaneTitle = styled.div`
   border-bottom: 1px solid #fe75fe;
   h2 {
     color: #fff;
-    text-indent: 32px;
-    font-size: 32px;
-    line-height: 40px;
-    @media screen and (max-width: 1200px) {
-      text-indent: 28px;
-      font-size: 28px;
-    }
+    text-indent: 30px;
+    font-size: 30px;
+    line-height: 32px;
+  }
 
     /* phones */
     @media screen and (max-width: 900px) {
-      text-indent: 20px;
-      font-size: 20px;
+      h2 {
+        text-indent: 20px;
+        font-size: 20px;
+        line-height: 32px;
+      }
     }
   }
 `;
@@ -124,8 +124,12 @@ function Pane(props) {
   const { title, children, frameId, back, footer, offset } = props;
   const frameTheme = frameId ? frames[frameId] : frames[0];
   const { height } = useWindowDimensions();
-  const totesOffset = footer ? 130 : 40;
+  const totesOffset = footer ? offset : 40;
   const paneHeight = offset ? (height - offset) : height;
+
+  useEffect(() => {
+    console.log('offset', offset);
+}, [offset]);
   
   return (
     <>

@@ -32,6 +32,7 @@ export default function MenuUserSettings() {
                     <ButtonIcon
                         navTo='/?p=security'
                         title='Account'
+                        sEven="even"
                     >
                         <Security />
                     </ButtonIcon>

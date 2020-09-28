@@ -9,13 +9,13 @@ const StyledFooterDiv  = styled.div`
     position: fixed;
     bottom: 0;
     left: 0;
-    height: 64px;
+    height: 96px;
     width: 100%;
     text-align: center;
     overflow: hidden;
-    & button {
-        height: 64px;
-        width: 64px;
+    button {
+        left 50%;
+        transform: translate(-50%, -50%);
     }
     .grid-container { width: 100%; position: absolute; bottom: 0; left: 0; }
 
@@ -35,6 +35,10 @@ const StyledFooterDiv  = styled.div`
         background-image: 
         linear-gradient(to right, #7a04eb 2px, transparent 2px), 
         linear-gradient(to bottom, #7a04eb 1px, transparent 2px);
+    }
+
+    @media screen and (max-width: 900px) {
+        height: 64px;
     }
 `;
 

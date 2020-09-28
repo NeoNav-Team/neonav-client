@@ -5,14 +5,18 @@ import ButtonIcon from './buttonIcon';
 
 const Title  = styled.h1`
     color: #fff;
-    font-size: 16px;
-    line-height: 64px;
+    font-size: 28px;
+    line-height: 96px;
     margin-bottom: 0;
     vertical-align: middle;
     filter: drop-shadow(0 0 5px #fff);
     width: calc(100% - 64px);
     & span {
         font-size: 0.66rem;
+    }
+    @media screen and (max-width: 900px) {
+        line-height: 64px;
+        font-size: 16px;
     }
 `;
 
@@ -22,17 +26,28 @@ const RightMenu  = styled.div`
   top:0;
   padding-top: 8px;
   padding-right: 4px;
-  height: 64px;
+  height: 96px;
   svg {
-      height: 40px;
+      margin-top: 6px;
+      height: 68px;
   }
+    @media screen and (max-width: 900px) {
+        height: 64px;
+        svg {
+            height: 40px;
+        }
+    }
 `;
 const Bar = styled.div`
     border: 0;
     width: 100%;
-    height: 64px;
+    height: 96px;
     margin: 0;
     padding: 0 16px;
+    /* phones */
+    @media screen and (max-width: 900px) {
+        height: 64px;
+    }
 `;
 
 function HeaderBar(props) {
@@ -43,7 +58,6 @@ function HeaderBar(props) {
             {!noMenu &&
                 <RightMenu>
                     <ButtonIcon
-                        height={'40px'}
                         navTo={'/'}
                     >
                         <AppMenu />
