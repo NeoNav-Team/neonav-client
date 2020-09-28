@@ -82,7 +82,7 @@ function FormLogin(props) {
         if (typeof stub !== 'undefined'&& stub.length >=1) {
             const messages = {
                 'invalidToken': 'Your token is old or invalid. Please login again.',
-                'loggedOut': 'You have been logged out. Please login again.',
+                'loggedOut': 'You have been logged out.',
                 'changePass': 'Your password has been changed. Please login again.',
                 'newUser': 'Thank you for joining! Please login with your credentials.'
             };

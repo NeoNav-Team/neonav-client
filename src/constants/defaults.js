@@ -7,10 +7,10 @@ import {
 } from '@ant-design/icons';
 
 export const colors = {
-    "primary-cyan":`#41c5ff`,
-    "primary-magenta":`#ff00a0`,
-    "primary-indigo":`#7a04eb`,
-    "primary-color": `#fff`
+    "primaryCyan":`#41c5ff`,
+    "primaryMagenta":`#ff00a0`,
+    "primaryIndigo":`#7a04eb`,
+    "primaryColor": `#fff`
 };
 
 export const modals = [

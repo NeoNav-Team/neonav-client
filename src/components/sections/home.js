@@ -55,22 +55,36 @@ export default function Home({ location }) {
         <StyledAntLayout>
             <Row gutter={[24, 24]}>
             <Col span={6}>
-                    <ButtonIcon navTo='/?p=chat'>
+                    <ButtonIcon
+                      navTo='/?p=chat'
+                      title="NeoChan"
+                    >
                         <Chat />
                     </ButtonIcon>
                 </Col>
                 <Col span={6}>
-                    <ButtonIcon navTo='/#kitty'>
+                    <ButtonIcon
+                      navTo='/#kitty'
+                      isEven="even"
+                      title="Kitty"
+                    >
                         <Kitty />
                     </ButtonIcon>
                 </Col>
                 <Col span={6} >
-                    <ButtonIcon navTo="/#userSettings">
+                    <ButtonIcon
+                      navTo="/#userSettings"
+                      title="User Settings"
+                    >
                         <UserSettings />
                     </ButtonIcon>
                 </Col>
                 <Col span={6}>
-                <ButtonIcon navTo='/logout'>
+                <ButtonIcon
+                  navTo='/logout'
+                  isEven="even"
+                  title="Exit"
+                >
                     <Logout />
                 </ButtonIcon>
                 </Col>

@@ -21,17 +21,26 @@ export default function MenuUserSettings() {
             <StyledAntLayout>
             <Row gutter={{ xs: 0, sm: 0, md: 0, lg: 24 }}>
                 <Col span={6}>
-                    <ButtonIcon width="100%" style={{width:'100%', border:'1px solid red'}} navTo='/?p=profile'>
+                    <ButtonIcon
+                        navTo='/?p=profile'
+                        title='Profile'
+                    >
                         <Profile />
                     </ButtonIcon>
                 </Col>
                 <Col span={6}>
-                    <ButtonIcon navTo='/?p=security'>
+                    <ButtonIcon
+                        navTo='/?p=security'
+                        title='Account'
+                    >
                         <Security />
                     </ButtonIcon>
                 </Col>
                 <Col span={6}>
-                    <ButtonIcon navTo='/#myQRCode'>
+                    <ButtonIcon
+                        navTo='/#myQRCode'
+                        title='Identification'
+                    >
                         <Qrcode />
                     </ButtonIcon>
                 </Col>
