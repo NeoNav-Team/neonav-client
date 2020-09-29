@@ -33,7 +33,7 @@ export default function Chat() {
   const chatBoxHeight = height - chatChannelHeight - chatInputHeight - headerBarHeight;
 
   return (
-    <StyledChatContainer className="pitch-mixin" data-augmented-ui="tl-clip-x tr-rect-x bl-clip both">
+    <StyledChatContainer className="pitch-mixin" data-augmented-ui="tl-clip-x tr-rect-x bl-clip br-clip border">
        <ChatChannelMenu />
        <ChatInfiniteDisplay height={chatBoxHeight} />
        <ChatInputBar />
