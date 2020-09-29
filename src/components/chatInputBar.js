@@ -4,11 +4,7 @@ import styled from 'styled-components';
 
 const StyledInputDiv  = styled.div`
     display: block;
-    background: yellow;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    height: 40px;
+    height: 48px;
     width: 100%;
     text-align: center;
     overflow: hidden;
@@ -16,14 +12,17 @@ const StyledInputDiv  = styled.div`
         height: 12vh;
         width: 12vh;
     }
-
+    &.pitch-mixin {
+        --aug-border-all: 1px;
+        --aug-border-bg: radial-gradient(#7a04eb, #7a04eb) 100% 100% / 100% 100%;
+    }
 `;
 
 function ChatInputBar(props) {
     const { children } = props;
 
     return (
-        <StyledInputDiv>
+        <StyledInputDiv className="pitch-mixin" data-augmented-ui="tl-clip-x tr-clipczx-x br-clip bl-clip border">
             {children}
         </StyledInputDiv>
     )

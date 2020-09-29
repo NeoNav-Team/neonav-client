@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { navigate } from 'gatsby';
 import { useWindowDimensions } from '../utils/responsive';
@@ -126,10 +126,6 @@ function Pane(props) {
   const { height } = useWindowDimensions();
   const totesOffset = footer ? offset : 40;
   const paneHeight = offset ? (height - offset) : height;
-
-  useEffect(() => {
-    console.log('offset', offset);
-}, [offset]);
   
   return (
     <>

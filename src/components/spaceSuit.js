@@ -32,6 +32,7 @@ const ReponsiveContainer = styled.div`
     position: relative;
     margin: 0 auto;
     max-width: 1200px;
+    min-height: 100vh;
     /* laptop and tablets
     @media screen and (max-width: 1200px) {
         max-width: 900px;

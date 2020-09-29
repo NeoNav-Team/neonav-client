@@ -57,7 +57,7 @@ export default function Home({ location }) {
             <Col span={6}>
                     <ButtonIcon
                       navTo='/?p=chat'
-                      title="NeoChan"
+                      title="谈 | tan | chat"
                     >
                         <Chat />
                     </ButtonIcon>

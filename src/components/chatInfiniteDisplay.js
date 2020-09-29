@@ -4,19 +4,18 @@ import styled from 'styled-components';
 
 const StyledWrapperDiv  = styled.div`
     display: block;
-    background: red;
     color: green;
-    height: 70vh;
+    min-height: ${props => props.height}px;
     width: 100%;
     text-align: center;
     overflow: hidden;
 `;
 
 function ChatInfiniteDisplay(props) {
-    const { children } = props;
+    const { children, height } = props;
 
     return (
-        <StyledWrapperDiv>
+        <StyledWrapperDiv height={height}>
             {children}
         </StyledWrapperDiv>
     )

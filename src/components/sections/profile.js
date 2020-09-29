@@ -1,5 +1,5 @@
 import React, { useEffect, useState }from 'react';
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from 'react-responsive';
 import { statusIcons }  from '../../constants/defaults';
 import { profileSchema } from '../../constants/schemas';
 import _ from 'lodash';
@@ -126,7 +126,7 @@ export default function Profile({ location }) {
     const avatar =_.get(profileData, 'profile.avatar', null);
     const defaultModal = modalFromLocation(location);
     const [modal, setModal] = useState(defaultModal);
-    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' })
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' });
 
     const closeModal = () => {
         setModal(null);
@@ -160,10 +160,6 @@ export default function Profile({ location }) {
         });
         setModal(modalFromLocation(location));
     }, [location]);
-
-    useEffect(() => {
-        console.log('isTabletOrMobile', isTabletOrMobile);
-    }, [isTabletOrMobile]);
 
     const userStub = <>{username}<span>#{userId}</span></>;
     const EBtn = ({ style }) => (!locked && <EditOutlined style={{...style, ...{cursor: 'pointer', opacity: 0.6}}}/>);
