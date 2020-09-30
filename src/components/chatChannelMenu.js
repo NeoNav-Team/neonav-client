@@ -211,8 +211,12 @@ function ChatChannelMenu(props) {
                     </CarouselContainer>
                     </Wrapper>
                 </DaddyWrapper>
-                <PrevBtn><div className="arrow" data-augmented-ui="all-hexangle-left border" /></PrevBtn>
-                <NextBtn><div className="arrow" data-augmented-ui="all-hexangle-right border" /></NextBtn>
+                <PrevBtn onClick={_.partial(slide, 'PREV')}>
+                    <div className="arrow" data-augmented-ui="all-hexangle-left border" />
+                </PrevBtn>
+                <NextBtn onClick={_.partial(slide, 'NEXT')}>
+                    <div className="arrow" data-augmented-ui="all-hexangle-right border" />
+                </NextBtn>
             </StyledInputDiv>
         </div>
     )
