@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { useSwipeable } from 'react-swipeable';
 import { colors } from '../constants/defaults';
 
-const {primaryCyan, primaryIndigo, primaryMagenta, primaryColor } = colors;
+const {primaryCyan, primaryIndigo, primaryMagenta } = colors;
 
 const StyledInputDiv = styled.div`
     display: block;
@@ -117,7 +117,6 @@ const PREV = "PREV";
 const initialState = { pos: 0, sliding: false, dir: NEXT };
 const getOrder = ({ index, pos, numItems }) => {
     const newOrder = index - pos < 0 ? numItems - Math.abs(index - pos) : index - pos;
-    console.log('newOrder', newOrder);
     return newOrder;
   };
 
@@ -150,7 +149,7 @@ function ChatChannelMenu(props) {
                     <CarouselContainer dir={state.dir} sliding={state.sliding}>
                             <CarouselSlot
                                 key={1}
-                                order={getOrder({ index: 1, pos: state.pos, numItems: 1 })}
+                                order={getOrder({ index: 0, pos: state.pos, numItems: 3 })}
                             >
                                 <ChannelIcon
                                     active={activeChannel === 'stoopid'}
@@ -170,7 +169,7 @@ function ChatChannelMenu(props) {
                             </CarouselSlot>
                             <CarouselSlot
                                 key={2}
-                                order={getOrder({ index: 2, pos: state.pos, numItems: 2 })}
+                                order={getOrder({ index: 1, pos: state.pos, numItems: 3 })}
                             >
                                 <ChannelIcon
                                     active={activeChannel === 'qqq'}
@@ -190,7 +189,7 @@ function ChatChannelMenu(props) {
                             </CarouselSlot>
                             <CarouselSlot
                                 key={3}
-                                order={getOrder({ index: 3, pos: state.pos, numItems: 3 })}
+                                order={getOrder({ index: 2, pos: state.pos, numItems: 3 })}
                             >
                                 <ChannelIcon
                                     active={activeChannel === 'bbb'}
@@ -199,12 +198,12 @@ function ChatChannelMenu(props) {
                                 />
                                 <ChannelIcon
                                     active={activeChannel === 'uuu'}
-                                    title="Some Long Ass Name"
+                                    title="Do you want to make my app?"
                                     handleClick={_.partial(selectActiveChannel, 'uuu')}
                                 />
                                 <ChannelIcon
                                     active={activeChannel === 'some'}
-                                    title="Neotropolis Central"
+                                    title="Pr0n"
                                     handleClick={_.partial(selectActiveChannel, 'some')}
                                 />
                             </CarouselSlot>
