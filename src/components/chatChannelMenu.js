@@ -122,6 +122,7 @@ const getOrder = ({ index, pos, numItems }) => {
 
 function ChatChannelMenu(props) {
     const [ activeChannel, setActiveChannel ] = useState(null);
+    const [showArrows, setShowArrows ] = useState(true);
     const [ state, dispatch ] = useReducer(reducer, initialState);
     const numItems = 3;
     const slide = dir => {
@@ -144,7 +145,7 @@ function ChatChannelMenu(props) {
     return (
         <div data-augmented-ui-reset>
             <StyledInputDiv className="pitch-mixin" data-augmented-ui="tl-clip-x tr-rect-x br-clip bl-clip both">
-                <DaddyWrapper {...swipeHandlers}>
+                <DaddyWrapper {...(showArrows && {...swipeHandlers})}>
                 <Wrapper>
                     <CarouselContainer dir={state.dir} sliding={state.sliding}>
                             <CarouselSlot
@@ -210,12 +211,14 @@ function ChatChannelMenu(props) {
                     </CarouselContainer>
                     </Wrapper>
                 </DaddyWrapper>
-                <PrevBtn onClick={_.partial(slide, 'PREV')}>
-                    <div className="arrow" data-augmented-ui="all-hexangle-left border" />
-                </PrevBtn>
-                <NextBtn onClick={_.partial(slide, 'NEXT')}>
-                    <div className="arrow" data-augmented-ui="all-hexangle-right border" />
-                </NextBtn>
+                {showArrows && <>
+                    <PrevBtn onClick={_.partial(slide, 'PREV')}>
+                        <div className="arrow" data-augmented-ui="all-hexangle-left border" />
+                    </PrevBtn>
+                    <NextBtn onClick={_.partial(slide, 'NEXT')}>
+                        <div className="arrow" data-augmented-ui="all-hexangle-right border" />
+                    </NextBtn>
+                </>}
             </StyledInputDiv>
         </div>
     )
