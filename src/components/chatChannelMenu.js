@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 import ChannelIcon from './channelIcon';
 import _ from 'lodash';
@@ -46,11 +46,14 @@ const CarouselContainer = styled.div`
     }
     transition: ${props => (props.sliding ? "none" : "transform 1s ease")};
     transform: ${props => {
-        if (!props.sliding) return "translateX(calc(-100%))";
-        if (props.dir === PREV) return "translateX(calc(2 * (-100%))";
-            return "translateX(0%)";
+      if (!props.sliding) return "translateX(calc(-80% - 20px))";
+      if (props.dir === PREV) return "translateX(calc(2 * (-80% - 20px)))";
+      return "translateX(0%)";
     }};
-`;
+    &.single {
+      transform: translateX(0%)
+  }
+  `;
 
 const Wrapper = styled.div`
   overflow: visible;
@@ -114,19 +117,23 @@ const NextBtn = styled.div`
 
 const NEXT = "NEXT";
 const PREV = "PREV";
-const initialState = { pos: 0, sliding: false, dir: NEXT };
+const initialState = { pos: 1, sliding: false, dir: NEXT };
 const getOrder = ({ index, pos, numItems }) => {
     const newOrder = index - pos < 0 ? numItems - Math.abs(index - pos) : index - pos;
     return newOrder;
   };
 
 function ChatChannelMenu(props) {
+    const { channels } = props;
     const [ activeChannel, setActiveChannel ] = useState(null);
-    const [showArrows, setShowArrows ] = useState(true);
     const [ state, dispatch ] = useReducer(reducer, initialState);
-    const numItems = 3;
+    const maxItems = 3;
+    const chunkedItems = _.chunk(channels, maxItems);
+    const totesChunks = chunkedItems.length;
+    const isPaginated = totesChunks >= 2;
+    const [ showArrows, setShowArrows ] = useState(isPaginated);
     const slide = dir => {
-      dispatch({ type: dir, numItems });
+      dispatch({ type: dir, totesChunks });
       setTimeout(() => {
         dispatch({ type: "stopSliding" });
       }, 50);
@@ -141,74 +148,38 @@ function ChatChannelMenu(props) {
     const selectActiveChannel = channel => {
         setActiveChannel(channel);
     }
+    useEffect(() => {
+      setShowArrows(isPaginated);
+  }, [totesChunks, isPaginated]);
 
     return (
         <div data-augmented-ui-reset>
             <StyledInputDiv className="pitch-mixin" data-augmented-ui="tl-clip-x tr-rect-x br-clip bl-clip both">
                 <DaddyWrapper {...(showArrows && {...swipeHandlers})}>
-                <Wrapper>
-                    <CarouselContainer dir={state.dir} sliding={state.sliding}>
-                            <CarouselSlot
-                                key={1}
-                                order={getOrder({ index: 0, pos: state.pos, numItems: 3 })}
-                            >
-                                <ChannelIcon
-                                    active={activeChannel === 'stoopid'}
-                                    title={"Stoopid Chat"}
-                                    handleClick={_.partial(selectActiveChannel, 'stoopid')}
-                                />
-                                <ChannelIcon
-                                    active={activeChannel === 'general'}
-                                    title="General"
-                                    handleClick={_.partial(selectActiveChannel, 'general')}
-                                />
-                                <ChannelIcon
-                                    active={activeChannel === 'some'}
-                                    title="Neotropolis Central"
-                                    handleClick={_.partial(selectActiveChannel, 'some')}
-                                />
-                            </CarouselSlot>
-                            <CarouselSlot
-                                key={2}
-                                order={getOrder({ index: 1, pos: state.pos, numItems: 3 })}
-                            >
-                                <ChannelIcon
-                                    active={activeChannel === 'qqq'}
-                                    title={"Kitty Memes"}
-                                    handleClick={_.partial(selectActiveChannel, 'qqq')}
-                                />
-                                <ChannelIcon
-                                    active={activeChannel === 'aaa'}
-                                    title="Pibb Bestest Chat"
-                                    handleClick={_.partial(selectActiveChannel, 'aaa')}
-                                />
-                                <ChannelIcon
-                                    active={activeChannel === 'ddd'}
-                                    title="Hacker Digest"
-                                    handleClick={_.partial(selectActiveChannel, 'ddd')}
-                                />
-                            </CarouselSlot>
-                            <CarouselSlot
-                                key={3}
-                                order={getOrder({ index: 2, pos: state.pos, numItems: 3 })}
-                            >
-                                <ChannelIcon
-                                    active={activeChannel === 'bbb'}
-                                    title={"Aliens"}
-                                    handleClick={_.partial(selectActiveChannel, 'bbb')}
-                                />
-                                <ChannelIcon
-                                    active={activeChannel === 'uuu'}
-                                    title="Do you want to make my app?"
-                                    handleClick={_.partial(selectActiveChannel, 'uuu')}
-                                />
-                                <ChannelIcon
-                                    active={activeChannel === 'some'}
-                                    title="Pr0n"
-                                    handleClick={_.partial(selectActiveChannel, 'some')}
-                                />
-                            </CarouselSlot>
-                    </CarouselContainer>
+                    <Wrapper>
+                        <CarouselContainer
+                          dir={state.dir}
+                          sliding={state.sliding}
+                          className={!showArrows && 'single'}
+                        >
+                            {chunkedItems.map((arr, index) => (
+                                <CarouselSlot
+                                    key={index}
+                                    order={getOrder({ index, pos: state.pos, numItems: maxItems })}
+                                >
+                                {arr.map((item, kindex) => {
+                                    const id = item.id;
+                                    const title = _.get(item, 'name', '').split('.').pop();
+                                    return (<ChannelIcon
+                                        key={`tnicn_${index}-${kindex}`} 
+                                        active={activeChannel === id}
+                                        title={title}
+                                        handleClick={_.partial(selectActiveChannel, id)}
+                                    />)
+                                })}
+                                </CarouselSlot>
+                            ))}
+                        </CarouselContainer>
                     </Wrapper>
                 </DaddyWrapper>
                 {showArrows && <>
@@ -224,25 +195,23 @@ function ChatChannelMenu(props) {
     )
 }
 
-function reducer(state, { type, numItems }) {
+function reducer(state, { type, totesChunks }) {
     switch (type) {
       case "reset":
         return initialState;
       case PREV:
-          console.log('dispatch PREV');
         return {
           ...state,
           dir: PREV,
           sliding: true,
-          pos: state.pos === 0 ? numItems - 1 : state.pos - 1
+          pos: state.pos === 0 ? totesChunks - 1 : state.pos - 1
         };
       case NEXT:
-        console.log('dispatch NEXT');
         return {
           ...state,
           dir: NEXT,
           sliding: true,
-          pos: state.pos === numItems - 1 ? 0 : state.pos + 1
+          pos: state.pos === totesChunks - 1 ? 0 : state.pos + 1
         };
       case "stopSliding":
         return { ...state, sliding: false };

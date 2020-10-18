@@ -10,4 +10,5 @@ export const apis = {
     validate: '/api/auth/user',
     fakename: '/api/user/fake',
     changePass: '/api/auth/users/',
+    channels: '/api/chat/channels'
 };
