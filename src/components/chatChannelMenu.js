@@ -52,7 +52,7 @@ const CarouselContainer = styled.div`
     }};
     &.single {
       transform: translateX(0%)
-  }
+    }
   `;
 
 const Wrapper = styled.div`
@@ -124,8 +124,8 @@ const getOrder = ({ index, pos, numItems }) => {
   };
 
 function ChatChannelMenu(props) {
-    const { channels } = props;
-    const [ activeChannel, setActiveChannel ] = useState(null);
+    const { channels, currentChannel, clickHandler} = props;
+    const [ activeChannel, setActiveChannel ] = useState(currentChannel || null);
     const [ state, dispatch ] = useReducer(reducer, initialState);
     const maxItems = 3;
     const chunkedItems = _.chunk(channels, maxItems);
@@ -144,9 +144,13 @@ function ChatChannelMenu(props) {
         preventDefaultTouchmoveEvent: true,
         trackMouse: true
     });
+    const updateCurrentChannel = channel => {
+      typeof clickHandler !== 'undefined' && clickHandler(channel);
+    }
 
     const selectActiveChannel = channel => {
         setActiveChannel(channel);
+        updateCurrentChannel(channel);
     }
     useEffect(() => {
       setShowArrows(isPaginated);

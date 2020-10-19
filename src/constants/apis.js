@@ -9,6 +9,6 @@ export const apis = {
     register: '/api/auth/user',
     validate: '/api/auth/user',
     fakename: '/api/user/fake',
-    changePass: '/api/auth/users/',
+    changePass: '/api/auth/users',
     channels: '/api/chat/channels'
 };

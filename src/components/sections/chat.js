@@ -4,7 +4,7 @@ import _ from 'lodash';
 import ChatChannelMenu from '../../components/chatChannelMenu';
 import ChatInfiniteDisplay from '../../components/chatInfiniteDisplay';
 import ChatInputBar from '../../components/chatInputBar';
-import { chatChannels } from '../../services/chat';
+import { chatChannels, getChatStore, getMessages, pollChatter } from '../../services/chat';
 import { useWindowDimensions } from '../../utils/responsive';
 import { useMediaQuery } from 'react-responsive';
 
@@ -34,26 +34,61 @@ export default function Chat({ location }) {
   const chatInputHeight = 48;
   const chatBoxHeight = height - chatChannelHeight - chatInputHeight - headerBarHeight;
   //chat data
-  const [channelsData, setChannels] = useState([]);
-
+  const [ chatStore, setChatStore ] = useState(getChatStore);
+ const [ messages, setMessages ] = useState(getMessages)
+  const [ chatData, setChatData ] = useState(null);
+  const showMessage = value => {
+    //save latest marker
+    console.log('value', value);
+    if (Array.isArray(value)) {
+      console.log('this is an array');
+      const messageArr = [_.cloneDeep(value).slice(1)];
+      console.log('messageArr', messageArr);
+      console.log('messages', messages);
+      const newChatStore = {
+        ...chatStore,
+        sinceMarker: value[0]
+      };
+      const newMessages = [
+        ...messages,
+        ...messageArr
+      ];
+      setChatStore(newChatStore);
+      setMessages(newMessages);
+    }
+  };
   const getChannels = async () => {
     const response = chatChannels();
     return await response;
-};
+  };
+  const getChatter = async () => {
+    pollChatter(showMessage, chatStore.sinceMarker);
+  };
+
   useEffect(() => {
     getChannels().then(res => {
         res.data = _.get(res, 'data', false) ? res.data : [];
-        setChannels(res.data);
-        localStorage.setItem('chatChannels', JSON.stringify(res.data));
+        const channelsObj = {channels: res.data};
+        const newChatStore = {
+          ...chatStore,
+          ...channelsObj
+        };
+        setChatStore(newChatStore);
+        localStorage.setItem('nnChatStore', JSON.stringify(newChatStore));
+        getChatter();
     }).catch(err => {
         console.log('err', err);
     });
   }, [location]);
 
+  useEffect(() => {}, [messages]);
+
   return (
     <StyledChatContainer className="pitch-mixin" data-augmented-ui="tl-clip-x tr-rect-x bl-clip br-clip border">
-       <ChatChannelMenu channels={channelsData} />
-       <ChatInfiniteDisplay height={chatBoxHeight} />
+       <ChatChannelMenu channels={chatStore.channels} />
+       <ChatInfiniteDisplay height={chatBoxHeight}>
+         {JSON.stringify(messages)}
+      </ChatInfiniteDisplay>
        <ChatInputBar />
     </StyledChatContainer>
   )
