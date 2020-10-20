@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 
-const StyledInputDiv  = styled.div`
+const StyledInputDiv = styled.div`
     display: block;
     background: transparent;
     height: 48px;
@@ -21,13 +21,43 @@ const StyledInputDiv  = styled.div`
     }
 `;
 
+const StyledInput =  styled.input`
+    width: 100%;
+    background: transparent;
+    color: #fff;
+    border: none;
+    min-height: 48px;
+    text-indent: 10vw;
+`;
+
 function ChatInputBar(props) {
-    const { children } = props;
+    const { channel, submitHandler } = props;
+    const [form, setForm] = useState({text: ''});
+    const updateField = e => {
+        setForm({
+          ...form,
+          [e.target.name]: e.target.value
+        });
+      };
+    const sendText = event => {
+        event.preventDefault();
+        submitHandler(channel, form);
+        setForm({text: ''});
+    }
 
     return (
         <div data-augmented-ui-reset>
             <StyledInputDiv className="pitch-mixin" data-augmented-ui="tl-clip-x tr-clipczx-x br-clip bl-clip both">
-                {children}
+                <form onSubmit={sendText}>
+                    <StyledInput
+                        type="text"
+                        value={form.text}
+                        name="text"
+                        placeholder="type message here"
+                        onChange={updateField}
+                    />
+                    <input type="submit" style={{'visibility':'hidden', 'position':'absolute'}}/>
+                </form>
             </StyledInputDiv>
         </div>
     )

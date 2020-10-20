@@ -18,10 +18,6 @@ export const getChatStore = () =>
     ? JSON.parse(window.localStorage.getItem('nnChatStore'))
     : {};
 
-const setChatStore = store => {
-  window.localStorage.setItem('nnChatStore', JSON.stringify(store));
-}
-
 export const chatChannels = () => {
     if (!isBrowser) return false;
     axios.defaults.port = 6001;
@@ -143,4 +139,39 @@ export const pollChatter = async (showMessage, sinceMarker) => {
     // Call pollChatter() again to get the next message
     await pollChatter(showMessage, message.data[0]);
   }
+};
+
+
+export const postMessage = (channel, data) => {
+  console.log('channel', channel);
+  console.log('data', data);
+  if (!isBrowser) return false;
+  axios.defaults.port = 6001;
+  const url = formatEnpoint('channels') + `/${channel}`;
+  const nnUser = getUser();
+  const token = nnUser.accessToken;
+  return axios({
+      headers: {
+        'x-access-token': `${token}`,
+        'content-type': 'application/json'
+      },
+      method: 'post',
+      url,
+      data
+  }).then(
+      function (response) {
+          return response;
+      }
+  ).catch(function (error) {
+      if (error.response) {
+        console.log('Error', error.response);
+        return error.response;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log('Error', error.config);
+      return error;
+    });
 };

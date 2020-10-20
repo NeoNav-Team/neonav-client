@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
 
@@ -14,10 +15,18 @@ const StyledWrapperDiv  = styled.div`
 
 function ChatInfiniteDisplay(props) {
     const { children, height } = props;
+    const messagesEndRef = useRef(null);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+    }
+
+    useEffect(scrollToBottom, [children]);
 
     return (
         <StyledWrapperDiv height={height}>
             {children}
+            <div ref={messagesEndRef} />
         </StyledWrapperDiv>
     )
 }

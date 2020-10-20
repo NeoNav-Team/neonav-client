@@ -4,7 +4,14 @@ import _ from 'lodash';
 import ChatChannelMenu from '../../components/chatChannelMenu';
 import ChatInfiniteDisplay from '../../components/chatInfiniteDisplay';
 import ChatInputBar from '../../components/chatInputBar';
-import { chatChannels, getChatStore, getMessages, saveMessages, pollChatter } from '../../services/chat';
+import { 
+  chatChannels,
+  getChatStore,
+  getMessages,
+  saveMessages,
+  postMessage,
+  pollChatter
+} from '../../services/chat';
 import { useWindowDimensions } from '../../utils/responsive';
 import { useMediaQuery } from 'react-responsive';
 import { List, Typography } from 'antd';
@@ -49,7 +56,6 @@ export default function Chat({ location }) {
         sinceMarker: value[0]
       };
       setChatStore(newChatStore);
-
       setMessages(prevMessages => {
         return _.uniqby(_.concat(...prevMessages, ...messageArr), 'id');
       });
@@ -92,9 +98,8 @@ export default function Chat({ location }) {
 
   useEffect(() => {
     const savedMessages = _.uniqby(messages, 'id');
-    console.log('unique messages', savedMessages);
     saveMessages(savedMessages);
-  }, [messages]);
+  });
 
   return (
     <StyledChatContainer className="pitch-mixin" data-augmented-ui="tl-clip-x tr-rect-x bl-clip br-clip border">
@@ -113,7 +118,10 @@ export default function Chat({ location }) {
             )}
           />
         </ChatInfiniteDisplay>
-       <ChatInputBar />
+      <ChatInputBar
+        channel={chatStore.selected}
+        submitHandler={postMessage}
+      />
     </StyledChatContainer>
   )
 }
