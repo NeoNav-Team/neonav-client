@@ -4,12 +4,15 @@ import _ from 'lodash';
 import ChatChannelMenu from '../../components/chatChannelMenu';
 import ChatInfiniteDisplay from '../../components/chatInfiniteDisplay';
 import ChatInputBar from '../../components/chatInputBar';
-import { chatChannels, getChatStore, getMessages, pollChatter } from '../../services/chat';
+import { chatChannels, getChatStore, getMessages, saveMessages, pollChatter } from '../../services/chat';
 import { useWindowDimensions } from '../../utils/responsive';
 import { useMediaQuery } from 'react-responsive';
+import { List, Typography } from 'antd';
+const { Text } = Typography;
 
 const StyledChatContainer = styled.div`
   background: transparent;
+  align: left;
   color: red;
   margin: 0 auto 16px;
   padding: 0;
@@ -35,26 +38,21 @@ export default function Chat({ location }) {
   const chatBoxHeight = height - chatChannelHeight - chatInputHeight - headerBarHeight;
   //chat data
   const [ chatStore, setChatStore ] = useState(getChatStore);
- const [ messages, setMessages ] = useState(getMessages)
-  const [ chatData, setChatData ] = useState(null);
+  const [ messages, setMessages ] = useState(getMessages)
+
   const showMessage = value => {
     //save latest marker
-    console.log('value', value);
     if (Array.isArray(value)) {
-      console.log('this is an array');
       const messageArr = [_.cloneDeep(value).slice(1)];
-      console.log('messageArr', messageArr);
-      console.log('messages', messages);
       const newChatStore = {
         ...chatStore,
         sinceMarker: value[0]
       };
-      const newMessages = [
-        ...messages,
-        ...messageArr
-      ];
       setChatStore(newChatStore);
-      setMessages(newMessages);
+
+      setMessages(prevMessages => {
+        return _.uniqby(_.concat(...prevMessages, ...messageArr), 'id');
+      });
     }
   };
   const getChannels = async () => {
@@ -64,11 +62,22 @@ export default function Chat({ location }) {
   const getChatter = async () => {
     pollChatter(showMessage, chatStore.sinceMarker);
   };
+  const setSelectedChannel = channelName => {
+    const newChatStore = {
+      ...chatStore,
+      selected: channelName
+    };
+    setChatStore(newChatStore);
+  }
 
   useEffect(() => {
     getChannels().then(res => {
-        res.data = _.get(res, 'data', false) ? res.data : [];
-        const channelsObj = {channels: res.data};
+        const chatData = _.get(res, 'data', false) ? res.data : [];
+        let selected = chatStore.selected || chatData.find(x => x.name === '谈.global')['id'] || null;
+        const channelsObj = {
+          channels: res.data,
+          selected
+        };
         const newChatStore = {
           ...chatStore,
           ...channelsObj
@@ -81,14 +90,29 @@ export default function Chat({ location }) {
     });
   }, [location]);
 
-  useEffect(() => {}, [messages]);
+  useEffect(() => {
+    const savedMessages = _.uniqby(messages, 'id');
+    console.log('unique messages', savedMessages);
+    saveMessages(savedMessages);
+  }, [messages]);
 
   return (
     <StyledChatContainer className="pitch-mixin" data-augmented-ui="tl-clip-x tr-rect-x bl-clip br-clip border">
-       <ChatChannelMenu channels={chatStore.channels} />
+       <ChatChannelMenu
+        channels={chatStore.channels}
+        selected={chatStore.selected}
+        clickHandler={setSelectedChannel}
+        />
        <ChatInfiniteDisplay height={chatBoxHeight}>
-         {JSON.stringify(messages)}
-      </ChatInfiniteDisplay>
+          <List
+            dataSource={messages}
+            renderItem={item => (
+              <List.Item>
+                <Text type="warning">{item.ts}</Text>  <Text mark>{item.from || item.fromid}</Text> {item.text}
+              </List.Item>
+            )}
+          />
+        </ChatInfiniteDisplay>
        <ChatInputBar />
     </StyledChatContainer>
   )

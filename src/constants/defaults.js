@@ -22,6 +22,8 @@ export const modals = [
     'editPass'
 ];
 
+export const selectedChat = 'global';
+
 export const statusIcons = {
     'departing': <RocketTwoTone rotate={45} style={{fontSize: '2.5vh', verticalAlign:'sub'}} />,
     'arriving': <RocketTwoTone rotate={135} style={{fontSize: '2.5vh', verticalAlign:'sub'}} />,

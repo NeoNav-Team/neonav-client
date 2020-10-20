@@ -4,11 +4,12 @@ import styled from 'styled-components';
 
 const StyledWrapperDiv  = styled.div`
     display: block;
-    color: green;
+    color: white;
     min-height: ${props => props.height}px;
+    max-height: ${props => props.height}px;
     width: 100%;
-    text-align: center;
-    overflow: hidden;
+    text-align: left;
+    overflow: auto;
 `;
 
 function ChatInfiniteDisplay(props) {

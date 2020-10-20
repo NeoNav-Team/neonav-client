@@ -9,7 +9,7 @@ export const getMessages = () =>
     ? JSON.parse(window.localStorage.getItem('nnMessages'))
     : [];
 
-const setMessages = messages => {
+export const saveMessages = messages => {
   window.localStorage.setItem('nnMessages', JSON.stringify(messages));
 }
 
@@ -94,7 +94,6 @@ export const pollChatter = async (showMessage, sinceMarker) => {
   const nnUser = getUser();
   const token = nnUser.accessToken;
   console.log('Fetching Chat...');
-  console.log('url', url);
   const fetchResponse = await axios({
       headers: {
         'x-access-token': `${token}`,
@@ -140,7 +139,6 @@ export const pollChatter = async (showMessage, sinceMarker) => {
   } else {
     // Get and show the message
     let message = await fetchResponse;
-    console.log('fetchResponse', fetchResponse);
     showMessage(message.data);
     // Call pollChatter() again to get the next message
     await pollChatter(showMessage, message.data[0]);

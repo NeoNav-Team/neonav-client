@@ -124,8 +124,8 @@ const getOrder = ({ index, pos, numItems }) => {
   };
 
 function ChatChannelMenu(props) {
-    const { channels, currentChannel, clickHandler} = props;
-    const [ activeChannel, setActiveChannel ] = useState(currentChannel || null);
+    const { channels, selected, clickHandler} = props;
+    const [ activeChannel, setActiveChannel ] = useState(selected || null);
     const [ state, dispatch ] = useReducer(reducer, initialState);
     const maxItems = 3;
     const chunkedItems = _.chunk(channels, maxItems);
