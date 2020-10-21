@@ -20,7 +20,6 @@ const { Text } = Typography;
 const StyledChatContainer = styled.div`
   background: transparent;
   align: left;
-  color: red;
   margin: 0 auto 16px;
   padding: 0;
   overflow: hidden;

@@ -18,7 +18,7 @@ function ChatInfiniteDisplay(props) {
     const messagesEndRef = useRef(null);
 
     const scrollToBottom = () => {
-        messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+        messagesEndRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' })
     }
 
     useEffect(scrollToBottom, [children]);

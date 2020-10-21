@@ -48,13 +48,17 @@ function ChatInputBar(props) {
     return (
         <div data-augmented-ui-reset>
             <StyledInputDiv className="pitch-mixin" data-augmented-ui="tl-clip-x tr-clipczx-x br-clip bl-clip both">
-                <form onSubmit={sendText}>
+                <form 
+                    onSubmit={sendText}
+                    autocomplete="off"
+                    >
                     <StyledInput
                         type="text"
                         value={form.text}
                         name="text"
                         placeholder="type message here"
                         onChange={updateField}
+                        autocomplete="chrome-off"
                     />
                     <input type="submit" style={{'visibility':'hidden', 'position':'absolute'}}/>
                 </form>
