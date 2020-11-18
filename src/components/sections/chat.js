@@ -34,6 +34,12 @@ const StyledChatContainer = styled.div`
   }
 `;
 
+
+//TODO: THINGS TO COMPLETE CHAT
+// 2. CREATE CHANNELS
+// 3. FETCH ON LOAD OF SECTION
+// 1. WRITE INFININTE SCROLL FOR CHAT
+
 export default function Chat({ location }) {
   // sizing values
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' });
@@ -60,10 +66,18 @@ export default function Chat({ location }) {
       });
     }
   };
+
+  //CHANNEL FUNCTIONS
   const getChannels = async () => {
     const response = chatChannels();
     return await response;
   };
+  const create = async () => {
+    const response = chatChannels();
+    return await response;
+  };
+
+
   const getChatter = async () => {
     pollChatter(showMessage, chatStore.sinceMarker);
   };
