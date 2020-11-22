@@ -87,6 +87,7 @@ export default function Chat({ location }) {
       selected: channelName
     };
     setChatStore(newChatStore);
+    localStorage.setItem('nnChatStore', JSON.stringify(newChatStore));
   }
 
   useEffect(() => {

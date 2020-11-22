@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import ChannelIcon from './channelIcon';
+import SliderIcon from './sliderIcon';
+import More from './icons/more';
 import _ from 'lodash';
 import Slider from 'react-slick';
 import { colors } from '../constants/defaults';
@@ -86,8 +88,8 @@ function ChatChannelMenu(props) {
       centerMode: false,
       accessibility: true,
       speed: 500,
-      slidesToShow: 2,
-      slidesToScroll: 1
+      slidesToShow: 3,
+      slidesToScroll: 3
     };
 
     const updateCurrentChannel = channel => {
@@ -117,9 +119,9 @@ function ChatChannelMenu(props) {
                                 />)
                             })
                         ))}
-                            <ChannelIcon
+                            <SliderIcon
                                     key={`tnicn_more`} 
-                                    title={'More...'}
+                                    title={<More />}
                                     handleClick={createChannel}
                             />
                 </Slider>
