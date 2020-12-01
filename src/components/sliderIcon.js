@@ -56,21 +56,16 @@ const IconWrap = styled.div`
         --aug-border-all: 1px;
         --aug-border-bg: radial-gradient(#7a04eb, #7a04eb) 100% 100% / 100% 100%;
     }
-    .title {
-        color: ${primaryCyan};
+    .icon {
+        opacity: 0.5;
         display: block;
         position: absolute;
-        left: 100%;
-        top: 50%;
-        left: 50%;
+        left: 0;
+        top: 0;
         text-align: center;
         font-size: 10px;
         line-height: 10px;
-        white-space: nowrap;
         max-width: 80px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        transform: translate(-50%, 0) rotateZ(60deg);
         transition: all 0.125s ease-out;
     }
     & :hover {
@@ -83,8 +78,7 @@ const IconWrap = styled.div`
             --aug-all-width: 48px;
             transform: translate(-50%, -50%) rotateZ(0deg);
         }
-        & .title {
-            transform: translate(-50%, -50%) rotateZ(0deg);
+        & .icon {
             filter: drop-shadow(0 0 5px ${primaryCyan});
         }
     }
@@ -108,10 +102,8 @@ const IconWrap = styled.div`
             --aug-inlay-bg: radial-gradient(ellipse at top, ${primaryMagenta}, rgba(122, 4, 235, 0))  20% 20% / 100% 100%;
             --aug-border-bg: radial-gradient(${primaryCyan}, ${primaryCyan}) 100% 100% / 100% 100%;
         }
-        & .title {
+        & .icon {
             font-size: 12px;
-            left: 50%;
-            top: 50%;
             width: 144px;
             min-width: 144px;
             max-width: 144px;
@@ -135,7 +127,7 @@ const IconWrap = styled.div`
 `;
 
 function SliderIcon(props) {
-    const { active, handleClick, title } = props;
+    const { active, handleClick, icon } = props;
 
   return (
     <InlineDiv
@@ -144,8 +136,7 @@ function SliderIcon(props) {
     >
         <IconWrap className={active && 'active'} data-augmented-ui-reset>
             <div className="abg" data-augmented-ui="tl-clip tr-clip br-clip bl-clip both" />
-            <div className="augment" data-augmented-ui="all-hex border" />
-            <div className="title">{title}</div>
+            <div className="icon">{icon}</div>
         </IconWrap>
     </InlineDiv>
   )

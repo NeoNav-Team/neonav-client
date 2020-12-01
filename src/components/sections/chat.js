@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { navigate } from 'gatsby';
 import _ from 'lodash';
 import ChatChannelMenu from '../../components/chatChannelMenu';
 import ChatInfiniteDisplay from '../../components/chatInfiniteDisplay';
 import ChatInputBar from '../../components/chatInputBar';
+import ModalEditField from '../../components/modalEditField';
 import { 
   chatChannels,
   getChatStore,
@@ -14,7 +16,7 @@ import {
 } from '../../services/chat';
 import { useWindowDimensions } from '../../utils/responsive';
 import { useMediaQuery } from 'react-responsive';
-import { List, Typography } from 'antd';
+import { List, Modal, Typography } from 'antd';
 const { Text } = Typography;
 
 const StyledChatContainer = styled.div`
@@ -31,6 +33,17 @@ const StyledChatContainer = styled.div`
     --aug-inlay-all: 4px;
     --aug-inlay-bg: radial-gradient(ellipse at top, #7a04eb, rgba(122, 4, 235, 0.125))  50% 50% / 100% 100%;
     --aug-inlay-opacity: 0.5;
+  }
+`;
+
+const StyledModal = styled(Modal)`
+  .ant-modal-content {
+    background:transparent;
+  }
+  .ant-modal-close-x {
+    margin-top: -50px;
+    color:#ff00a0;
+    filter: drop-shadow(0 0 8px #ff00a0);
   }
 `;
 
@@ -51,6 +64,12 @@ export default function Chat({ location }) {
   //chat data
   const [ chatStore, setChatStore ] = useState(getChatStore);
   const [ messages, setMessages ] = useState(getMessages)
+  const [modal, setModal] = useState(null);
+
+  const closeModal = () => {
+      setModal(null);
+      navigate('/chat');
+  }
 
   const showMessage = value => {
     //save latest marker
@@ -72,22 +91,27 @@ export default function Chat({ location }) {
     const response = chatChannels();
     return await response;
   };
-  const create = async () => {
-    const response = chatChannels();
-    return await response;
-  };
-
 
   const getChatter = async () => {
     pollChatter(showMessage, chatStore.sinceMarker);
   };
+
   const setSelectedChannel = channelName => {
-    const newChatStore = {
-      ...chatStore,
-      selected: channelName
-    };
-    setChatStore(newChatStore);
-    localStorage.setItem('nnChatStore', JSON.stringify(newChatStore));
+    switch (channelName) {
+      case 'addChannel':
+        setModal('addChannel');
+      break;
+      case 'dropChannel':
+        setModal('dropChannel');
+      break;
+      default:
+        const newChatStore = {
+          ...chatStore,
+          selected: channelName
+        };
+        setChatStore(newChatStore);
+        localStorage.setItem('nnChatStore', JSON.stringify(newChatStore));
+  }
   }
 
   useEffect(() => {
@@ -105,6 +129,7 @@ export default function Chat({ location }) {
         setChatStore(newChatStore);
         localStorage.setItem('nnChatStore', JSON.stringify(newChatStore));
         getChatter();
+        console.log('seclected channel is ' + selected);
     }).catch(err => {
         console.log('err', err);
     });
@@ -116,6 +141,7 @@ export default function Chat({ location }) {
   });
 
   return (
+    <>
     <StyledChatContainer className="pitch-mixin" data-augmented-ui="tl-clip-x tr-rect-x bl-clip br-clip border">
        <ChatChannelMenu
         channels={chatStore.channels}
@@ -137,5 +163,18 @@ export default function Chat({ location }) {
         submitHandler={postMessage}
       />
     </StyledChatContainer>
+    <StyledModal
+            title={null}
+            visible={modal}
+            closable={false}
+            onCancel={closeModal}
+            bodyStyle={{padding:0, background:'transparent'}}
+            footer={null}
+            width="75vh"
+            >
+                {modal === 'addChannel' && <ModalEditField />}
+                {modal === 'dropChannel' && <ModalEditField />}
+            </StyledModal>
+    </>
   )
 }

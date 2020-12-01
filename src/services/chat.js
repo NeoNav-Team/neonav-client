@@ -50,7 +50,7 @@ export const chatChannels = () => {
 };
 
 export const seedChannel = (channel, params) => {
-  const { since, until, limit } = params;
+  // const { since, until, limit } = params;
   if (!isBrowser) return false;
   axios.defaults.port = 6001;
   const url = formatEnpoint('channels') + `/${channel}/history`;

@@ -96,8 +96,6 @@ function ChatChannelMenu(props) {
       typeof clickHandler !== 'undefined' && clickHandler(channel);
     }
 
-    const createChannel = () => {};
-
     const selectActiveChannel = channel => {
         setActiveChannel(channel);
         updateCurrentChannel(channel);
@@ -119,11 +117,11 @@ function ChatChannelMenu(props) {
                                 />)
                             })
                         ))}
-                            <SliderIcon
-                                    key={`tnicn_more`} 
-                                    title={<More />}
-                                    handleClick={createChannel}
-                            />
+                    <SliderIcon
+                            key={`tnicn_more`} 
+                            icon={<More fill={primaryCyan} />}
+                            handleClick={_.partial(selectActiveChannel, 'addChannel')}
+                    />
                 </Slider>
             </StyledInputDiv>
         </div>

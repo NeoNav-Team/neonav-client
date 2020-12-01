@@ -50,7 +50,7 @@ function ChatInputBar(props) {
             <StyledInputDiv className="pitch-mixin" data-augmented-ui="tl-clip-x tr-clipczx-x br-clip bl-clip both">
                 <form 
                     onSubmit={sendText}
-                    autocomplete="off"
+                    autoComplete="off"
                     >
                     <StyledInput
                         type="text"
