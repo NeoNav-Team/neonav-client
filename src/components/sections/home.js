@@ -66,7 +66,7 @@ export default function Home({ location }) {
                     <ButtonIcon
                       navTo='/#kitty'
                       isEven="even"
-                      title="Kitty"
+                      title="Meow"
                     >
                         <Kitty />
                     </ButtonIcon>
