@@ -2,16 +2,17 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { navigate } from 'gatsby';
 import _ from 'lodash';
-import ChatChannelMenu from '../../components/chatChannelMenu';
+import ChatChannelSelector  from '../../components/chatChannelSelector';
 import ChatInfiniteDisplay from '../../components/chatInfiniteDisplay';
 import ChatInputBar from '../../components/chatInputBar';
 import ModalEditField from '../../components/modalEditField';
 import { 
-  chatChannels,
-  getChatStore,
+  getChatChannels,
+  getChatLocalStorage,
   getMessages,
   saveMessages,
   postMessage,
+  seedChannel,
   pollChatter
 } from '../../services/chat';
 import { useWindowDimensions } from '../../utils/responsive';
@@ -61,9 +62,12 @@ export default function Chat({ location }) {
   const chatChannelHeight = isTabletOrMobile ? 64 : 96;
   const chatInputHeight = 48;
   const chatBoxHeight = height - chatChannelHeight - chatInputHeight - headerBarHeight;
-  //chat data
-  const [ chatStore, setChatStore ] = useState(getChatStore);
-  const [ messages, setMessages ] = useState(getMessages)
+  const [ isLoaded, setIsLoaded ] = useState(false);
+  //const [ chatStore, setChatStore ] = useState(getChatLocalStorage);
+  const [chatChannels, setChatChannels] = useState([]);
+  const [selectedChannel, setSelectedChannel] = useState(null);
+  const [sinceMarker, setSinceMarker] = useState(null)
+  const [ messages, setMessages ] = useState(getMessages);
   const [modal, setModal] = useState(null);
 
   const closeModal = () => {
@@ -75,91 +79,86 @@ export default function Chat({ location }) {
     //save latest marker
     if (Array.isArray(value)) {
       const messageArr = [_.cloneDeep(value).slice(1)];
-      const newChatStore = {
-        ...chatStore,
-        sinceMarker: value[0]
-      };
-      setChatStore(newChatStore);
+      const newSinceMarker = value[0];
+      setSinceMarker(newSinceMarker);
       setMessages(prevMessages => {
         return _.uniqby(_.concat(...prevMessages, ...messageArr), 'id');
       });
     }
   };
 
-  //CHANNEL FUNCTIONS
-  const getChannels = async () => {
-    const response = chatChannels();
+  const fetchChatChannels = async () => {
+    const response = getChatChannels();
     return await response;
   };
 
   const getChatter = async () => {
-    pollChatter(showMessage, chatStore.sinceMarker);
+    pollChatter(showMessage, sinceMarker);
   };
 
-  const setSelectedChannel = channelName => {
-    switch (channelName) {
-      case 'addChannel':
-        setModal('addChannel');
-      break;
-      case 'dropChannel':
-        setModal('dropChannel');
-      break;
-      default:
-        const newChatStore = {
-          ...chatStore,
-          selected: channelName
-        };
-        setChatStore(newChatStore);
-        localStorage.setItem('nnChatStore', JSON.stringify(newChatStore));
-  }
-  }
+  // const setSelectedChannel = channelName => {
+  //   switch (channelName) {
+  //     case 'addChannel':
+  //       setModal('addChannel');
+  //     break;
+  //     case 'dropChannel':
+  //       setModal('dropChannel');
+  //     break;
+  //     default:
+  //       const newChatStore = {
+  //         ...chatStore,
+  //         selected: channelName
+  //       };
+  //       setChatStore(newChatStore);
+  //       localStorage.setItem('nnChatStore', JSON.stringify(newChatStore));
+  //   }
+  // }
 
   useEffect(() => {
-    getChannels().then(res => {
-        const chatData = _.get(res, 'data', false) ? res.data : [];
-        let selected = chatStore.selected || chatData.find(x => x.name === '谈.global')['id'] || null;
-        const channelsObj = {
-          channels: res.data,
-          selected
-        };
-        const newChatStore = {
-          ...chatStore,
-          ...channelsObj
-        };
-        setChatStore(newChatStore);
-        localStorage.setItem('nnChatStore', JSON.stringify(newChatStore));
+    fetchChatChannels().then(res => {
+        const chatChannels = _.get(res, 'data', false) ? res.data : [];
+        let selected = selectedChannel || chatChannels.find(x => x.name === '谈.global')['id'] || null;
+        // localStorage.setItem('nnChatStore', JSON.stringify(newChatStore));
         getChatter();
-        console.log('seclected channel is ' + selected);
+        setChatChannels(chatChannels);
+        setSelectedChannel(selected);
     }).catch(err => {
         console.log('err', err);
     });
   }, [location]);
 
   useEffect(() => {
-    const savedMessages = _.uniqby(messages, 'id');
-    saveMessages(savedMessages);
-  });
+    selectedChannel && seedChannel(selectedChannel).then(res => {
+      const seededMessages = _.get(res, 'data', false) ? res.data : [];
+      const oldMessages = _.cloneDeep(messages);
+      const collectedMessages = _.merge(seededMessages, oldMessages);
+      console.log('seededMessages', seededMessages);
+      setMessages(collectedMessages);
+    }).catch(err => {
+      console.log('seedChannel err', err);
+    });
+  },[selectedChannel]);
 
   return (
     <>
     <StyledChatContainer className="pitch-mixin" data-augmented-ui="tl-clip-x tr-rect-x bl-clip br-clip border">
-       <ChatChannelMenu
-        channels={chatStore.channels}
-        selected={chatStore.selected}
+       <ChatChannelSelector
+        channels={chatChannels}
+        selectedChannel={selectedChannel}
         clickHandler={setSelectedChannel}
-        />
-       <ChatInfiniteDisplay height={chatBoxHeight}>
+      />
+      <ChatInfiniteDisplay height={chatBoxHeight}>
           <List
-            dataSource={messages}
+            dataSource={_.filter(messages, {channel: selectedChannel})}
             renderItem={item => (
               <List.Item>
                 <Text type="warning">{item.ts}</Text>  <Text mark>{item.from || item.fromid}</Text> {item.text}
               </List.Item>
             )}
           />
-        </ChatInfiniteDisplay>
+      </ChatInfiniteDisplay>
       <ChatInputBar
-        channel={chatStore.selected}
+        channel={selectedChannel}
         submitHandler={postMessage}
       />
     </StyledChatContainer>

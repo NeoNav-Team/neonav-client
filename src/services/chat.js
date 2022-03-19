@@ -13,12 +13,12 @@ export const saveMessages = messages => {
   window.localStorage.setItem('nnMessages', JSON.stringify(messages));
 }
 
-export const getChatStore = () =>
+export const getChatLocalStorage = () =>
   isBrowser && window.localStorage.getItem('nnChatStore')
     ? JSON.parse(window.localStorage.getItem('nnChatStore'))
     : {};
 
-export const chatChannels = () => {
+export const getChatChannels = () => {
     if (!isBrowser) return false;
     axios.defaults.port = 6001;
     const url = formatEnpoint('channels');
