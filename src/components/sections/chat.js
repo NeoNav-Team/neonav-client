@@ -8,9 +8,8 @@ import ChatInputBar from '../../components/chatInputBar';
 import ModalEditField from '../../components/modalEditField';
 import { 
   getChatChannels,
-  getChatLocalStorage,
   getMessages,
-  saveMessages,
+  orderMessagesbyTimestamp,
   postMessage,
   seedChannel,
   pollChatter
@@ -37,6 +36,56 @@ const StyledChatContainer = styled.div`
   }
 `;
 
+const StyledChatMessage = styled.div`
+  padding: 3vw;
+  &.pitch-mixin {
+    --aug-inlay-all: 4px;
+    --aug-inlay-bg: radial-gradient(ellipse at top, #7a04eb, rgba(122, 4, 235, 0))  50% 50% / 100% 100%;
+    --aug-border-all: 1px;
+    --aug-border-bg: radial-gradient(#7a04eb, #7a04eb) 100% 100% / 100% 100%;
+  }
+`;
+
+const Timestamp = styled(Text)`
+  color: white;
+  font-weight: 100;
+  margin-left: 10px;
+  font-size: 10px
+  opacity: 0.55;
+`;
+
+const User = styled(Text)`
+  color: #41c5ff;
+  font-weight: 300;
+  margin-left: 10px;
+  font-size: 12px
+`;
+
+const StyledChatMessageLabel = styled.div`
+  font-size: 10px;
+  padding: 2px;
+  width: 70vw;
+  &.pitch-mixin {
+    --aug-inlay-all: 4px;
+    --aug-inlay-bg: radial-gradient(ellipse at top, #7a04eb, rgba(122, 4, 235, 0))  50% 50% / 100% 100%;
+    --aug-border-all: 1px;
+    --aug-border-bg: radial-gradient(#7a04eb, #7a04eb) 100% 100% / 100% 100%;
+  }
+`;
+
+const StyledChatMessageText = styled.div`
+  font-size: 12px;
+  padding: 10px;
+  min-width: 70vw;
+  &.pitch-mixin {
+    --aug-inlay-all: 4px;
+    --aug-inlay-bg: radial-gradient(ellipse at top, #41c5ff, rgba(122, 4, 235, 0))  50% 50% / 100% 100%;
+    --aug-border-all: 1px;
+    --aug-border-bg: radial-gradient(#41c5ff, #41c5ff) 100% 100% / 100% 100%;
+  }
+`;
+
+
 const StyledModal = styled(Modal)`
   .ant-modal-content {
     background:transparent;
@@ -62,12 +111,12 @@ export default function Chat({ location }) {
   const chatChannelHeight = isTabletOrMobile ? 64 : 96;
   const chatInputHeight = 48;
   const chatBoxHeight = height - chatChannelHeight - chatInputHeight - headerBarHeight;
-  const [ isLoaded, setIsLoaded ] = useState(false);
-  //const [ chatStore, setChatStore ] = useState(getChatLocalStorage);
+
   const [chatChannels, setChatChannels] = useState([]);
   const [selectedChannel, setSelectedChannel] = useState(null);
   const [sinceMarker, setSinceMarker] = useState(null)
-  const [ messages, setMessages ] = useState(getMessages);
+  const [messages, setMessages] = useState([]);
+  const [lastMessage, setLastMessage] = useState([]);
   const [modal, setModal] = useState(null);
 
   const closeModal = () => {
@@ -75,15 +124,14 @@ export default function Chat({ location }) {
       navigate('/chat');
   }
 
-  const showMessage = value => {
+  const showSingleMessage = value => {
     //save latest marker
+    //append entered chat message to message feed
     if (Array.isArray(value)) {
-      const messageArr = [_.cloneDeep(value).slice(1)];
       const newSinceMarker = value[0];
+      const newMessage = value[1];
+      setLastMessage(newMessage);
       setSinceMarker(newSinceMarker);
-      setMessages(prevMessages => {
-        return _.uniqby(_.concat(...prevMessages, ...messageArr), 'id');
-      });
     }
   };
 
@@ -93,35 +141,29 @@ export default function Chat({ location }) {
   };
 
   const getChatter = async () => {
-    pollChatter(showMessage, sinceMarker);
+    pollChatter(showSingleMessage, sinceMarker);
   };
 
-  // const setSelectedChannel = channelName => {
-  //   switch (channelName) {
-  //     case 'addChannel':
-  //       setModal('addChannel');
-  //     break;
-  //     case 'dropChannel':
-  //       setModal('dropChannel');
-  //     break;
-  //     default:
-  //       const newChatStore = {
-  //         ...chatStore,
-  //         selected: channelName
-  //       };
-  //       setChatStore(newChatStore);
-  //       localStorage.setItem('nnChatStore', JSON.stringify(newChatStore));
-  //   }
-  // }
+
+  const setInitalStateFromResponse = (res) => {
+    const chatChannels = _.get(res, 'data', false) ? res.data : [];
+    let selected = selectedChannel || chatChannels.find(x => x.name === '谈.global')['id'] || null;
+    // localStorage.setItem('nnChatStore', JSON.stringify(newChatStore));
+    getChatter();
+    setChatChannels(chatChannels);
+    setSelectedChannel(selected);
+  }
+
+  const setChannelMessagesFromResponse = (res) => {
+    const seededChannelMessages = _.get(res, 'data', false) ? res.data : [];
+    const oldMessages = _.cloneDeep(messages);
+    const collectedMessages = _.unionBy(seededChannelMessages, oldMessages, 'id');
+    setMessages(orderMessagesbyTimestamp(collectedMessages));
+  }
 
   useEffect(() => {
     fetchChatChannels().then(res => {
-        const chatChannels = _.get(res, 'data', false) ? res.data : [];
-        let selected = selectedChannel || chatChannels.find(x => x.name === '谈.global')['id'] || null;
-        // localStorage.setItem('nnChatStore', JSON.stringify(newChatStore));
-        getChatter();
-        setChatChannels(chatChannels);
-        setSelectedChannel(selected);
+      setInitalStateFromResponse(res);
     }).catch(err => {
         console.log('err', err);
     });
@@ -129,15 +171,21 @@ export default function Chat({ location }) {
 
   useEffect(() => {
     selectedChannel && seedChannel(selectedChannel).then(res => {
-      const seededMessages = _.get(res, 'data', false) ? res.data : [];
-      const oldMessages = _.cloneDeep(messages);
-      const collectedMessages = _.merge(seededMessages, oldMessages);
-      console.log('seededMessages', seededMessages);
-      setMessages(collectedMessages);
+      setChannelMessagesFromResponse(res);
     }).catch(err => {
       console.log('seedChannel err', err);
     });
   },[selectedChannel]);
+
+  useEffect(() => {
+    console.log('messages', messages);
+  },[messages])
+
+  useEffect(() => {
+    const updatedMessages = _.cloneDeep(messages);
+    updatedMessages.push(lastMessage);
+    setMessages(orderMessagesbyTimestamp(updatedMessages));
+  },[lastMessage])
 
   return (
     <>
@@ -148,12 +196,19 @@ export default function Chat({ location }) {
         clickHandler={setSelectedChannel}
       />
       <ChatInfiniteDisplay height={chatBoxHeight}>
+        <div>{selectedChannel}</div>
           <List
             dataSource={_.filter(messages, {channel: selectedChannel})}
             renderItem={item => (
-              <List.Item>
-                <Text type="warning">{item.ts}</Text>  <Text mark>{item.from || item.fromid}</Text> {item.text}
-              </List.Item>
+                <StyledChatMessage>
+                  <StyledChatMessageLabel className="pitch-mixin" data-augmented-ui="tr-clip both">
+                    <User>{item.from || item.fromid}</User>
+                    <Timestamp>{item.ts}</Timestamp>
+                  </StyledChatMessageLabel>
+                  <StyledChatMessageText className="pitch-mixin" data-augmented-ui="tr-clip br-round bl-round both">
+                    <Text> 》 {item.text}</Text>
+                  </StyledChatMessageText>
+                </StyledChatMessage>
             )}
           />
       </ChatInfiniteDisplay>

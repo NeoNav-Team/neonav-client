@@ -76,9 +76,9 @@ function ChatChannelMenu(props) {
     return (
         <div data-augmented-ui-reset>
             <PrevBtn onClick={_.partial(setArrowChannelhandler, previousChannel)}><div className="arrow" data-augmented-ui="all-hexangle-left border" /></PrevBtn>
-                <StyledSelect className="pitch-mixin" data-augmented-ui="tl-clip-x tr-rect-x br-clip bl-clip both" onChange={setSelectedChannelhandler}>
+                <StyledSelect className="pitch-mixin" value={selectedChannel || ''} data-augmented-ui="tl-clip-x tr-rect-x br-clip bl-clip both" onChange={setSelectedChannelhandler}>
                     {channels.map((channel, index) => {
-                        return <option key={`channel_${index}`} selected={selectedChannel === channel.id} value={channel.id}>{channel.name}</option>;
+                        return <option key={`channel_${index}`} value={channel.id}>{channel.name}</option>;
                     })}
                 </StyledSelect>
             <NextBtn onClick={_.partial(setArrowChannelhandler, nextChannel)}><div className="arrow" data-augmented-ui="all-hexangle-right border" /></NextBtn>

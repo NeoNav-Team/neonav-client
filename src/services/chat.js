@@ -1,4 +1,6 @@
 import axios from 'axios';
+import _ from 'lodash';
+import moment from 'moment';
 import { isBrowser } from '../utils/checks';
 import { getUser, logout } from './auth';
 import { formatEnpoint } from '../utils/format';
@@ -17,6 +19,14 @@ export const getChatLocalStorage = () =>
   isBrowser && window.localStorage.getItem('nnChatStore')
     ? JSON.parse(window.localStorage.getItem('nnChatStore'))
     : {};
+
+export const orderMessagesbyTimestamp = (messages, dir) => {
+  const direction = dir || 'asc';
+  const orderedMessages = _.orderBy(messages, (o) => {
+    return moment(o.ts);
+  }, [direction]);
+  return orderedMessages;
+}
 
 export const getChatChannels = () => {
     if (!isBrowser) return false;
@@ -89,7 +99,7 @@ export const pollChatter = async (showMessage, sinceMarker) => {
   const url = formatEnpoint('channels') + `/all?since=${since}`;
   const nnUser = getUser();
   const token = nnUser.accessToken;
-  console.log('Fetching Chat...');
+  console.log('Fetching Chat...', since);
   const fetchResponse = await axios({
       headers: {
         'x-access-token': `${token}`,
