@@ -66,6 +66,7 @@ function ModalCreateChannel(props) {
         <div>
           <QrReader
             delay={300}
+            constraints={{facingMode: 'environment'}}
             onResult={(result, error) => {
               if (!!result) {
                 setQrData(result?.text);
@@ -80,7 +81,7 @@ function ModalCreateChannel(props) {
       </div>
         <Title level={4} style={{color:'#fff'}}>Active Users</Title>
         <p style={{lineHeight: '30px'}}>
-          {channelUsers.map((user, index) => { return (
+          {channelUsers && channelUsers.map((user, index) => { return (
             <Tag color={channelAdmin !== user.userid ? 'rgba(0,0,0, 0.5)' : 'rgba(255,0,255, 0.75)'}><UserOutlined /> <Text key={index}>{user.username || user.userid}</Text></Tag> 
           )})}
         </p>
