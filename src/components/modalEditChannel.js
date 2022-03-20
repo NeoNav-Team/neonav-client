@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { navigate } from 'gatsby';
 import _ from 'lodash';
-import PopoverQRReader from './popoverQrReader';
+import PopoverQRReader from './popoverQRReader';
 import {
     // Alert,
     // Button,

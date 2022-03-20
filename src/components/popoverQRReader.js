@@ -22,7 +22,6 @@ function PopoverQRReader(props) {
         setIsVisible(visible)
         if (!isVisible) {
             const localstream = _.get(window, 'localstream', null);
-            console.log('localstream', localstream);
             localstream && localstream.getTracks().forEach(track => track.stop());
         }
     }
