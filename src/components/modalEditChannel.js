@@ -9,6 +9,7 @@ import {
     Tag,
     // Input
 } from 'antd';
+import { QrReader } from 'react-qr-reader';
 import { UserOutlined } from '@ant-design/icons';
 import { getChannelUsers } from '../services/chat';
 
@@ -17,6 +18,7 @@ const { Text, Title } = Typography;
 function ModalCreateChannel(props) {
     const [errMsg, setErrMsg] = useState(null);
     const [channelUsers, setChannelUsers] = useState([]);
+    const [qrData, setQrData] = useState(null)
     const [form] = Form.useForm();
     const { fieldKey: channelId, myChannels } = props;
     const channel = _.filter(myChannels, ['id', channelId])[0];
@@ -60,6 +62,22 @@ function ModalCreateChannel(props) {
     return (
     <>
         <Title level={2} style={{color:'#fff'}}>{channelName}</Title>
+        <Title level={4} style={{color:'#fff'}}>Add User</Title>
+        <div>
+          <QrReader
+            delay={300}
+            onResult={(result, error) => {
+              if (!!result) {
+                setQrData(result?.text);
+              }
+              if (!!error) {
+                console.info(error);
+              }
+            }}
+            style={{ width: '100%' }}
+          />
+        <p>{qrData}</p>
+      </div>
         <Title level={4} style={{color:'#fff'}}>Active Users</Title>
         <p style={{lineHeight: '30px'}}>
           {channelUsers.map((user, index) => { return (
