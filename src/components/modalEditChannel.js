@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { navigate } from 'gatsby';
 import _ from 'lodash';
+import PopoverQRReader from './popoverQrReader';
 import {
     // Alert,
     // Button,
@@ -9,7 +10,6 @@ import {
     Tag,
     // Input
 } from 'antd';
-import { QrReader } from 'react-qr-reader';
 import { UserOutlined } from '@ant-design/icons';
 import { getChannelUsers } from '../services/chat';
 
@@ -48,6 +48,10 @@ function ModalCreateChannel(props) {
         console.log('Failed:', errorInfo);
     };
 
+    const onQRRead = value => {
+      setQrData(value);
+    }
+
 
     useEffect(() => {
       getChannelUsers(channelId).then(res => {
@@ -63,26 +67,12 @@ function ModalCreateChannel(props) {
     <>
         <Title level={2} style={{color:'#fff'}}>{channelName}</Title>
         <Title level={4} style={{color:'#fff'}}>Add User</Title>
-        <div>
-          <QrReader
-            delay={300}
-            constraints={{facingMode: 'environment'}}
-            onResult={(result, error) => {
-              if (!!result) {
-                setQrData(result?.text);
-              }
-              if (!!error) {
-                console.info(error);
-              }
-            }}
-            style={{ width: '100%' }}
-          />
+        <PopoverQRReader successHandler={onQRRead} />
         <p>{qrData}</p>
-      </div>
         <Title level={4} style={{color:'#fff'}}>Active Users</Title>
         <p style={{lineHeight: '30px'}}>
           {channelUsers && channelUsers.map((user, index) => { return (
-            <Tag color={channelAdmin !== user.userid ? 'rgba(0,0,0, 0.5)' : 'rgba(255,0,255, 0.75)'}><UserOutlined /> <Text key={index}>{user.username || user.userid}</Text></Tag> 
+            <Tag key={index} color={channelAdmin !== user.userid ? 'rgba(0,0,0, 0.5)' : 'rgba(255,0,255, 0.75)'}><UserOutlined /> <Text key={index}>{user.username || user.userid}</Text></Tag> 
           )})}
         </p>
         <Form
