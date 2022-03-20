@@ -3,7 +3,6 @@ import _ from 'lodash';
 import { QrReader } from 'react-qr-reader';
 import styled from 'styled-components';
 import {
-    Button,
     Popover
 } from 'antd';
 import { QrcodeOutlined } from '@ant-design/icons';
@@ -30,7 +29,7 @@ function PopoverQRReader(props) {
         <Popover
         content={
             <SyledDiv>
-            {isVisible ? (<QrReader
+            {isVisible && (<QrReader
                 delay={300}
                 constraints={{facingMode: 'environment'}}
                 onResult={(result, error) => {
@@ -43,8 +42,6 @@ function PopoverQRReader(props) {
                 }
                 }}
             />
-            ) : (
-                null
             )}
             </SyledDiv>
         }
