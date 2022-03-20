@@ -11,7 +11,7 @@ export const getMessages = () =>
     ? JSON.parse(window.localStorage.getItem('nnMessages'))
     : [];
 
-export const saveMessages = messages => {
+export const setChatLocalStorage = messages => {
   window.localStorage.setItem('nnMessages', JSON.stringify(messages));
 }
 
@@ -192,6 +192,38 @@ export const createChannel = (data) => {
         'content-type': 'application/json'
       },
       method: 'post',
+      url,
+      data
+  }).then(
+      function (response) {
+          return response;
+      }
+  ).catch(function (error) {
+      if (error.response) {
+        console.log('Error', error.response);
+        return error.response;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log('Error', error.config);
+      return error;
+    });
+};
+
+export const getChannelUsers = (channel, data) => {
+  if (!isBrowser) return false;
+  axios.defaults.port = 6001;
+  const url = formatEnpoint('channels') + `/${channel}/users`;
+  const nnUser = getUser();
+  const token = nnUser.accessToken;
+  return axios({
+      headers: {
+        'x-access-token': `${token}`,
+        'content-type': 'application/json'
+      },
+      method: 'get',
       url,
       data
   }).then(

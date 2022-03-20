@@ -13,7 +13,7 @@ import SpaceSuit from '../spaceSuit';
 import Pane from '../pane';
 import { modalFromLocation, stubFromSearch } from '../../utils/navigation';
 import { getChatChannels } from '../../services/chat';
-import { InfoCircleOutlined, EditOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { InfoCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import ModalEditChannel from '../modalEditChannel';
 import ModalCreateChannel from '../modalCreateChannel';
 
@@ -124,8 +124,8 @@ export default function Channels({ location }) {
     };
 
     const fetchChatChannels = async () => {
-    const response = getChatChannels();
-    return await response;
+        const response = getChatChannels();
+        return await response;
     };
 
     useEffect(() => {
@@ -174,7 +174,7 @@ export default function Channels({ location }) {
             width="75vh"
             >
             <Pane frameId={1}>
-                {modal === 'editChannel' && <ModalEditChannel fieldKey={stubFromSearch(location, 'k')} />}
+                {modal === 'editChannel' && <ModalEditChannel fieldKey={stubFromSearch(location, 'k')} myChannels={channels} />}
                 {modal === 'createChannel' && <ModalCreateChannel />}
             </Pane>
         </StyledModal>
