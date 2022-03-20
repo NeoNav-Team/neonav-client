@@ -4,6 +4,7 @@ import SpaceSuit from '../components/spaceSuit';
 import PrivateRoute from '../components/privateRoute';
 import Home from '../components/sections/home';
 import Chat from '../components/sections/chat';
+import Channels from '../components/sections/channels';
 import Security from '../components/sections/security';
 import Profile from '../components/sections/profile'; 
 import FooterNav from '../components/footerNav';
@@ -22,6 +23,7 @@ export default function Index({ location }) {
           {p === 'chat' && <PrivateRoute location={location} component={Chat} />}
           {p === 'profile' && <PrivateRoute location={location} component={Profile} />}
           {p === 'security' && <PrivateRoute location={location} component={Security} />}
+          {p === 'channels' && <PrivateRoute location={location} component={Channels} />}
           {p !== 'chat' && <FooterNav />}
     </SpaceSuit>
   )

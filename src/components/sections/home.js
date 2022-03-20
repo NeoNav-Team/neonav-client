@@ -5,6 +5,7 @@ import {modalFromLocation } from '../../utils/navigation';
 import styled from 'styled-components';
 import Logout from '../icons/logout';
 import Kitty from '../icons/kitty';
+import TanChat from '../icons/tanchat';
 import Chat from '../icons/chat';
 import MenuUserSettings from '../menuUserSettings';
 import { 
@@ -54,13 +55,13 @@ export default function Home({ location }) {
       <>
         <StyledAntLayout>
             <Row gutter={[24, 24]}>
-            <Col span={6}>
-                    <ButtonIcon
-                      navTo='/?p=chat'
-                      title="谈 | tan | chat"
-                    >
-                        <Chat />
-                    </ButtonIcon>
+              <Col span={6}>
+                  <ButtonIcon
+                    navTo='/?p=chat'
+                    title="tan / chat"
+                  >
+                      <TanChat />
+                  </ButtonIcon>
                 </Col>
                 <Col span={6}>
                     <ButtonIcon
@@ -78,8 +79,8 @@ export default function Home({ location }) {
                     >
                         <UserSettings />
                     </ButtonIcon>
-                </Col>
-                <Col span={6}>
+              </Col>
+              <Col span={6}>
                 <ButtonIcon
                   navTo='/logout'
                   isEven="even"
@@ -87,7 +88,23 @@ export default function Home({ location }) {
                 >
                     <Logout />
                 </ButtonIcon>
+              </Col>
+            </Row>
+            <Row gutter={[24, 24]}>
+              <Col span={6}>
+                  <ButtonIcon
+                    navTo='/?p=channels'
+                    title="Channels"
+                  >
+                      <Chat />
+                  </ButtonIcon>
                 </Col>
+                <Col span={6}>
+                </Col>
+                <Col span={6} >
+              </Col>
+              <Col span={6}>
+              </Col>
             </Row>
         </StyledAntLayout>
         <StyledModal
