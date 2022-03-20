@@ -6,13 +6,16 @@ import styled from 'styled-components';
 import { 
         Row,
         Col,
-        Modal
+        Modal,
+        Button
     } from 'antd';
 import SpaceSuit from '../spaceSuit';
 import Pane from '../pane';
 import { modalFromLocation, stubFromSearch } from '../../utils/navigation';
-import Lock from '../icons/lock';
-import Unlock from '../icons/unlock';
+import { getChatChannels } from '../../services/chat';
+import { InfoCircleOutlined, EditOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import ModalEditChannel from '../modalEditChannel';
+import ModalCreateChannel from '../modalCreateChannel';
 
 const StyledP = styled.p`
     display:block;
@@ -48,11 +51,7 @@ const StyledBlurb = styled.span`
 `;
 
 const MiniIconBtn = styled.div`
-    cursor: pointer;
-    fill: #fff;
-    svg {
-        opacity: 0.5;
-    }
+    fontSize: '28px';
 `;
 
 const EditBtnHolder = styled.div`
@@ -106,23 +105,39 @@ const StyledModal = styled(Modal)`
 
 
 export default function Channels({ location }) {
-    const [locked, setLock] = useState(true);
     const defaultModal = modalFromLocation(location);
     const [modal, setModal] = useState(defaultModal);
+    const [channels, setChatChannels] = useState([]);
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' });
 
     const closeModal = () => {
         setModal(null);
-        navigate('/?p=profile');
+        navigate('/?p=channels');
     }
 
-    const toggleLock = () => {
-        setLock(!locked);
+    const setProfileObjKey = objKey => {
+        if(objKey !== 'create') {
+            navigate(`/?p=channels&k=${objKey}#editChannel`);
+        } else {
+            navigate(`/?p=channels#createChannel`);
+        }
     };
 
+    const fetchChatChannels = async () => {
+    const response = getChatChannels();
+    return await response;
+    };
 
     useEffect(() => {
-    }, [location]);
+        fetchChatChannels().then(res => {
+            const myChannels = _.filter(res.data, ['scope', 'group']);
+            setChatChannels(myChannels);
+        }).catch(err => {
+            console.log('err', err);
+        });
+        setModal(modalFromLocation(location));
+        console.log('modal', modal);
+      }, [location]);
 
     const userStub = <>Channels</>;
 
@@ -130,19 +145,21 @@ export default function Channels({ location }) {
     <SpaceSuit>
         <Pane
             title={userStub}
-            back={'/#channels'}
+            back={'/'}
             offset={isTabletOrMobile ? '128' : '160'}
             footer={
-                <MiniIconBtn style={{width:'40px', right:'16px'}} onClick={toggleLock}>
-                    {locked ? <Lock /> : <Unlock />}
-                </MiniIconBtn>
+                <MiniIconBtn />
             }
         >
         <Row justify="space-between" align="middle">
-            <StyledCol span={15}>
-                <StyledP style={{cursor: 'pointer'}}>
-                    <Styledlabel>Channels</Styledlabel>
-                    <StyledValue>TBD</StyledValue>
+            <StyledCol span={24}>
+                {channels.map((channel, index) => { return (
+                <StyledP {...({ onClick: _.partial(setProfileObjKey, channel.id), style:{cursor:'pointer'}})} key={index}>
+                    <Button><InfoCircleOutlined /> {channel.name}</Button>
+                </StyledP>
+                )})}
+                <StyledP {...({ onClick: _.partial(setProfileObjKey, 'create'), style:{cursor:'pointer'}})}>
+                    <Button><PlusCircleOutlined /> Create Channel</Button>
                 </StyledP>
             </StyledCol>
         </Row>
@@ -157,7 +174,8 @@ export default function Channels({ location }) {
             width="75vh"
             >
             <Pane frameId={1}>
-                Modal goes here
+                {modal === 'editChannel' && <ModalEditChannel fieldKey={stubFromSearch(location, 'k')} />}
+                {modal === 'createChannel' && <ModalCreateChannel />}
             </Pane>
         </StyledModal>
     </SpaceSuit>

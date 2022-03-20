@@ -19,7 +19,9 @@ export const modals = [
     'myQRCode',
     'editField',
     'editAvatar',
-    'editPass'
+    'editPass',
+    'editChannel',
+    'createChannel',
 ];
 
 export const selectedChat = 'global';
