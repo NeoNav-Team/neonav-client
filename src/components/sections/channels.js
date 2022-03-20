@@ -26,46 +26,14 @@ const StyledP = styled.p`
     font-family: Roboto, sans-serif;
     font-weight: 100;
 `;
-
-const Styledlabel = styled.span`
-    font-family: Orbitron, sans-serif;
-    display: inline-block;
-    min-width: 10vh;
-    text-transform: uppercase;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-right: 2vh;
-    color: #00b8ff;
-`;
-const StyledValue = styled.span`
-    display: inline-block;
-    width: auto;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-`;
-const StyledBlurb = styled.span`
-    margin-left: 1.5vh;
-    display: block;
-`;
-
 const MiniIconBtn = styled.div`
     fontSize: '28px';
 `;
-
-const EditBtnHolder = styled.div`
-    position: absolute;
-    bottom: 1.75vh;
-    right: 2vh;
-`;
-
 const StyledCol = styled(Col)`
     ${StyledP} {
         cursor: ${props => props.locked ? 'inherit' : 'pointer'};
     }
 `;
-
 const StyledModal = styled(Modal)`
   .ant-modal-content {
     background:transparent;
@@ -102,7 +70,6 @@ const StyledModal = styled(Modal)`
         }
     }
 `;
-
 
 export default function Channels({ location }) {
     const userStub = <>Channels</>;

@@ -2,9 +2,7 @@ import React, {useState} from 'react';
 import _ from 'lodash';
 import { QrReader } from 'react-qr-reader';
 import styled from 'styled-components';
-import {
-    Popover
-} from 'antd';
+import { Popover } from 'antd';
 import { QrcodeOutlined } from '@ant-design/icons';
 
 const SyledDiv = styled.div`
@@ -49,7 +47,8 @@ function PopoverQRReader(props) {
         visible={isVisible}
         placement="top"
         onVisibleChange={clickHandler}
-        ><QrcodeOutlined style={{fontSize: '42px', width: '60px'}} />
+        >
+            <QrcodeOutlined style={{fontSize: '42px', width: '60px'}} />
         </Popover>
     )
 }

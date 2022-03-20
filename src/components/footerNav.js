@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Qrcode from './icons/Qrcode';
+import Qrcode from './icons/qrcode';
 import ButtonIcon from './buttonIcon';
 
 const StyledFooterDiv  = styled.div`
