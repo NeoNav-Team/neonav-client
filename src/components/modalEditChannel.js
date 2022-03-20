@@ -21,6 +21,7 @@ function ModalCreateChannel(props) {
     const { fieldKey: channelId, myChannels } = props;
     const channel = _.filter(myChannels, ['id', channelId])[0];
     const channelName = _.get(channel, 'name', '');
+    const channelAdmin = _.get(channel, 'admin', '');
 
     const goChannelUsers  = async value => {
         const response = getChannelUsers(value);
@@ -53,6 +54,7 @@ function ModalCreateChannel(props) {
       }).catch(err => {
           console.log('err', err);
       });
+      console.log('props.myChannels', props.myChannels);
     }, [props]);
 
     return (
@@ -61,7 +63,7 @@ function ModalCreateChannel(props) {
         <Title level={4} style={{color:'#fff'}}>Active Users</Title>
         <p style={{lineHeight: '30px'}}>
           {channelUsers.map((user, index) => { return (
-            <Tag color="rgba(0,0,0, 0.5)"><UserOutlined /> <Text key={index}>{user.username || user.userid}</Text></Tag> 
+            <Tag color={channelAdmin !== user.userid ? 'rgba(0,0,0, 0.5)' : 'rgba(255,0,255, 0.75)'}><UserOutlined /> <Text key={index}>{user.username || user.userid}</Text></Tag> 
           )})}
         </p>
         <Form

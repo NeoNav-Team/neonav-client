@@ -104,11 +104,11 @@ const StyledModal = styled(Modal)`
 `;
 
 
-export default function Channels({ location }) {
-    const userStub = <>Channels</>;
+export default function Contacts({ location }) {
+    const userStub = <>Contacts</>;
     const defaultModal = modalFromLocation(location);
     const [modal, setModal] = useState(defaultModal);
-    const [channels, setChatChannels] = useState([]);
+    const [contacts, setChatContacts] = useState([]);
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' });
 
     const closeModal = () => {
@@ -131,12 +131,13 @@ export default function Channels({ location }) {
 
     useEffect(() => {
         fetchChatChannels().then(res => {
-            const myChannels = _.filter(res.data, ['scope', 'group']);
-            setChatChannels(myChannels);
+            const myChannels = res.data;
+            setChatContacts(myChannels);
         }).catch(err => {
             console.log('err', err);
         });
         setModal(modalFromLocation(location));
+        console.log('contacts', contacts);
       }, [location]);
 
   return (
@@ -151,14 +152,7 @@ export default function Channels({ location }) {
         >
         <Row justify="space-between" align="middle">
             <StyledCol span={24}>
-                {channels.map((channel, index) => { return (
-                <StyledP {...({ onClick: _.partial(setProfileObjKey, channel.id), style:{cursor:'pointer'}})} key={index}>
-                    <Button><InfoCircleOutlined /> {channel.name}</Button>
-                </StyledP>
-                )})}
-                <StyledP {...({ onClick: _.partial(setProfileObjKey, 'create'), style:{cursor:'pointer'}})}>
-                    <Button><PlusCircleOutlined /> Create Channel</Button>
-                </StyledP>
+                Your momma
             </StyledCol>
         </Row>
         </Pane>
@@ -172,8 +166,9 @@ export default function Channels({ location }) {
             width="75vh"
             >
             <Pane frameId={1}>
-                {modal === 'editChannel' && <ModalEditChannel fieldKey={stubFromSearch(location, 'k')} myChannels={channels} />}
-                {modal === 'createChannel' && <ModalCreateChannel />}
+                { 
+                // modal goes here
+                }
             </Pane>
         </StyledModal>
     </SpaceSuit>
