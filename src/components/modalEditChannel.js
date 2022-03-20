@@ -11,14 +11,13 @@ import {
     // Input
 } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { getChannelUsers } from '../services/chat';
+import { getChannelUsers, addUserToChannel } from '../services/chat';
 
 const { Text, Title } = Typography;
 
 function ModalCreateChannel(props) {
     const [errMsg, setErrMsg] = useState(null);
     const [channelUsers, setChannelUsers] = useState([]);
-    const [qrData, setQrData] = useState(null)
     const [form] = Form.useForm();
     const { fieldKey: channelId, myChannels } = props;
     const channel = _.filter(myChannels, ['id', channelId])[0];
@@ -48,8 +47,14 @@ function ModalCreateChannel(props) {
         console.log('Failed:', errorInfo);
     };
 
-    const onQRRead = value => {
-      setQrData(value);
+    const onQRRead = userId => {
+      addUserToChannel(channelId, userId).then(res => {
+        const myUsers = res.data;
+        console.log('res.data', res.data);
+        // setChannelUsers(myUsers);
+    }).catch(err => {
+        console.log('err', err);
+    });
     }
 
 
@@ -68,7 +73,6 @@ function ModalCreateChannel(props) {
         <Title level={2} style={{color:'#fff'}}>{channelName}</Title>
         <Title level={4} style={{color:'#fff'}}>Add User</Title>
         <PopoverQRReader successHandler={onQRRead} />
-        <p>{qrData}</p>
         <Title level={4} style={{color:'#fff'}}>Active Users</Title>
         <p style={{lineHeight: '30px'}}>
           {channelUsers && channelUsers.map((user, index) => { return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Profile from './icons/profile';
+import Qrcode from './icons/Qrcode';
 import ButtonIcon from './buttonIcon';
 
 const StyledFooterDiv  = styled.div`
@@ -49,9 +49,9 @@ function FooterNav(props) {
         <StyledFooterDiv>
             <div className="grid-container" />
                 <ButtonIcon
-                    navTo={'/?p=profile'}
+                    navTo='/#myQRCode'
                 >
-                    <Profile fill={'#00b8ff'} />
+                    <Qrcode fill={'#00b8ff'} />
                 </ButtonIcon>
                 {children}
         </StyledFooterDiv>
