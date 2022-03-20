@@ -99,7 +99,6 @@ export const pollChatter = async (showMessage, sinceMarker) => {
   const url = formatEnpoint('channels') + `/all?since=${since}`;
   const nnUser = getUser();
   const token = nnUser.accessToken;
-  console.log('Fetching Chat...', since);
   const fetchResponse = await axios({
       headers: {
         'x-access-token': `${token}`,
@@ -109,12 +108,9 @@ export const pollChatter = async (showMessage, sinceMarker) => {
       url
   }).then(
     function (response) {
-      console.log('fetch complete!');
-      console.log('response', response);
       return response;
     }
   ).catch(function (error) {
-    console.log('fetch complete!');
       if (error.response) {
         console.log('Error', error.response);
         return error.response;

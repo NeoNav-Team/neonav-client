@@ -196,7 +196,6 @@ export default function Chat({ location }) {
         clickHandler={setSelectedChannel}
       />
       <ChatInfiniteDisplay height={chatBoxHeight}>
-        <div>{selectedChannel}</div>
           <List
             dataSource={_.filter(messages, {channel: selectedChannel})}
             renderItem={item => (
