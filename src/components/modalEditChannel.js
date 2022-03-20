@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { navigate } from 'gatsby';
 import _ from 'lodash';
-import PopoverQRReader from './popoverQRReader';
+// import PopoverQRReader from './popoverQRReader';
 import {
     // Alert,
     // Button,
@@ -72,7 +72,7 @@ function ModalCreateChannel(props) {
     <>
         <Title level={2} style={{color:'#fff'}}>{channelName}</Title>
         <Title level={4} style={{color:'#fff'}}>Add User</Title>
-        <PopoverQRReader successHandler={onQRRead} />
+        {/* <PopoverQRReader successHandler={onQRRead} /> */}
         <Title level={4} style={{color:'#fff'}}>Active Users</Title>
         <p style={{lineHeight: '30px'}}>
           {channelUsers && channelUsers.map((user, index) => { return (
