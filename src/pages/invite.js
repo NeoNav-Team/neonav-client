@@ -29,7 +29,7 @@ export default function Login({location}) {
               lg={{offset:5, span:14}}
               xl={{offset:6, span:12}}
               >
-              <FormLogin location={location} />
+                invite
             </Col>
           </Row>
         </StyledVertCenteredDiv>
