@@ -6,6 +6,7 @@ import TinyForm from './tinyForm';
 import {
     Typography,
     Tag,
+    Button,
 } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { getUser } from '../services/auth';
@@ -22,14 +23,14 @@ function ModalCreateChannel(props) {
     const channelAdmin = _.get(channel, 'admin', '');
     const userId = nnUser.userid;
     const isChannelAdmin = channelAdmin === userId;
-    const [admin, setAdmin] = useState(channelAdmin);
+
 
     const selectionUsers = channelUsers => {
       const selectItems = []
       channelUsers.map(user => {
         const value = user.userid;
-        const name = user.username;
-        selectItems.push({value, name});
+        const name = `${user.userid} ➤ ${user.username}`;
+        value !== userId && selectItems.push({value, name});
       })
       return selectItems;
     }
@@ -55,22 +56,30 @@ function ModalCreateChannel(props) {
       const userId = res.remove;
       removeUserToChannel(channelId, userId).then(res => {
         updateChannelUsers(channelId);
-    }).catch(err => {
-        console.log('err', err);
-    });
+      }).catch(err => {
+          console.log('err', err);
+      });
     }
 
     const onChangeAdmin = res => {
       const userId = res.reassign;
       changeAdminToChannel(channelId, userId).then(res => {
-        setAdmin(userId);
+        navigate('/?p=channels', { replace: true });
     }).catch(err => {
         console.log('err', err);
     });
     }
 
+    const handleLeave = () => {
+      removeUserToChannel(channelId, userId).then(res => {
+        navigate('/', { replace: true });
+      }).catch(err => {
+          console.log('err', err);
+      });
+    }
+
     useEffect(() => {
-      updateChannelUsers(channelId);
+      channelId && updateChannelUsers(channelId);
     }, [channelId]);
     
 
@@ -83,16 +92,18 @@ function ModalCreateChannel(props) {
             <PopoverQRReader successHandler={onAddUser} />
             <Title level={4} style={{color:'#fff'}}>Remove User</Title>
             <TinyForm type='select' label='Remove' name={'remove'} successHandler={onRemoveUser} data={selectionUsers(channelUsers)} />
-            <Title level={4} style={{color:'#fff'}}>Reassign Admin</Title>
+            <Title level={4} style={{color:'#fff'}}>Resassign Admin</Title>
             <TinyForm type='select' label='Resassign' name={'reassign'} successHandler={onChangeAdmin} data={selectionUsers(channelUsers)} />
           </>
         )}
         <Title level={4} style={{color:'#fff'}}>Active Users</Title>
         <p style={{lineHeight: '30px'}}>
           {channelUsers && channelUsers.map((user, index) => { return (
-            <Tag key={index} color={admin !== user.userid ? 'rgba(0,0,0, 0.5)' : 'rgba(255,0,255, 0.75)'}><UserOutlined /> <Text key={index}>{user.username || user.userid}</Text></Tag> 
+            <Tag key={index} color={channelAdmin !== user.userid ? 'rgba(0,0,0, 0.5)' : 'rgba(255,0,255, 0.75)'}><UserOutlined /> <Text key={index}>{user.username || user.userid}</Text></Tag> 
           )})}
         </p>
+        <Title level={4} style={{color:'#fff'}}>Actions</Title>
+        <Button onClick={handleLeave} style={{backgroundColor: '#ff00a0', fontSize: '12px'}}>Leave Channel</Button>
     </>
 )   
 }
