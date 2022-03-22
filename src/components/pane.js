@@ -27,7 +27,7 @@ const StyledPaneDiv = styled.div`
   .ant-checkbox + span {
     color: #fff;
   }
-  .ant-input, .ant-input-password, .ant-select {
+  .ant-input, .ant-input-password {
       border-radius: 10px 0 10px 0;
       border: 2px solid ${props => props.colors[2]};
       line-height: 4vh;
