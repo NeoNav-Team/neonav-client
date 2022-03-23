@@ -41,6 +41,34 @@ export const userRegister = data => {
     });
 };
 
+export const userInvite = data => {
+  if (!isBrowser) return false;
+  axios.defaults.port = 6001;
+  const url = formatEnpoint('invite');
+  return axios({
+      method: 'post',
+      url,
+      data
+  }).then(
+    function (response) {
+      logout(() => {
+        navigate('/login#newUser');
+      });
+    }
+  ).catch(function (error) {
+      if (error.response) {
+        console.log('Error', error.response);
+        return error.response;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log('Error', error.config);
+      return error;
+    });
+};
+
 export const userChangePass = data => {
   if (!isBrowser) return false;
   axios.defaults.port = 6001;

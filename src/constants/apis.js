@@ -6,6 +6,7 @@ export const apis = {
     },
     login: '/api/auth',
     profile: '/api/user',
+    invite: '/api/auth/invite',
     register: '/api/auth/user',
     validate: '/api/auth/user',
     fakename: '/api/user/fake',

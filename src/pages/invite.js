@@ -1,7 +1,7 @@
 import React from 'react';
 import SpaceSuit from '../components/spaceSuit';
 import Logo from '../components/logo';
-import FormLogin from '../components/formLogin';
+import FormInvite from '../components/formInvite';
 import { Row, Col } from 'antd';
 import styled from 'styled-components';
 
@@ -29,7 +29,7 @@ export default function Login({location}) {
               lg={{offset:5, span:14}}
               xl={{offset:6, span:12}}
               >
-                invite
+              <FormInvite location={location} />
             </Col>
           </Row>
         </StyledVertCenteredDiv>
