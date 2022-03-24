@@ -1,10 +1,13 @@
 import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment';
+import apis from '../constants/apis';
 import { isBrowser } from '../utils/checks';
 import { getUser, logout } from './auth';
 import { formatEnpoint } from '../utils/format';
 import { navigate } from 'gatsby';
+
+const port = _.get(apis, 'url.port', '');
 
 export const getMessages = () =>
   isBrowser && window.localStorage.getItem('nnMessages')
@@ -30,7 +33,7 @@ export const orderMessagesbyTimestamp = (messages, dir) => {
 
 export const getChatChannels = () => {
     if (!isBrowser) return false;
-    axios.defaults.port = 6001;
+    axios.defaults.port = port;
     const url = formatEnpoint('channels');
     const nnUser = getUser();
     const token = nnUser.accessToken;
@@ -62,7 +65,7 @@ export const getChatChannels = () => {
 export const seedChannel = (channel, params) => {
   // const { since, until, limit } = params;
   if (!isBrowser) return false;
-  axios.defaults.port = 6001;
+  axios.defaults.port = port;
   const url = formatEnpoint('channels') + `/${channel}/history`;
   const nnUser = getUser();
   const token = nnUser.accessToken;
@@ -93,7 +96,7 @@ export const seedChannel = (channel, params) => {
 
 export const pollChatter = async (showMessage, sinceMarker) => {
   if (!isBrowser) return false;
-  axios.defaults.port = 6001;
+  axios.defaults.port = port;
   const WAIT_TIME = 3000;
   const since = sinceMarker || 'now';
   const url = formatEnpoint('channels') + `/all?since=${since}`;
@@ -150,7 +153,7 @@ export const pollChatter = async (showMessage, sinceMarker) => {
 
 export const postMessage = (channel, data) => {
   if (!isBrowser) return false;
-  axios.defaults.port = 6001;
+  axios.defaults.port = port;
   const url = formatEnpoint('channels') + `/${channel}`;
   const nnUser = getUser();
   const token = nnUser.accessToken;
@@ -182,7 +185,7 @@ export const postMessage = (channel, data) => {
 
 export const createChannel = (data) => {
   if (!isBrowser) return false;
-  axios.defaults.port = 6001;
+  axios.defaults.port = port;
   const url = formatEnpoint('channels');
   const nnUser = getUser();
   const token = nnUser.accessToken;
@@ -214,7 +217,7 @@ export const createChannel = (data) => {
 
 export const getChannelUsers = (channel, data) => {
   if (!isBrowser) return false;
-  axios.defaults.port = 6001;
+  axios.defaults.port = port;
   const url = formatEnpoint('channels') + `/${channel}/users`;
   const nnUser = getUser();
   const token = nnUser.accessToken;
@@ -246,7 +249,7 @@ export const getChannelUsers = (channel, data) => {
 
 export const addUserToChannel = (channel, user, data) => {
   if (!isBrowser) return false;
-  axios.defaults.port = 6001;
+  axios.defaults.port = port;
   const url = formatEnpoint('channels') + `/${channel}/${user}`;
   const nnUser = getUser();
   const token = nnUser.accessToken;
@@ -278,7 +281,7 @@ export const addUserToChannel = (channel, user, data) => {
 
 export const removeUserToChannel = (channel, user, data) => {
   if (!isBrowser) return false;
-  axios.defaults.port = 6001;
+  axios.defaults.port = port;
   const url = formatEnpoint('channels') + `/${channel}/${user}`;
   const nnUser = getUser();
   const token = nnUser.accessToken;
@@ -310,7 +313,7 @@ export const removeUserToChannel = (channel, user, data) => {
 
 export const changeAdminToChannel = (channel, user, data) => {
   if (!isBrowser) return false;
-  axios.defaults.port = 6001;
+  axios.defaults.port = port;
   const url = formatEnpoint('channels') + `/${channel}/${user}`;
   const nnUser = getUser();
   const token = nnUser.accessToken;

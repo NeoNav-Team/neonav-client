@@ -1,8 +1,8 @@
 export const apis = {
     url: {
         protocol: 'https',
-        hostname: 'neonav.net',
-        port: '6001'
+        hostname: 'api.neonav.net',
+        port: ''
     },
     login: '/api/auth',
     profile: '/api/user',

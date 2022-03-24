@@ -1,8 +1,11 @@
 import { formatEnpoint } from '../utils/format';
+import apis from '../constants/apis';
 import { isBrowser } from '../utils/checks';
 import { navigate } from 'gatsby';
 import axios from 'axios';
 import _ from 'lodash';
+
+const { port } = _.get(apis, 'url.port', '');
 
 export const getUser = () =>
   isBrowser && window.localStorage.getItem('nnUser')
@@ -15,7 +18,7 @@ const setUser = user => {
 
 export const userRegister = data => {
   if (!isBrowser) return false;
-  axios.defaults.port = 6001;
+  axios.defaults.port = port;
   const url = formatEnpoint('register');
   return axios({
       method: 'post',
@@ -43,7 +46,7 @@ export const userRegister = data => {
 
 export const userInvite = data => {
   if (!isBrowser) return false;
-  axios.defaults.port = 6001;
+  axios.defaults.port = port;
   const url = formatEnpoint('invite');
   return axios({
       method: 'post',
@@ -71,7 +74,7 @@ export const userInvite = data => {
 
 export const userChangePass = data => {
   if (!isBrowser) return false;
-  axios.defaults.port = 6001;
+  axios.defaults.port = port;
   const nnUser = getUser();
   data.dbid = nnUser.id;
   const userid = nnUser.userid;
@@ -107,7 +110,7 @@ export const userChangePass = data => {
 
 export const validateToken = () => {
   if (!isBrowser) return false;
-  axios.defaults.port = 6001;
+  axios.defaults.port = port;
   const nnUser = getUser();
   const token = nnUser.accessToken;
   const url = formatEnpoint('validate');
@@ -137,7 +140,7 @@ export const validateToken = () => {
 
 export const userLogin = data => {
     if (!isBrowser) return false;
-    axios.defaults.port = 6001;
+    axios.defaults.port = port;
     const url = formatEnpoint('login');
     return axios({
         method: 'post',

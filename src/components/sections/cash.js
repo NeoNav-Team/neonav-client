@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { navigate } from 'gatsby';
 import _ from 'lodash';
-import ChatChannelSelector  from '../../components/chatChannelSelector';
-import ChatInfiniteDisplay from '../../components/chatInfiniteDisplay';
-import ChatInputBar from '../../components/chatInputBar';
 import ModalEditField from '../../components/modalEditField';
 import { 
   getChatChannels,
@@ -101,7 +98,7 @@ const StyledModal = styled(Modal)`
 //TODO: THINGS TO COMPLETE CHAT
 // 1. WRITE INFININTE SCROLL FOR CHAT
 
-export default function Chat({ location }) {
+export default function Cash({ location }) {
   // sizing values
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' });
   const { height } = useWindowDimensions();
@@ -146,7 +143,6 @@ export default function Chat({ location }) {
   const setInitalStateFromResponse = (res) => {
     const chatChannels = _.get(res, 'data', false) ? res.data : [];
     let selected = selectedChannel || chatChannels.find(x => x.name === '谈.global')['id'] || null;
-    // localStorage.setItem('nnChatStore', JSON.stringify(newChatStore));
     getChatter();
     setChatChannels(chatChannels);
     setSelectedChannel(selected);
@@ -188,31 +184,7 @@ export default function Chat({ location }) {
   return (
     <>
     <StyledChatContainer className="pitch-mixin" data-augmented-ui="tl-clip-x tr-rect-x bl-clip br-clip border">
-       <ChatChannelSelector
-        channels={chatChannels}
-        selectedChannel={selectedChannel}
-        clickHandler={setSelectedChannel}
-      />
-      <ChatInfiniteDisplay height={chatBoxHeight}>
-          <List
-            dataSource={_.filter(messages, {channel: selectedChannel})}
-            renderItem={item => (
-                <StyledChatMessage>
-                  <StyledChatMessageLabel className="pitch-mixin" data-augmented-ui="tr-clip both">
-                    <User>{item.from || item.fromid}</User>
-                    <Timestamp>{item.ts}</Timestamp>
-                  </StyledChatMessageLabel>
-                  <StyledChatMessageText className="pitch-mixin" data-augmented-ui="tr-clip br-round bl-round both">
-                    <Text> 》 {item.text}</Text>
-                  </StyledChatMessageText>
-                </StyledChatMessage>
-            )}
-          />
-      </ChatInfiniteDisplay>
-      <ChatInputBar
-        channel={selectedChannel}
-        submitHandler={postMessage}
-      />
+     Cash
     </StyledChatContainer>
     <StyledModal
             title={null}
@@ -224,7 +196,6 @@ export default function Chat({ location }) {
             width="75vh"
             >
                 {modal === 'addChannel' && <ModalEditField />}
-                {modal === 'dropChannel' && <ModalEditField />}
             </StyledModal>
     </>
   )

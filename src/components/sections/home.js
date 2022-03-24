@@ -4,9 +4,12 @@ import { getUser } from '../../services/auth';
 import {modalFromLocation } from '../../utils/navigation';
 import styled from 'styled-components';
 import Logout from '../icons/logout';
+import Notes from '../icons/notes';
 import Kitty from '../icons/kitty';
 import TanChat from '../icons/tanchat';
 import Chat from '../icons/chat';
+import Cash from '../icons/cash';
+import Contacts from '../icons/contacts';
 import MenuUserSettings from '../menuUserSettings';
 import { 
     Layout as AntLayout,
@@ -54,7 +57,7 @@ export default function Home({ location }) {
   return (
       <>
         <StyledAntLayout>
-            <Row gutter={[24, 24]}>
+            <Row gutter={[18, 24]} justify="space-around" align="middle">
               <Col span={6}>
                   <ButtonIcon
                     navTo='/?p=chat'
@@ -64,7 +67,26 @@ export default function Home({ location }) {
                   </ButtonIcon>
                 </Col>
                 <Col span={6}>
-                    <ButtonIcon
+                  <ButtonIcon
+                    navTo='/?p=channels'
+                    isEven="even"
+                    title="Channels"
+                  >
+                      <Chat />
+                  </ButtonIcon>
+                </Col>
+                <Col span={6}>
+                  <ButtonIcon
+                    navTo='/?p=cash'
+                    title="CASH"
+                  >
+                      <Cash />
+                  </ButtonIcon>
+              </Col>
+            </Row>
+            <Row gutter={[18, 24]} justify="space-around" align="middle">
+              <Col span={6}>
+                  <ButtonIcon
                       navTo='/#kitty'
                       isEven="even"
                       title="Meow"
@@ -72,38 +94,44 @@ export default function Home({ location }) {
                         <Kitty />
                     </ButtonIcon>
                 </Col>
-                <Col span={6} >
-                    <ButtonIcon
-                      navTo="/#userSettings"
-                      title="User Settings"
+                <Col span={6}>
+                  <ButtonIcon
+                      navTo="/?p=contacts"
+                      title="Contacts"
                     >
-                        <UserSettings />
+                        <Contacts />
                     </ButtonIcon>
               </Col>
               <Col span={6}>
-                <ButtonIcon
-                  navTo='/logout'
+              <ButtonIcon
+                  navTo='/?p=notes'
                   isEven="even"
-                  title="Exit"
+                  title="Notes"
                 >
-                    <Logout />
+                    <Notes />
                 </ButtonIcon>
               </Col>
             </Row>
-            <Row gutter={[24, 24]}>
+            <Row gutter={[18, 24]} justify="space-around" align="middle">
               <Col span={6}>
                   <ButtonIcon
-                    navTo='/?p=channels'
-                    title="Channels"
+                    navTo="/#userSettings"
+                    title="User Settings"
                   >
-                      <Chat />
+                      <UserSettings />
                   </ButtonIcon>
                 </Col>
                 <Col span={6}>
-                </Col>
-                <Col span={6} >
+                  <ButtonIcon
+                    navTo='/logout'
+                    isEven="even"
+                    title="Exit"
+                  >
+                    <Logout />
+                </ButtonIcon>
               </Col>
               <Col span={6}>
+
               </Col>
             </Row>
         </StyledAntLayout>

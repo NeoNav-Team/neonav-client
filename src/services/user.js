@@ -1,11 +1,15 @@
 import { formatEnpoint } from '../utils/format';
+import _ from 'lodash';
 import { isBrowser } from '../utils/checks';
 import { getUser } from './auth';
+import apis from '../constants/apis';
 import axios from 'axios';
+
+const { port } = _.get(apis, 'url', '');
 
 export const userProfile = () => {
     if (!isBrowser) return false;
-    axios.defaults.port = 6001;
+    axios.defaults.port = port;
     const url = formatEnpoint('profile');
     const nnUser = getUser();
     const token = nnUser.accessToken;
@@ -37,7 +41,7 @@ export const userProfile = () => {
 
 export const updateProfile = data => {
   if (!isBrowser) return false;
-  axios.defaults.port = 6001;
+  axios.defaults.port = port;
   const url = formatEnpoint('profile');
   const nnUser = getUser();
   const token = nnUser.accessToken;
@@ -69,7 +73,7 @@ export const updateProfile = data => {
 
 export const fakeName = () => {
   if (!isBrowser) return false;
-  axios.defaults.port = 6001;
+  axios.defaults.port = port;
   const url = formatEnpoint('fakename');
   return axios({
       method: 'get',
