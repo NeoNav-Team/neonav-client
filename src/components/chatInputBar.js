@@ -43,7 +43,7 @@ function ChatInputBar(props) {
     const sendText = event => {
         event.preventDefault();
         const blankStub = {text: ''};
-        form.text.length > 0 && submitHandler(channel, form);
+        form.text && form.text.length > 0 && submitHandler(channel, form);
         setForm(blankStub);
     }
 
