@@ -45,6 +45,10 @@ function ChatInputBar(props) {
         const blankStub = {text: ''};
         form.text && form.text.length > 0 && submitHandler(channel, form);
         setForm(blankStub);
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+            document.body.scrollTop = 0;
+        }, 10);
     }
 
     useEffect(() => {
