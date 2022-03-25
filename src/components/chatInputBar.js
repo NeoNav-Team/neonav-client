@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 
 
@@ -32,6 +32,7 @@ const StyledInput =  styled.input`
 
 function ChatInputBar(props) {
     const { channel, submitHandler } = props;
+    const inputElement = useRef(null);
     const [form, setForm] = useState({text: ''});
     const updateField = e => {
         setForm({
@@ -42,9 +43,16 @@ function ChatInputBar(props) {
     const sendText = event => {
         event.preventDefault();
         const blankStub = {text: ''};
-        form !== blankStub && submitHandler(channel, form);
+        form.text.length > 0 && submitHandler(channel, form);
         setForm(blankStub);
     }
+
+    useEffect(() => {
+    inputElement.current.onfocus = () => {
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+    };
+    }, [inputElement]);
 
     return (
         <div data-augmented-ui-reset>
@@ -56,6 +64,7 @@ function ChatInputBar(props) {
                     <StyledInput
                         type="text"
                         value={form.text}
+                        ref={inputElement}
                         name="text"
                         placeholder="type message here"
                         onChange={updateField}
