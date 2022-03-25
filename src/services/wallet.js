@@ -7,10 +7,10 @@ import axios from 'axios';
 
 const { port } = _.get(apis, 'url', '');
 
-export const userProfile = () => {
+export const userWallet = () => {
     if (!isBrowser) return false;
     axios.defaults.port = port;
-    const url = formatEnpoint('profile');
+    const url = formatEnpoint('wallet');
     const nnUser = getUser();
     const token = nnUser.accessToken;
     return axios({
@@ -39,10 +39,42 @@ export const userProfile = () => {
 };
 
 
-export const updateProfile = data => {
+export const userWalletHistory = () => {
+    if (!isBrowser) return false;
+    axios.defaults.port = port;
+    const url = formatEnpoint('wallet') + 'history';
+    const nnUser = getUser();
+    const token = nnUser.accessToken;
+    return axios({
+        headers: {
+          'x-access-token': `${token}`,
+          'content-type': 'application/json'
+        },
+        method: 'get',
+        url
+    }).then(
+        function (response) {
+            return response;
+        }
+    ).catch(function (error) {
+        if (error.response) {
+          console.log('Error', error.response);
+          return error.response;
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log('Error', error.message);
+        }
+        console.log('Error', error.config);
+        return error;
+      });
+};
+
+
+export const sendCash = data => {
   if (!isBrowser) return false;
   axios.defaults.port = port;
-  const url = formatEnpoint('profile');
+  const url = formatEnpoint('wallet');
   const nnUser = getUser();
   const token = nnUser.accessToken;
   return axios({
@@ -53,31 +85,6 @@ export const updateProfile = data => {
       method: 'put',
       url,
       data
-  }).then(
-      function (response) {
-          return response;
-      }
-  ).catch(function (error) {
-      if (error.response) {
-        console.log('Error', error.response);
-        return error.response;
-      } else if (error.request) {
-        console.log(error.request);
-      } else {
-        console.log('Error', error.message);
-      }
-      console.log('Error', error.config);
-      return error;
-    });
-};
-
-export const fakeName = () => {
-  if (!isBrowser) return false;
-  axios.defaults.port = port;
-  const url = formatEnpoint('fakename');
-  return axios({
-      method: 'get',
-      url
   }).then(
       function (response) {
           return response;

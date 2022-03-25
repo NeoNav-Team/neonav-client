@@ -22,6 +22,7 @@ export const modals = [
     'editPass',
     'editChannel',
     'createChannel',
+    'payCash',
 ];
 
 export const selectedChat = 'global';

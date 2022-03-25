@@ -2,18 +2,19 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { navigate } from 'gatsby';
 import _ from 'lodash';
-import ModalEditField from '../../components/modalEditField';
+import CashProfile from '../../components/cashProfile';
+import CashActions from '../../components/cashActions';
+import CashHistory from '../../components/cashHistory';
+import ModalPayCash from '../../components/modalPayCash';
 import { 
-  getChatChannels,
-  getMessages,
-  orderMessagesbyTimestamp,
-  postMessage,
-  seedChannel,
-  pollChatter
-} from '../../services/chat';
+  userWallet,
+  userWalletHistory
+} from '../../services/wallet';
+import Pane from '../pane';
 import { useWindowDimensions } from '../../utils/responsive';
-import { useMediaQuery } from 'react-responsive';
-import { List, Modal, Typography } from 'antd';
+import { modalFromLocation } from '../../utils/navigation';
+import { Modal, Typography } from 'antd';
+
 const { Text } = Typography;
 
 const StyledChatContainer = styled.div`
@@ -31,24 +32,6 @@ const StyledChatContainer = styled.div`
     --aug-inlay-bg: radial-gradient(ellipse at top, #7a04eb, rgba(122, 4, 235, 0.125))  50% 50% / 100% 100%;
     --aug-inlay-opacity: 0.5;
   }
-`;
-
-const StyledChatMessage = styled.div`
-  padding: 3vw;
-  &.pitch-mixin {
-    --aug-inlay-all: 4px;
-    --aug-inlay-bg: radial-gradient(ellipse at top, #7a04eb, rgba(122, 4, 235, 0))  50% 50% / 100% 100%;
-    --aug-border-all: 1px;
-    --aug-border-bg: radial-gradient(#7a04eb, #7a04eb) 100% 100% / 100% 100%;
-  }
-`;
-
-const Timestamp = styled(Text)`
-  color: white;
-  font-weight: 100;
-  margin-left: 10px;
-  font-size: 10px
-  opacity: 0.55;
 `;
 
 const User = styled(Text)`
@@ -86,117 +69,109 @@ const StyledChatMessageText = styled.div`
 const StyledModal = styled(Modal)`
   .ant-modal-content {
     background:transparent;
+    box-shadow: none;
+    color: #fff;
   }
   .ant-modal-close-x {
     margin-top: -50px;
     color:#ff00a0;
     filter: drop-shadow(0 0 8px #ff00a0);
   }
+  .ant-modal-footer {
+    border: 0;
+    padding: 0;
+    filter: drop-shadow(0px 0px 5px #00b8ff);
+    &:hover {
+        filter: drop-shadow(0px 0px 10px #00b8ff);
+    }
+  }
+  .ant-btn {
+    clip-path: polygon(0% 15%, 15% 7%, 15% 0%, 85% 0%, 85% 7%, 100% 15%, 100% 85%, 85% 93%, 85% 100%, 15% 100%, 15% 93%, 0% 85%);
+    color: #fff;
+    background-color: #120458;
+    border: 0;
+    width: 20vh;
+    }
+    .ant-btn-primary {
+        background-color: #00b8ff;
+    }
+    .ant-form-item-label {
+        label {
+            color: #fff;
+            font-size: 3vh;
+        }
+    }
 `;
 
 
-//TODO: THINGS TO COMPLETE CHAT
-// 1. WRITE INFININTE SCROLL FOR CHAT
-
 export default function Cash({ location }) {
   // sizing values
-  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' });
   const { height } = useWindowDimensions();
-  const headerBarHeight = isTabletOrMobile ? 64 : 96;
-  const chatChannelHeight = isTabletOrMobile ? 64 : 96;
-  const chatInputHeight = 48;
-  const chatBoxHeight = height - chatChannelHeight - chatInputHeight - headerBarHeight;
+  const headerBarHeight = 64
+  const chashActionsHeight = 160;
+  const cashHistoryBoxHeight = height - headerBarHeight - chashActionsHeight;
 
-  const [chatChannels, setChatChannels] = useState([]);
-  const [selectedChannel, setSelectedChannel] = useState(null);
-  const [sinceMarker, setSinceMarker] = useState(null)
-  const [messages, setMessages] = useState([]);
-  const [lastMessage, setLastMessage] = useState([]);
+  const [balance, setBalance] = useState(null);
+  const [history, setHistory] = useState([]);
+
   const [modal, setModal] = useState(null);
 
   const closeModal = () => {
       setModal(null);
-      navigate('/chat');
+      navigate('/?p=cash');
   }
 
-  const showSingleMessage = value => {
-    //save latest marker
-    //append entered chat message to message feed
-    if (Array.isArray(value)) {
-      const newSinceMarker = value[0];
-      const newMessage = value[1];
-      setLastMessage(newMessage);
-      setSinceMarker(newSinceMarker);
-    }
-  };
-
-  const fetchChatChannels = async () => {
-    const response = getChatChannels();
-    return await response;
-  };
-
-  const getChatter = async () => {
-    pollChatter(showSingleMessage, sinceMarker);
-  };
-
+  const fetchCash = async () => {
+    const wallet = userWallet();
+    const history = userWalletHistory();
+    
+    return Promise.all([wallet, history]).then((values) => {
+      return values;
+    });
+  }
 
   const setInitalStateFromResponse = (res) => {
-    const chatChannels = _.get(res, 'data', false) ? res.data : [];
-    let selected = selectedChannel || chatChannels.find(x => x.name === '谈.global')['id'] || null;
-    getChatter();
-    setChatChannels(chatChannels);
-    setSelectedChannel(selected);
+    const balance = _.get(res[0], 'data.balance', 0);
+    const history = _.get(res[1], 'data', []);
+    console.log('res[1]',res[1]);
+    setBalance(balance);
+    setHistory(history);
   }
 
-  const setChannelMessagesFromResponse = (res) => {
-    const seededChannelMessages = _.get(res, 'data', false) ? res.data : [];
-    const oldMessages = _.cloneDeep(messages);
-    const collectedMessages = _.unionBy(seededChannelMessages, oldMessages, 'id');
-    setMessages(orderMessagesbyTimestamp(collectedMessages));
+  const goPay = () => {
+
   }
 
   useEffect(() => {
-    fetchChatChannels().then(res => {
+    fetchCash().then(res => {
       setInitalStateFromResponse(res);
     }).catch(err => {
         console.log('err', err);
     });
+    console.log('modalFromLocation(location)', modalFromLocation(location));
+    setModal(modalFromLocation(location));
   }, [location]);
-
-  useEffect(() => {
-    selectedChannel && seedChannel(selectedChannel).then(res => {
-      setChannelMessagesFromResponse(res);
-    }).catch(err => {
-      console.log('seedChannel err', err);
-    });
-  },[selectedChannel]);
-
-  useEffect(() => {
-    console.log('messages', messages);
-  },[messages])
-
-  useEffect(() => {
-    const updatedMessages = _.cloneDeep(messages);
-    updatedMessages.push(lastMessage);
-    setMessages(orderMessagesbyTimestamp(updatedMessages));
-  },[lastMessage])
 
   return (
     <>
     <StyledChatContainer className="pitch-mixin" data-augmented-ui="tl-clip-x tr-rect-x bl-clip br-clip border">
-     Cash
+     <CashProfile balance={balance} />
+     <CashActions />
+     <CashHistory height={cashHistoryBoxHeight} history={history} />
     </StyledChatContainer>
     <StyledModal
-            title={null}
-            visible={modal}
-            closable={false}
-            onCancel={closeModal}
-            bodyStyle={{padding:0, background:'transparent'}}
-            footer={null}
-            width="75vh"
-            >
-                {modal === 'addChannel' && <ModalEditField />}
-            </StyledModal>
+        title={null}
+        visible={modal}
+        closable={false}
+        onCancel={closeModal}
+        bodyStyle={{padding:0, background:'transparent'}}
+        footer={null}
+        width="75vh"
+        >
+          <Pane frameId={1}>
+            {modal === 'payCash' && <ModalPayCash />}
+           </Pane>
+      </StyledModal>
     </>
   )
 }

@@ -1,5 +1,5 @@
 import { formatEnpoint } from '../utils/format';
-import apis from '../constants/apis';
+import { apis }  from '../constants/apis';
 import { isBrowser } from '../utils/checks';
 import { navigate } from 'gatsby';
 import axios from 'axios';

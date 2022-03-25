@@ -1,7 +1,7 @@
 import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment';
-import apis from '../constants/apis';
+import { apis } from '../constants/apis';
 import { isBrowser } from '../utils/checks';
 import { getUser, logout } from './auth';
 import { formatEnpoint } from '../utils/format';

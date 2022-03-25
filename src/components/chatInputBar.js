@@ -41,8 +41,9 @@ function ChatInputBar(props) {
       };
     const sendText = event => {
         event.preventDefault();
-        submitHandler(channel, form);
-        setForm({text: ''});
+        const blankStub = {text: ''};
+        form !== blankStub && submitHandler(channel, form);
+        setForm(blankStub);
     }
 
     return (
