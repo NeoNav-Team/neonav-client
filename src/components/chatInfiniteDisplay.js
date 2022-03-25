@@ -23,7 +23,7 @@ function ChatInfiniteDisplay(props) {
     useEffect(scrollToBottom, [children]);
 
     return (
-        <StyledWrapperDiv height={height} onScroll={scrollHandler}>
+        <StyledWrapperDiv height={height}>
             {children}
             <div ref={messagesEndRef} />
         </StyledWrapperDiv>
