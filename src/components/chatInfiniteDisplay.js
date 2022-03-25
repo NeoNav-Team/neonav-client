@@ -20,16 +20,6 @@ function ChatInfiniteDisplay(props) {
         messagesEndRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' })
     }
 
-    const scrollHandler = event => {
-        if (window) {
-            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            if (scrollTop !== 0) {
-                window.scrollTo(0, 0);
-                document.body.scrollTop = 0;
-            }
-        }
-    }
-
     useEffect(scrollToBottom, [children]);
 
     return (
