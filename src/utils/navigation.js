@@ -16,6 +16,7 @@ export const stubFromSearch = (location, key) => {
 };
 
 export const paramsFromLocation = location => {
-    const params = new URLSearchParams(location);
+    const cleanLocation = location.replace('/', '').replace('?', '').split('#')[0];
+    const params = JSON.parse('{"' + decodeURI(cleanLocation.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}');
     return params;
 }

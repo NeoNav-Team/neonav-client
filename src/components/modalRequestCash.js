@@ -14,7 +14,7 @@ function ModalPayCash(props) {
 
     const onFinish = value => {
         setErrMsg(null);
-        qrSetter(`/?p=cash&r=${userId}&a=${value.amount}#requestCash`)
+        qrSetter(`/?p=cash&r=${userId}&a=${value.amount}#payCash`)
         navigate(`/?p=cash#myQRCode`);
     };
 

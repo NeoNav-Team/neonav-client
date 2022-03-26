@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import _ from 'lodash';
 import { navigate } from 'gatsby';
 import { colors } from '../constants/defaults';
-import { paramsFromLocation } from '../utils/format'
+import { paramsFromLocation } from '../utils/navigation'
 import { QrcodeOutlined } from '@ant-design/icons';
 import PopoverQRReader from './popoverQRReader';
 import { Badge, Button } from 'antd';
@@ -47,7 +46,6 @@ function CashActions(props) {
     }
 
     const openRequestModal = () => {
-        console.log('openRequestModal', openRequestModal);
         navigate(`/?p=cash#requestCash`);
     }
 
@@ -56,7 +54,7 @@ function CashActions(props) {
         const params = paramsFromLocation(scan);
         const { p, r, a } = params;
         if (typeof p !== 'undefined' && p === 'cash'){
-            navigate(`/?p=cash${r && `&r=${r}`}${a && `&a=${a}`}#payCash`);
+            navigate(`/?p=cash${typeof r !== 'undefined' && `&r=${r}`}${typeof a !== 'undefined' && `&a=${a}`}#payCash`);
         } else if (scan.length === 10 && !isNaN(scan)) {
             navigate(`/?p=cash${r && `&r=${scan}`}#payCash`);
         } else {

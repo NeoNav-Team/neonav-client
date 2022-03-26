@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { navigate } from 'gatsby';
 import {
     Alert,
@@ -25,12 +25,22 @@ function ModalPayCash(props) {
             setErrMsg('Connection error. Please try again later.');
             console.log('err', JSON.stringify(err));
         });
+        form.resetFields();
     };
 
     const onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo);
+        form.resetFields();
     };
 
+
+    useEffect(() => {
+        console.log('useEffect', r, a);
+        form.setFieldsValue({
+            ['recipient']: r,
+            ['amount']: a
+        });
+    }, [r, a, form]);
 
     return (
     <>
@@ -38,10 +48,6 @@ function ModalPayCash(props) {
             form={form}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
-            initialValues={{
-                recipient: r || null,
-                amount: a || null,
-              }}
         >
             <Form.Item
                 name="recipient"
@@ -52,7 +58,7 @@ function ModalPayCash(props) {
             </Form.Item>
             <Form.Item
                 name="amount"
-                label="amount"
+                label="Amount"
             >
                 <Input style={{textAlign: 'center', fontSize: '1.75em'}} />
             </Form.Item>

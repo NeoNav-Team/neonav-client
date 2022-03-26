@@ -140,7 +140,7 @@ export default function Cash({ location }) {
         >
           <Pane frameId={1}>
             {modal === 'payCash' && <ModalPayCash r={stubFromSearch(location, 'r')} a={stubFromSearch(location, 'a')} />}
-            {modal === 'requestCash' && <ModalRquestCash a={stubFromSearch(location, 'a')} qrSetter={qrSetter} />}
+            {modal === 'requestCash' && <ModalRquestCash a={stubFromSearch(location, 'a')} userId={userId} qrSetter={qrSetter} />}
             {modal === 'myQRCode' && <ModalQRCode value={qrCode} />}
            </Pane>
       </StyledModal>
