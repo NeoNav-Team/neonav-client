@@ -51,14 +51,14 @@ function CashActions(props) {
 
     const onScanRecipient = scan => {
         setErrCount(0);
-        const params = paramsFromLocation(scan);
-        const { p, r, a } = params;
-        if (typeof p !== 'undefined' && p === 'cash'){
-            navigate(`/?p=cash${typeof r !== 'undefined' && `&r=${r}`}${typeof a !== 'undefined' && `&a=${a}`}#payCash`);
-        } else if (scan.length === 10 && !isNaN(scan)) {
-            navigate(`/?p=cash${r && `&r=${scan}`}#payCash`);
+        if (scan.length === 10 && !isNaN(scan)) {
+            navigate(`/?p=cash&r=${scan}#payCash`);
         } else {
-            setErrCount(1);
+            const params = paramsFromLocation(scan);
+            const { p, r, a } = params;
+            if (typeof p !== 'undefined' && p === 'cash'){
+                navigate(`/?p=cash${typeof r !== 'undefined' && `&r=${r}`}${typeof a !== 'undefined' && `&a=${a}`}#payCash`);
+            }
         }
     }
 
