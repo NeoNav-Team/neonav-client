@@ -5,7 +5,7 @@ import { navigate } from 'gatsby';
 import { colors } from '../constants/defaults';
 import { paramsFromLocation } from '../utils/format'
 import { QrcodeOutlined } from '@ant-design/icons';
-import PopoverQRReader from './popoverQrReader';
+import PopoverQRReader from './popoverQRReader';
 import { Badge, Button } from 'antd';
 
 const {primaryCyan, primaryIndigo, primaryMagenta } = colors;

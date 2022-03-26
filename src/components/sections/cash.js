@@ -119,7 +119,6 @@ export default function Cash({ location }) {
     }).catch(err => {
         console.log('err', err);
     });
-    console.log('modalFromLocation(location)', modalFromLocation(location));
     setModal(modalFromLocation(location));
   }, [location]);
 
