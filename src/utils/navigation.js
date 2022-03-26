@@ -14,3 +14,8 @@ export const stubFromSearch = (location, key) => {
     const params = queryString.parse(location.search);
     return typeof params[key] !== 'undefined' ? params[key] : null;
 };
+
+export const paramsFromLocation = location => {
+    const params = new URLSearchParams(location);
+    return params;
+}

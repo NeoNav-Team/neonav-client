@@ -6,25 +6,16 @@ import {
     Form,
     Input
 } from 'antd';
-import { sendCash } from '../services/wallet';
 
 function ModalPayCash(props) {
     const [errMsg, setErrMsg] = useState(null);
     const [form] = Form.useForm();
-    const { r, a } = props;
+    const { userId, qrSetter, a } = props;
 
     const onFinish = value => {
         setErrMsg(null);
-        sendCash(value).then(res => {
-            if (res.status !== 200 && res.data.message) {
-                setErrMsg(res.data.message || res.statusText);
-            } else {
-                navigate('/?p=cash', { replace: true });
-            }
-        }).catch(err => {
-            setErrMsg('Connection error. Please try again later.');
-            console.log('err', JSON.stringify(err));
-        });
+        qrSetter(`/?p=cash&r=${userId}&a=${value.amount}#requestCash`)
+        navigate(`/?p=cash#myQRCode`);
     };
 
     const onFinishFailed = errorInfo => {
@@ -39,17 +30,9 @@ function ModalPayCash(props) {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             initialValues={{
-                recipient: r || null,
                 amount: a || null,
               }}
         >
-            <Form.Item
-                name="recipient"
-                label="Recipient ID"
-                defau
-            >
-                <Input style={{textAlign: 'center', fontSize: '1.75em'}} />
-            </Form.Item>
             <Form.Item
                 name="amount"
                 label="amount"
@@ -63,7 +46,7 @@ function ModalPayCash(props) {
             }
             <Form.Item>
                 <Button type="primary" htmlType="submit">
-                    Pay
+                    Request
                 </Button>
             </Form.Item>
         </Form>

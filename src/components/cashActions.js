@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import _ from 'lodash';
 import { navigate } from 'gatsby';
 import { colors } from '../constants/defaults';
+import { paramsFromLocation } from '../utils/format'
 import { QrcodeOutlined } from '@ant-design/icons';
-import { Button, Typography } from 'antd';
-const { Text } = Typography;
+import PopoverQRReader from './popoverQrReader';
+import { Badge, Button } from 'antd';
 
 const {primaryCyan, primaryIndigo, primaryMagenta } = colors;
 
@@ -38,24 +39,40 @@ const CashButton = styled(Button)`
     min-height: 40px;
 `
 
-
 function CashActions(props) {
-    const { balance, userId } = props;
-
-    const displayOverfill = balance =>{
-        return balance > 1000000000 ? 99999999 : balance;
-    }
+    const [errCount, setErrCount ] = useState(0);
 
     const openPayModal = () => {
-        console.log('openPayModal');
         navigate(`/?p=cash#payCash`);
+    }
+
+    const openRequestModal = () => {
+        console.log('openRequestModal', openRequestModal);
+        navigate(`/?p=cash#requestCash`);
+    }
+
+    const onScanRecipient = scan => {
+        setErrCount(0);
+        const params = paramsFromLocation(scan);
+        const { p, r, a } = params;
+        if (typeof p !== 'undefined' && p === 'cash'){
+            navigate(`/?p=cash${r && `&r=${r}`}${a && `&a=${a}`}#payCash`);
+        } else if (scan.length === 10 && !isNaN(scan)) {
+            navigate(`/?p=cash${r && `&r=${scan}`}#payCash`);
+        } else {
+            setErrCount(1);
+        }
     }
 
     return (
         <div data-augmented-ui-reset>
             <StyledInputDiv className="pitch-mixin" data-augmented-ui="tl-rect tr-clip br-round bl-scoop both">
-               <CashButton icon={<QrcodeOutlined />}>Scan</CashButton> 
-               <CashButton>Request</CashButton> 
+                <PopoverQRReader successHandler={onScanRecipient}>
+                    <Badge count={errCount}>
+                        <CashButton icon={<QrcodeOutlined />}>Scan</CashButton>
+                    </Badge>
+                </PopoverQRReader>
+               <CashButton onClick={openRequestModal}>Request</CashButton> 
                <CashButton onClick={openPayModal}>Pay</CashButton>
             </StyledInputDiv>
         </div>

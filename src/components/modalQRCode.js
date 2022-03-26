@@ -14,7 +14,7 @@ const SyledDiv = styled.div`
         --aug-b-extend1: 50%;
     
         --aug-border-all: 1vh;
-        --aug-border-bg: #ccc;
+        --aug-border-bg: #fff;
         
         --aug-inlay-all: 8px;
         --aug-inlay-bg: white;

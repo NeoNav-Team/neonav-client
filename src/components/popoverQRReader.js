@@ -12,7 +12,7 @@ const SyledDiv = styled.div`
 `;
 
 function PopoverQRReader(props) {
-    const {successHandler} = props;
+    const {successHandler, children} = props;
     const [isVisible, setIsVisible] = useState(false);
 
     const clickHandler = visible => {
@@ -48,7 +48,7 @@ function PopoverQRReader(props) {
         placement="top"
         onVisibleChange={clickHandler}
         >
-            <QrcodeOutlined style={{fontSize: '42px', width: '60px'}} />
+            {children ? children : <QrcodeOutlined style={{fontSize: '42px', width: '60px'}} />}
         </Popover>
     )
 }

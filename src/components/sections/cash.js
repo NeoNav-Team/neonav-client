@@ -2,20 +2,21 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { navigate } from 'gatsby';
 import _ from 'lodash';
+import { getUser } from '../../services/auth';
 import CashProfile from '../../components/cashProfile';
 import CashActions from '../../components/cashActions';
 import CashHistory from '../../components/cashHistory';
 import ModalPayCash from '../../components/modalPayCash';
+import ModalRquestCash from '../../components/modalRequestCash';
+import ModalQRCode from '../../components/modalQRCode';
 import { 
   userWallet,
   userWalletHistory
 } from '../../services/wallet';
 import Pane from '../pane';
 import { useWindowDimensions } from '../../utils/responsive';
-import { modalFromLocation } from '../../utils/navigation';
-import { Modal, Typography } from 'antd';
-
-const { Text } = Typography;
+import { modalFromLocation, stubFromSearch } from '../../utils/navigation';
+import { Modal } from 'antd';
 
 const StyledChatContainer = styled.div`
   background: transparent;
@@ -33,38 +34,6 @@ const StyledChatContainer = styled.div`
     --aug-inlay-opacity: 0.5;
   }
 `;
-
-const User = styled(Text)`
-  color: #41c5ff;
-  font-weight: 300;
-  margin-left: 10px;
-  font-size: 12px
-`;
-
-const StyledChatMessageLabel = styled.div`
-  font-size: 10px;
-  padding: 2px;
-  width: 70vw;
-  &.pitch-mixin {
-    --aug-inlay-all: 4px;
-    --aug-inlay-bg: radial-gradient(ellipse at top, #7a04eb, rgba(122, 4, 235, 0))  50% 50% / 100% 100%;
-    --aug-border-all: 1px;
-    --aug-border-bg: radial-gradient(#7a04eb, #7a04eb) 100% 100% / 100% 100%;
-  }
-`;
-
-const StyledChatMessageText = styled.div`
-  font-size: 12px;
-  padding: 10px;
-  min-width: 70vw;
-  &.pitch-mixin {
-    --aug-inlay-all: 4px;
-    --aug-inlay-bg: radial-gradient(ellipse at top, #41c5ff, rgba(122, 4, 235, 0))  50% 50% / 100% 100%;
-    --aug-border-all: 1px;
-    --aug-border-bg: radial-gradient(#41c5ff, #41c5ff) 100% 100% / 100% 100%;
-  }
-`;
-
 
 const StyledModal = styled(Modal)`
   .ant-modal-content {
@@ -111,14 +80,21 @@ export default function Cash({ location }) {
   const chashActionsHeight = 160;
   const cashHistoryBoxHeight = height - headerBarHeight - chashActionsHeight;
 
+  const nnUser = getUser();
+  const userId = nnUser.userid;
+
   const [balance, setBalance] = useState(null);
   const [history, setHistory] = useState([]);
-
+  const [qrCode, setQrCode] = useState('');
   const [modal, setModal] = useState(null);
 
   const closeModal = () => {
       setModal(null);
       navigate('/?p=cash');
+  }
+  const qrSetter = qrcode => {
+    navigate('/?p=cash#qrCash');
+    setQrCode(qrcode);
   }
 
   const fetchCash = async () => {
@@ -133,13 +109,8 @@ export default function Cash({ location }) {
   const setInitalStateFromResponse = (res) => {
     const balance = _.get(res[0], 'data.balance', 0);
     const history = _.get(res[1], 'data', []);
-    console.log('res[1]',res[1]);
     setBalance(balance);
     setHistory(history);
-  }
-
-  const goPay = () => {
-
   }
 
   useEffect(() => {
@@ -156,7 +127,7 @@ export default function Cash({ location }) {
     <>
     <StyledChatContainer className="pitch-mixin" data-augmented-ui="tl-clip-x tr-rect-x bl-clip br-clip border">
      <CashProfile balance={balance} />
-     <CashActions />
+     <CashActions userId={userId} />
      <CashHistory height={cashHistoryBoxHeight} history={history} />
     </StyledChatContainer>
     <StyledModal
@@ -169,7 +140,9 @@ export default function Cash({ location }) {
         width="75vh"
         >
           <Pane frameId={1}>
-            {modal === 'payCash' && <ModalPayCash />}
+            {modal === 'payCash' && <ModalPayCash r={stubFromSearch(location, 'r')} a={stubFromSearch(location, 'a')} />}
+            {modal === 'requestCash' && <ModalRquestCash a={stubFromSearch(location, 'a')} qrSetter={qrSetter} />}
+            {modal === 'myQRCode' && <ModalQRCode value={qrCode} />}
            </Pane>
       </StyledModal>
     </>
