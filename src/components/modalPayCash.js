@@ -14,18 +14,22 @@ function ModalPayCash(props) {
     const { r, a } = props;
 
     const onFinish = value => {
-        setErrMsg(null);
-        sendCash(value).then(res => {
-            if (res.status !== 200 && res.data.message) {
-                setErrMsg(res.data.message || res.statusText);
-            } else {
-                navigate('/?p=cash', { replace: true });
-            }
-        }).catch(err => {
-            setErrMsg('Connection error. Please try again later.');
-            console.log('err', JSON.stringify(err));
-        });
-        form.resetFields();
+        if (!isNaN(value.amount)) {
+            setErrMsg(null);
+            sendCash(value).then(res => {
+                if (res.status !== 200 && res.data.message) {
+                    setErrMsg(res.data.message || res.statusText);
+                } else {
+                    navigate('/?p=cash', { replace: true });
+                }
+            }).catch(err => {
+                setErrMsg('Connection error. Please try again later.');
+                console.log('err', JSON.stringify(err));
+            });
+            form.resetFields();
+        } else {
+            setErrMsg('Please send a valid number.');  
+        }
     };
 
     const onFinishFailed = errorInfo => {

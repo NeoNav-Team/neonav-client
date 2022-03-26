@@ -126,8 +126,8 @@ export default function Cash({ location }) {
     <>
     <StyledChatContainer className="pitch-mixin" data-augmented-ui="tl-clip-x tr-rect-x bl-clip br-clip border">
      <CashProfile balance={balance} />
-     <CashActions userId={userId} />
      <CashHistory height={cashHistoryBoxHeight} history={history} />
+     <CashActions userId={userId} />
     </StyledChatContainer>
     <StyledModal
         title={null}

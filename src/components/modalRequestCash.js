@@ -10,18 +10,26 @@ import {
 function ModalPayCash(props) {
     const [errMsg, setErrMsg] = useState(null);
     const [form] = Form.useForm();
+    const [validNum, setValidNum] = useState(true);
     const { userId, qrSetter, a } = props;
 
     const onFinish = value => {
-        setErrMsg(null);
-        qrSetter(`/?p=cash&r=${userId}&a=${value.amount}#payCash`)
-        navigate(`/?p=cash#myQRCode`);
+        if (!isNaN(value.amount)) {
+            setErrMsg(null);
+            qrSetter(`/?p=cash&r=${userId}&a=${value.amount}#payCash`);
+            navigate(`/?p=cash#myQRCode`);
+        } else {
+         setErrMsg('Please send a valid number.');  
+        }
     };
 
     const onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo);
     };
 
+    const isNum = value => {
+        setValidNum(!isNaN(value));
+    }
 
     return (
     <>
@@ -35,7 +43,6 @@ function ModalPayCash(props) {
         >
             <Form.Item
                 name="amount"
-                label="amount"
             >
                 <Input style={{textAlign: 'center', fontSize: '1.75em'}} />
             </Form.Item>
