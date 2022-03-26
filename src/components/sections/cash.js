@@ -77,7 +77,7 @@ export default function Cash({ location }) {
   // sizing values
   const { height } = useWindowDimensions();
   const headerBarHeight = 64
-  const chashActionsHeight = 160;
+  const chashActionsHeight = 170;
   const cashHistoryBoxHeight = height - headerBarHeight - chashActionsHeight;
 
   const nnUser = getUser();
