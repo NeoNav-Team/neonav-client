@@ -16,6 +16,7 @@ import FooterNav from '../components/footerNav';
 import HeaderBar from '../components/headerBar';
 import { pollChatter } from '../services/chat';
 import { message } from 'antd';
+import { restrictedChannels } from '../constants/defaults';
 
 export default function Index({ location }) {
   const isHome = location && location.search.length <= 1;
@@ -44,13 +45,13 @@ export default function Index({ location }) {
 
   const pushToAnnounce = lastMessage => {
     // display notifcations and annoucements channels 
-    if (lastMessage.channel === "d6993467030d7398f0415badd9186aa0") {
+    if (lastMessage.channel === restrictedChannels[0]) {
       message.info({
         content: lastMessage.text,
         duration: 2, 
         onClick: _.partial(onMessageClose, `/?p=${lastMessage.notifyapp}`),
       });
-    } else if (lastMessage.channel === "22c6fec7b63257ca0d7b743946090fa9") {
+    } else if (lastMessage.channel === restrictedChannels[1]) {
       message.warn({
         content: lastMessage.text,
         duration: 4,

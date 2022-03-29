@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { navigate } from 'gatsby';
 import _ from 'lodash';
+import queryString from 'query-string';
 import ChatChannelSelector  from '../../components/chatChannelSelector';
 import ChatInfiniteDisplay from '../../components/chatInfiniteDisplay';
 import ChatInputBar from '../../components/chatInputBar';
@@ -108,6 +109,9 @@ export default function Chat({ location, lastMessage }) {
   const chatInputHeight = 48;
   const chatBoxHeight = height - chatChannelHeight - chatInputHeight - headerBarHeight;
 
+  const params = queryString && queryString.parse(_.get(location, 'search', ''));
+  const paramChannel = params && params.c ? params.c : null;
+
   const [chatChannels, setChatChannels] = useState([]);
   const [selectedChannel, setSelectedChannel] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -125,8 +129,15 @@ export default function Chat({ location, lastMessage }) {
 
   const setInitalStateFromResponse = (res) => {
     const chatChannels = _.get(res, 'data', false) ? res.data : [];
-    let selected = selectedChannel || chatChannels.find(x => x.name === '谈.global')['id'] || null;
-    setChatChannels(chatChannels);
+    let selected = selectedChannel ||  paramChannel || chatChannels.find(x => x.name === '谈.global')['id'] || null;
+    let myChannels = [];
+    console.log('chatChannels', chatChannels);
+    if (paramChannel) {
+      myChannels = _.filter(chatChannels, ['id', paramChannel]);
+    } else {
+      myChannels = chatChannels.filter(({scope}) => scope === 'global' || scope === 'group');
+    }
+    setChatChannels(myChannels);
     setSelectedChannel(selected);
   }
 
@@ -153,9 +164,7 @@ export default function Chat({ location, lastMessage }) {
     });
   },[selectedChannel]);
 
-  useEffect(() => {
-    console.log('messages', messages);
-  },[messages])
+  useEffect(() => {},[messages])
 
   useEffect(() => {
     const updatedMessages = _.cloneDeep(messages);
@@ -166,7 +175,7 @@ export default function Chat({ location, lastMessage }) {
   return (
     <>
     <StyledChatContainer className="pitch-mixin" data-augmented-ui="tl-clip-x tr-rect-x bl-clip br-clip border">
-       <ChatChannelSelector
+      <ChatChannelSelector
         channels={chatChannels}
         selectedChannel={selectedChannel}
         clickHandler={setSelectedChannel}

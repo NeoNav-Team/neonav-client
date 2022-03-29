@@ -77,6 +77,8 @@ const Timestamp = styled(Text)`
 function CashHistory(props) {
     const { history, height } = props;
 
+    console.log('history', history);
+
     const displayOverfill = balance =>{
         return balance > 1000000000 ? 99999999 : balance;
     }
@@ -92,7 +94,7 @@ function CashHistory(props) {
                         <Timestamp>{item.ts}</Timestamp>
                     </StyledHistoryLabel>
                     <StyledHistoryText className="pitch-mixin" data-augmented-ui="tr-clip br-round bl-round both">
-                        <Text>{item.user} 💸 {item.amount}</Text>
+                        <Text>{item.username || item.user} 💸 {item.amount}</Text>
                     </StyledHistoryText>
                 </StyledHistoryMessage>
             )}

@@ -115,20 +115,35 @@ export default function Home({ location }) {
             <Row gutter={[18, 24]} justify="space-around" align="middle">
               <Col span={6}>
                   <ButtonIcon
-                    navTo="/#userSettings"
-                    title="User Settings"
+                    navTo="/?p=chat&c=22c6fec7b63257ca0d7b743946090fa9"
+                    title="Anouncements"
                   >
-                      <UserSettings />
+                     <Chat />
                   </ButtonIcon>
                 </Col>
                 <Col span={6}>
+                <ButtonIcon
+                    navTo="/?p=chat&c=d6993467030d7398f0415badd9186aa0"
+                    title="Notifcations"
+                  >
+                     <Chat />
+                </ButtonIcon>
+              </Col>
+              <Col span={6}>
+
+              </Col>
+            </Row>
+            <Row gutter={[18, 24]} justify="space-around" align="middle">
+              <Col span={6}>
                   <ButtonIcon
                     navTo='/logout'
                     isEven="even"
                     title="Exit"
                   >
                     <Logout />
-                </ButtonIcon>
+                  </ButtonIcon>
+                </Col>
+                <Col span={6}>
               </Col>
               <Col span={6}>
 
