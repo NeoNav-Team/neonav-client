@@ -92,7 +92,7 @@ function FormLogin(props) {
     }
 
     useEffect(() => {
-        !stubMsg && setMessage(stubFromLocation(location));
+        !stubMsg && setMessage(stubFromLocation(location), 0);
         setStubMsg(true);
     }, [location, stubMsg]);
 
