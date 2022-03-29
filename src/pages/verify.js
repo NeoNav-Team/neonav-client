@@ -1,7 +1,7 @@
 import React from 'react';
 import SpaceSuit from '../components/spaceSuit';
 import Logo from '../components/logo';
-import FormRegister from '../components/formRegister';
+import FormVerify from '../components/formVerify';
 import { Row, Col } from 'antd';
 import styled from 'styled-components';
 
@@ -29,7 +29,7 @@ export default function Register({location}) {
               lg={{offset:5, span:14}}
               xl={{offset:6, span:12}}
               >
-              <FormRegister location={location} />
+              <FormVerify location={location} />
             </Col>
           </Row>
         </StyledVertCenteredDiv>

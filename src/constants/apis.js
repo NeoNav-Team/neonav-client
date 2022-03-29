@@ -8,6 +8,7 @@ export const apis = {
     profile: '/api/user',
     invite: '/api/auth/invite',
     register: '/api/auth/user',
+    verify: '/api/auth/verify',
     wallet: 'api/user/wallet',
     validate: '/api/auth/user',
     fakename: '/api/user/fake',

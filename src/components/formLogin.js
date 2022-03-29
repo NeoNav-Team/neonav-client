@@ -84,7 +84,8 @@ function FormLogin(props) {
                 'invalidToken': 'Your token is old or invalid. Please login again.',
                 'loggedOut': 'You have been logged out.',
                 'changePass': 'Your password has been changed. Please login again.',
-                'newUser': 'Thank you for joining! Please login with your credentials.'
+                'newUser': 'Thank you for joining! Please login with your credentials.',
+                'verified': 'Thank you for verfying! Please login again.'
             };
             message.warning(messages[stub]);
         }

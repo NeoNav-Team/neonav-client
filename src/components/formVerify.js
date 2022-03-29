@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import _ from 'lodash';
 import { navigate } from 'gatsby';
+import _ from 'lodash';
 import queryString from 'query-string';
 import Pane from './pane';
-import { userInvite } from '../services/auth';
+import { userVerifyEmail } from '../services/auth';
 import styled from 'styled-components';
 import {
     Alert,
@@ -46,21 +46,22 @@ const Eula = styled.p`
     }
 `;
 
-function FormInvite(props) {
+function FormVerify(props) {
     const {location} = props;
     const params = queryString && queryString.parse(_.get(location, 'search', ''));
-    const invite = params && params.id;
+    const code = params && params.code;
+    const email = params && params.email;
 
     const [errMsg, setErrMsg] = useState(null);
     
-    const acceptInvite = async values => {
-        const response = userInvite(values);
+    const acceptVerfication = async values => {
+        const response = userVerifyEmail(values);
         return await response;
     };
 
     const onFinish = values => {
         setErrMsg(null);
-        acceptInvite(values).then(res => {
+        acceptVerfication(values).then(res => {
             if (res.status !== 200 && res.data.message) {
                 setErrMsg(res.data.message || res.statusText);
             } else {
@@ -76,46 +77,38 @@ function FormInvite(props) {
         console.log('Failed:', errorInfo);
     };
 
-    const viewEula = () => {
-        navigate('/eula', { replace: true });
-    }
-
   return (
     <>
-    <Pane title="Invite">
+    <Pane title="Verify">
         <StyledForm
             name="basic"
             initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             >
-            <Form.Item name="invite" initialValue={invite}>
-              <StyledTitle>{invite}</StyledTitle>
-              <Input  style={{display: 'none'}}/>
+            <Form.Item
+                name="code"
+                label="Provide a code"
+                initialValue={code}
+                rules={[{ required: true, message: 'Please input a valid code.' }]}
+            >
+                <Input />
             </Form.Item>
             <Form.Item
                 name="email"
-                label="Provide an email"
-                rules={[{ required: true, message: 'Please input a valid email' }]}
+                label="Provide your email"
+                initialValue={email}
+                rules={[{ required: true, message: 'Please input a valid email.' }]}
             >
                 <Input />
             </Form.Item>
             <Note>Email is not shared with third parties intentionally.</Note>
-            <Form.Item
-                name="password"
-                label="Create a password"
-                rules={[{ required: true, message: 'Please input your password!' }]}
-            >
-                <Input />
-            </Form.Item>
-            <Note>Requires 10 characters with numbers and symbols.</Note>
             {errMsg && 
               <Form.Item>
                   <Alert message={errMsg} type="error" />
               </Form.Item>  
             }
             <Form.Item>
-                <Eula onClick={viewEula}>By clicking below you accept our <span>EULA</span></Eula>
                 <Button
                     type="primary"
                     htmlType="submit"
@@ -128,4 +121,4 @@ function FormInvite(props) {
     </>
   )
 }
-export default FormInvite;
+export default FormVerify;

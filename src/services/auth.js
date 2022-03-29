@@ -160,8 +160,37 @@ export const userLogin = data => {
           console.log('Error', error.message);
         }
         console.log('Error', error.config);
+        
         return error;
       });
+};
+
+export const userVerifyEmail = data => {
+  if (!isBrowser) return false;
+  axios.defaults.port = port;
+  const url = formatEnpoint('verify');
+  console.log('data', data);
+  return axios({
+      method: 'post',
+      url,
+      data
+  }).then(
+      function (response) {
+          logout(() => {
+            navigate('/login#verified');
+          });
+      }
+  ).catch(function (error) {
+      if (error.response) {
+        return error.response;
+      } else if (error.request) {
+        console.log('Error', error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log('Error', error.config);
+      return error;
+    });
 };
 
 export const isLoggedIn = () => {
