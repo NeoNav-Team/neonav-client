@@ -9,6 +9,8 @@ import Kitty from '../icons/kitty';
 import TanChat from '../icons/tanchat';
 import Chat from '../icons/chat';
 import Cash from '../icons/cash';
+import Notify from '../icons/notify';
+import Announcements from '../icons/announcements';
 import Contacts from '../icons/contacts';
 import MenuUserSettings from '../menuUserSettings';
 import { 
@@ -115,10 +117,18 @@ export default function Home({ location }) {
             <Row gutter={[18, 24]} justify="space-around" align="middle">
               <Col span={6}>
                   <ButtonIcon
+                    navTo="/#userSettings"
+                    title="User Settings"
+                  >
+                      <UserSettings />
+                  </ButtonIcon>
+                </Col>
+              <Col span={6}>
+                  <ButtonIcon
                     navTo="/?p=chat&c=22c6fec7b63257ca0d7b743946090fa9"
                     title="Anouncements"
                   >
-                     <Chat />
+                     <Announcements />
                   </ButtonIcon>
                 </Col>
                 <Col span={6}>
@@ -126,24 +136,22 @@ export default function Home({ location }) {
                     navTo="/?p=chat&c=d6993467030d7398f0415badd9186aa0"
                     title="Notifcations"
                   >
-                     <Chat />
+                     <Notify />
                 </ButtonIcon>
-              </Col>
-              <Col span={6}>
-
               </Col>
             </Row>
             <Row gutter={[18, 24]} justify="space-around" align="middle">
-              <Col span={6}>
+                <Col span={6}>
                   <ButtonIcon
                     navTo='/logout'
                     isEven="even"
                     title="Exit"
                   >
                     <Logout />
-                  </ButtonIcon>
-                </Col>
-                <Col span={6}>
+                </ButtonIcon>
+              </Col>
+              <Col span={6}>
+
               </Col>
               <Col span={6}>
 
