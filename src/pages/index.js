@@ -22,6 +22,35 @@ export default function Index({ location }) {
   const isHome = location && location.search.length <= 1;
   const params = queryString.parse(location.search);
   const p = !isHome && params.p;
+  const c = !isHome && params.c;
+
+  // notfications
+  const [notices, setNotices] = useState({});
+  const [recentChannels, setRecentChannels] = useState([]);
+
+  let specialChannels = _.clone(restrictedChannels);
+  specialChannels.push('d6993467030d7398f0415badd92401be') //global chat
+
+
+  const setNotify = (id, state) => {
+    const clearedNotices = _.cloneDeep(notices);
+    if (id === 'cash' ){
+      clearedNotices.cash = state || false;
+    } else {
+      clearedNotices[id] = state || false;
+      if(specialChannels.indexOf(id) === -1) { //if not a special channel
+        let unviewedChannels = _.clone(recentChannels);
+        if (state === true && unviewedChannels.indexOf(id) === -1) {
+          unviewedChannels.push(id);
+        } else {
+          unviewedChannels = _.pull(unviewedChannels, id);
+        }
+        setRecentChannels(unviewedChannels);
+      }
+    }
+    setNotices(clearedNotices);
+    console.log('notices', notices, 'recentChannels', recentChannels);
+  }
 
   //latest Message Feeds
   const [sinceMarker, setSinceMarker] = useState(null);
@@ -51,18 +80,24 @@ export default function Index({ location }) {
         duration: 2, 
         onClick: _.partial(onMessageClose, `/?p=${lastMessage.notifyapp}`),
       });
+      const c = lastMessage.notifyapp === 'cash' ? lastMessage.notifyapp : lastMessage.channel || null;
+      setNotify(c, true);
     } else if (lastMessage.channel === restrictedChannels[1]) {
       message.warn({
         content: lastMessage.text,
         duration: 4,
-      }
-      );
+      });
+      setNotify(restrictedChannels[1], true);
     }
   }
 
   useEffect(() => {
     getLatest();
   }, []);
+
+  useEffect(() => {
+    c ? setNotify(c, false) : setNotify(p, false);
+  }, [p, c]);
 
   useEffect(() => {
     console.log('lastMessage', lastMessage);
@@ -75,12 +110,12 @@ export default function Index({ location }) {
       <HeaderBar noMenu={isHome}>
             N E O N A V
       </HeaderBar>
-          {isHome && <PrivateRoute location={location} component={Home} />}
-          {p === 'chat' && <PrivateRoute location={location} lastMessage={lastMessage} component={Chat} />}
+          {isHome && <PrivateRoute location={location} recentChannels={recentChannels} component={Home} notices={notices} />}
+          {p === 'chat' && <PrivateRoute location={location} setNotify={setNotify} lastMessage={lastMessage} component={Chat} />}
           {p === 'cash' && <PrivateRoute location={location} lastMessage={lastMessage} component={Cash} />}
           {p === 'profile' && <PrivateRoute location={location} component={Profile} />}
           {p === 'security' && <PrivateRoute location={location} component={Security} />}
-          {p === 'channels' && <PrivateRoute location={location} component={Channels} />}
+          {p === 'channels' && <PrivateRoute location={location} recentChannels={recentChannels} component={Channels} />}
           {p === 'contacts' && <PrivateRoute location={location} lastMessage={lastMessage} component={Contacts} />}
           {p === 'notes' && <PrivateRoute location={location} component={Notes} />}
           {p !== 'chat' && p !== 'cash' && <FooterNav />}

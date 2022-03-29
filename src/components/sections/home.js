@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import _ from 'lodash';
 import { navigate } from 'gatsby';
 import { getUser } from '../../services/auth';
 import {modalFromLocation } from '../../utils/navigation';
@@ -17,7 +18,8 @@ import {
     Layout as AntLayout,
     Row,
     Col,
-    Modal
+    Modal,
+    Badge
   } from 'antd';
 import ButtonIcon from '../buttonIcon';
 import UserSettings from '../icons/userSettings';
@@ -41,7 +43,14 @@ const StyledModal = styled(Modal)`
   }
 `;
 
-export default function Home({ location }) {
+const Notice = styled(Badge)`
+  .ant-badge-count {
+    background: #ff00a0;
+    color: transparent;
+  }
+`;
+
+export default function Home({ location, notices, recentChannels }) {
     const nnUser = getUser();
     const userId = nnUser.userid;
     const defaultModal = modalFromLocation(location);
@@ -74,7 +83,7 @@ export default function Home({ location }) {
                     isEven="even"
                     title="Channels"
                   >
-                      <Chat />
+                      <Notice count={recentChannels.length >= 1 ? 1 : 0} style={{color: 'white'}}><Chat /></Notice>
                   </ButtonIcon>
                 </Col>
                 <Col span={6}>
@@ -82,7 +91,7 @@ export default function Home({ location }) {
                     navTo='/?p=cash'
                     title="CASH"
                   >
-                      <Cash />
+                      <Notice count={_.get(notices, 'cash', false) ? 1 : 0}><Cash /></Notice>
                   </ButtonIcon>
               </Col>
             </Row>
@@ -101,7 +110,7 @@ export default function Home({ location }) {
                       navTo="/?p=contacts"
                       title="Contacts"
                     >
-                        <Contacts />
+                        <Notice count={_.get(notices, 'contacts', false) ? 1 : 0}><Contacts /></Notice>
                     </ButtonIcon>
               </Col>
               <Col span={6}>
@@ -120,7 +129,7 @@ export default function Home({ location }) {
                     navTo="/#userSettings"
                     title="User Settings"
                   >
-                      <UserSettings />
+                     <UserSettings />
                   </ButtonIcon>
                 </Col>
               <Col span={6}>
@@ -128,7 +137,7 @@ export default function Home({ location }) {
                     navTo="/?p=chat&c=22c6fec7b63257ca0d7b743946090fa9"
                     title="Anouncements"
                   >
-                     <Announcements />
+                    <Notice count={_.get(notices, '22c6fec7b63257ca0d7b743946090fa9', false) ? 1 : 0}><Announcements /></Notice>
                   </ButtonIcon>
                 </Col>
                 <Col span={6}>
@@ -136,7 +145,7 @@ export default function Home({ location }) {
                     navTo="/?p=chat&c=d6993467030d7398f0415badd9186aa0"
                     title="Notifcations"
                   >
-                     <Notify />
+                    <Notice count={_.get(notices, 'd6993467030d7398f0415badd9186aa0', false) ? 1 : 0}><Notify /></Notice>
                 </ButtonIcon>
               </Col>
             </Row>

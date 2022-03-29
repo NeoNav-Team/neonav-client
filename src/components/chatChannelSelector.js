@@ -57,7 +57,7 @@ const NextBtn = styled.div`
 
 
 function ChatChannelMenu(props) {
-    const { channels, selectedChannel, clickHandler} = props;
+    const { channels, selectedChannel, clickHandler, setNotify } = props;
     const channelIDs = channels.map(a => a.id);
     const channelIndex = channelIDs.indexOf(selectedChannel);
     const previousChannel = channelIndex === 0 ? channelIDs[channelIDs.length  - 1] : channelIDs[channelIndex - 1];
@@ -67,10 +67,12 @@ function ChatChannelMenu(props) {
   const setSelectedChannelhandler = event => {
     const selectedId = event.target.value;
     clickHandler(selectedId);
+    setNotify(selectedId, false);
   }
 
   const setArrowChannelhandler = selectedId => {
     clickHandler(selectedId);
+    setNotify(selectedId, false);
   }
 
     return (

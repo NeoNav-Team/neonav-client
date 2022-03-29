@@ -100,7 +100,7 @@ const StyledModal = styled(Modal)`
 //TODO: THINGS TO COMPLETE CHAT
 // 1. WRITE INFININTE SCROLL FOR CHAT
 
-export default function Chat({ location, lastMessage }) {
+export default function Chat({ location, lastMessage, setNotify }) {
   // sizing values
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' });
   const { height } = useWindowDimensions();
@@ -131,7 +131,6 @@ export default function Chat({ location, lastMessage }) {
     const chatChannels = _.get(res, 'data', false) ? res.data : [];
     let selected = selectedChannel ||  paramChannel || chatChannels.find(x => x.name === '谈.global')['id'] || null;
     let myChannels = [];
-    console.log('chatChannels', chatChannels);
     if (paramChannel) {
       myChannels = _.filter(chatChannels, ['id', paramChannel]);
     } else {
@@ -139,6 +138,7 @@ export default function Chat({ location, lastMessage }) {
     }
     setChatChannels(myChannels);
     setSelectedChannel(selected);
+    setNotify(selected, false);
   }
 
   const setChannelMessagesFromResponse = (res) => {
@@ -178,6 +178,7 @@ export default function Chat({ location, lastMessage }) {
       <ChatChannelSelector
         channels={chatChannels}
         selectedChannel={selectedChannel}
+        setNotify={setNotify}
         clickHandler={setSelectedChannel}
       />
       <ChatInfiniteDisplay height={chatBoxHeight}>
