@@ -8,11 +8,9 @@ import ChatInputBar from '../../components/chatInputBar';
 import ModalEditField from '../../components/modalEditField';
 import { 
   getChatChannels,
-  getMessages,
   orderMessagesbyTimestamp,
   postMessage,
   seedChannel,
-  pollChatter
 } from '../../services/chat';
 import { useWindowDimensions } from '../../utils/responsive';
 import { useMediaQuery } from 'react-responsive';
@@ -101,7 +99,7 @@ const StyledModal = styled(Modal)`
 //TODO: THINGS TO COMPLETE CHAT
 // 1. WRITE INFININTE SCROLL FOR CHAT
 
-export default function Chat({ location }) {
+export default function Chat({ location, lastMessage }) {
   // sizing values
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' });
   const { height } = useWindowDimensions();
@@ -112,42 +110,22 @@ export default function Chat({ location }) {
 
   const [chatChannels, setChatChannels] = useState([]);
   const [selectedChannel, setSelectedChannel] = useState(null);
-  const [sinceMarker, setSinceMarker] = useState(null)
   const [messages, setMessages] = useState([]);
-  const [lastMessage, setLastMessage] = useState([]);
   const [modal, setModal] = useState(null);
 
   const closeModal = () => {
       setModal(null);
-      navigate('/chat');
+      navigate('/p=chat');
   }
-
-  const showSingleMessage = value => {
-    //save latest marker
-    //append entered chat message to message feed
-    if (Array.isArray(value)) {
-      const newSinceMarker = value[0];
-      const newMessage = value[1];
-      setLastMessage(newMessage);
-      setSinceMarker(newSinceMarker);
-    }
-  };
 
   const fetchChatChannels = async () => {
     const response = getChatChannels();
     return await response;
   };
 
-  const getChatter = async () => {
-    pollChatter(showSingleMessage, sinceMarker);
-  };
-
-
   const setInitalStateFromResponse = (res) => {
     const chatChannels = _.get(res, 'data', false) ? res.data : [];
     let selected = selectedChannel || chatChannels.find(x => x.name === '谈.global')['id'] || null;
-    // localStorage.setItem('nnChatStore', JSON.stringify(newChatStore));
-    getChatter();
     setChatChannels(chatChannels);
     setSelectedChannel(selected);
   }
