@@ -62,7 +62,7 @@ export default function Home({ location, notices, recentChannels }) {
     }
 
     useEffect(() => {
-        setModal(modalFromLocation(location))
+        setModal(modalFromLocation(location));
     }, [location]);
 
   return (
@@ -83,7 +83,7 @@ export default function Home({ location, notices, recentChannels }) {
                     isEven="even"
                     title="Channels"
                   >
-                      <Notice count={recentChannels.length >= 1 ? 1 : 0} style={{color: 'white'}}><Chat /></Notice>
+                      <Notice count={recentChannels.length >= 1 ? recentChannels.length : 0} style={{color: 'white'}}><Chat /></Notice>
                   </ButtonIcon>
                 </Col>
                 <Col span={6}>

@@ -29,27 +29,27 @@ export default function Index({ location }) {
   const [recentChannels, setRecentChannels] = useState([]);
 
   let specialChannels = _.clone(restrictedChannels);
-  specialChannels.push('d6993467030d7398f0415badd92401be') //global chat
+  specialChannels.push('22c6fec7b63257ca0d7b74394605813e') //global chat
 
 
   const setNotify = (id, state) => {
-    const clearedNotices = _.cloneDeep(notices);
-    if (id === 'cash' ){
+    let clearedNotices = _.cloneDeep(notices);
+    let nextID = _.clone(id);
+    if (nextID === 'cash' ){
       clearedNotices.cash = state || false;
     } else {
-      clearedNotices[id] = state || false;
-      if(specialChannels.indexOf(id) === -1) { //if not a special channel
+      clearedNotices[nextID] = state || false;
+      if(specialChannels.indexOf(nextID) === -1) { //if not a special channel
         let unviewedChannels = _.clone(recentChannels);
-        if (state === true && unviewedChannels.indexOf(id) === -1) {
-          unviewedChannels.push(id);
-        } else {
-          unviewedChannels = _.pull(unviewedChannels, id);
+        if (state === true && unviewedChannels.indexOf(nextID) === -1) {
+          nextID && unviewedChannels.push(nextID);
+        } else if (state === false) {
+          unviewedChannels = _.pull(unviewedChannels, nextID);
         }
-        setRecentChannels(unviewedChannels);
+        nextID && setRecentChannels(unviewedChannels);
       }
     }
     setNotices(clearedNotices);
-    console.log('notices', notices, 'recentChannels', recentChannels);
   }
 
   //latest Message Feeds
@@ -88,6 +88,8 @@ export default function Index({ location }) {
         duration: 4,
       });
       setNotify(restrictedChannels[1], true);
+    } else {
+      setNotify(lastMessage.channel, true);
     }
   }
 
@@ -100,7 +102,6 @@ export default function Index({ location }) {
   }, [p, c]);
 
   useEffect(() => {
-    console.log('lastMessage', lastMessage);
     pushToAnnounce(lastMessage);
   }, [lastMessage]);
 
