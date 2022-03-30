@@ -79,7 +79,7 @@ export const userChangePass = data => {
   data.dbid = nnUser.id;
   const userid = nnUser.userid;
   const token = nnUser.accessToken;
-  const url = `${formatEnpoint('changePass')}${userid}`;
+  const url = `${formatEnpoint('changePass')}/${userid}`;
   return axios({
       headers: {
         'x-access-token': `${token}`,
