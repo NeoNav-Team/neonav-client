@@ -5,7 +5,7 @@ import {
     Row,
     Col
 } from 'antd';
-import { QrcodeOutlined, EditOutlined, UserOutlined,  UserAddOutlined } from '@ant-design/icons';
+import { QrcodeOutlined, EditOutlined, UserSwitchOutlined } from '@ant-design/icons';
 import PopoverQRReader from './popoverQRReader';
 import PopoverInputField from './popoverInputField';
 
@@ -114,7 +114,7 @@ const IconTitleWrap = styled.div`
 `;
 
 function IdActions(props) {
-    const { successHandler, title, icon } = props;
+    const { successHandler, title, icon, data } = props;
 
     return (
         <div>
@@ -139,16 +139,18 @@ function IdActions(props) {
                         <Col className="gutter-row" span={6}>
                             <PopoverInputField successHandler={successHandler}>
                                 <IconWrap className="pitch-mixin" data-augmented-ui="border all-hex" >
-                                    <UserOutlined />
+                                    <EditOutlined />
                                 </IconWrap>
                             </PopoverInputField>
                         </Col>
                         <Col className="gutter-row" span={6}>
-                            <PopoverInputField successHandler={successHandler}>
-                                <IconWrap className="pitch-mixin" data-augmented-ui="border all-hex" >
-                                    <EditOutlined />
-                                </IconWrap>
-                            </PopoverInputField>
+                            {data && (
+                                <PopoverInputField type="select" data={data || []} successHandler={successHandler}>
+                                    <IconWrap className="pitch-mixin" data-augmented-ui="border all-hex" >
+                                        <UserSwitchOutlined />
+                                    </IconWrap>
+                                </PopoverInputField>
+                            )}
                         </Col>
                     </Row>
                 </StyledInputDiv>

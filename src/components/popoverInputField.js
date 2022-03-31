@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import _ from 'lodash';
 import { QrReader } from 'react-qr-reader';
 import styled from 'styled-components';
@@ -21,9 +21,12 @@ function PopoverInputField(props) {
     const closeOnSuccess = data => {
         setIsVisible(false);
         successHandler(data.data);
+    };
+
+    useEffect(() => {
         window.scrollTo(0, 0);
         document.body.scrollTop = 0;
-    };
+    },[isVisible]);
     
     return (
         <Popover
