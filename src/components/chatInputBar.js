@@ -74,7 +74,7 @@ function ChatInputBar(props) {
                         onChange={updateField}
                         autocomplete="chrome-off"
                     />
-                    <input type="submit" style={{'visibility':'hidden', 'position':'absolute'}}/>
+                    <input type="submit" ref={inputElement} style={{'visibility':'hidden', 'position':'absolute'}}/>
                 </form>
             </StyledInputDiv>
         </div>

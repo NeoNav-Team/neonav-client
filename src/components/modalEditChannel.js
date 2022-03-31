@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { navigate } from 'gatsby';
-import PopoverQRReader from './popoverQRReader';
-import TinyForm from './tinyForm';
 import {
     Typography,
     Tag,
     Button,
 } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import IdActions from '../components/idActions';
+import { UserOutlined, UserAddOutlined, UserDeleteOutlined, UserSwitchOutlined} from '@ant-design/icons';
 import { getUser } from '../services/auth';
 import { getChannelUsers, addUserToChannel, removeUserToChannel, changeAdminToChannel } from '../services/chat';
 
@@ -52,8 +51,7 @@ function ModalCreateChannel(props) {
     });
     }
 
-    const onRemoveUser = res => {
-      const userId = res.remove;
+    const onRemoveUser = userId => {
       removeUserToChannel(channelId, userId).then(res => {
         updateChannelUsers(channelId);
       }).catch(err => {
@@ -61,8 +59,7 @@ function ModalCreateChannel(props) {
       });
     }
 
-    const onChangeAdmin = res => {
-      const userId = res.reassign;
+    const onChangeAdmin = userId => {
       changeAdminToChannel(channelId, userId).then(res => {
         navigate('/?p=channels', { replace: true });
     }).catch(err => {
@@ -88,12 +85,10 @@ function ModalCreateChannel(props) {
         <Title level={2} style={{color:'#fff'}}>{channelName}</Title>
         {isChannelAdmin && (
           <>
-            <Title level={4} style={{color:'#fff'}}>Add User</Title>
-            <PopoverQRReader successHandler={onAddUser} />
-            <Title level={4} style={{color:'#fff'}}>Remove User</Title>
-            <TinyForm type='select' label='Remove' name={'remove'} successHandler={onRemoveUser} data={selectionUsers(channelUsers)} />
-            <Title level={4} style={{color:'#fff'}}>Resassign Admin</Title>
-            <TinyForm type='select' label='Resassign' name={'reassign'} successHandler={onChangeAdmin} data={selectionUsers(channelUsers)} />
+            <Title level={4} style={{color:'#fff'}}>Admin Options</Title>
+            <IdActions title="Add User to Channel" successHandler={onAddUser} icon={<UserAddOutlined />} />
+            <IdActions title="Remove User from Channel" successHandler={onRemoveUser} icon={<UserDeleteOutlined />} />
+            <IdActions title="Reassign Admin to Channel" successHandler={onRemoveUser} icon={<UserSwitchOutlined />} />
           </>
         )}
         <Title level={4} style={{color:'#fff'}}>Active Users</Title>

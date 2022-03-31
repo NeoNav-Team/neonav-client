@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { navigate } from 'gatsby';
 import { useWindowDimensions } from '../utils/responsive';
+import { useMediaQuery } from 'react-responsive';
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
 
@@ -11,6 +12,7 @@ const StyledPaneDiv = styled.div`
   padding: 0;
   overflow: hidden;
   position: relative;
+  z-index: 100;
   filter: drop-shadow(0px 0px 6px ${props => props.colors[0]});
   .pitch-mixin {
     max-height: ${props => props.height}px;
@@ -124,9 +126,11 @@ function Pane(props) {
   const { title, children, frameId, back, footer, offset } = props;
   const frameTheme = frameId ? frames[frameId] : frames[0];
   const { height } = useWindowDimensions();
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' });
+  const headerFooterOffset = isTabletOrMobile ? 200 : 260;
   const totesOffset = footer ? offset : 40;
   const paneHeight = height;
-  const scrollheight = height - totesOffset - 200;
+  const scrollheight = height - totesOffset - headerFooterOffset;
 
   return (
     <>
