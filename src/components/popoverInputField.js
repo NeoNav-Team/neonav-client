@@ -21,9 +21,10 @@ function PopoverInputField(props) {
     const closeOnSuccess = data => {
         setIsVisible(false);
         successHandler(data.data);
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
     };
     
-
     return (
         <Popover
         overlayStyle={{position: 'absolute', top: '0px !important'}}

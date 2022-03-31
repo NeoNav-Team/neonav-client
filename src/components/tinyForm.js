@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef, useEffect} from 'react';
 import styled from 'styled-components';
 import {
   Input,
@@ -43,11 +43,14 @@ export default function TinyForm(props) {
   const { data, label, name, type, successHandler } = props;
   const [form] = Form.useForm();
 
-  const fixViewOnFocus = () =>
-  {
-    window.scrollTo(0, 0);
-    document.body.scrollTop = 0;
-  }
+  const inputElement = useRef(null);
+
+  useEffect(() => {
+    inputElement.current.onfocus = () => {
+      window.scrollTo(0, 0);
+      document.body.scrollTop = 0;
+    };
+  });
 
   const inputFieldbyType  = (type, data) =>{
     let element = null;
@@ -63,7 +66,7 @@ export default function TinyForm(props) {
         );
       break;
       default:
-        element =  <Input onFocus={fixViewOnFocus} />;
+        element =  <Input ref={inputElement} />;
       break;
     }
     return element;
