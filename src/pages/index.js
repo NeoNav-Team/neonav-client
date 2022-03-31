@@ -119,7 +119,7 @@ export default function Index({ location }) {
           {p === 'channels' && <PrivateRoute location={location} recentChannels={recentChannels} component={Channels} />}
           {p === 'contacts' && <PrivateRoute location={location} lastMessage={lastMessage} component={Contacts} />}
           {p === 'notes' && <PrivateRoute location={location} component={Notes} />}
-          {p !== 'chat' && p !== 'cash' && <FooterNav />}
+          {p !== 'chat' && p !== 'cash' &&<FooterNav />}
     </SpaceSuit>
   )
 }

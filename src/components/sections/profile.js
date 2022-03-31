@@ -170,7 +170,7 @@ export default function Profile({ location }) {
         <Pane
             title={userStub}
             back={'/#userSettings'}
-            offset={isTabletOrMobile ? '128' : '160'}
+            offset={isTabletOrMobile ? '64' : '64'}
             footer={
                 <MiniIconBtn style={{width:'40px', right:'16px'}} onClick={toggleLock}>
                     {locked ? <Lock /> : <Unlock />}

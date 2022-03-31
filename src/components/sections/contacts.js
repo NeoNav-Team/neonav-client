@@ -1,5 +1,4 @@
 import React, { useEffect, useState }from 'react';
-import { useMediaQuery } from 'react-responsive';
 import _ from 'lodash';
 import { navigate } from 'gatsby';
 import styled from 'styled-components';
@@ -7,15 +6,16 @@ import {
         Row,
         Col,
         Modal,
-        Button
     } from 'antd';
 import SpaceSuit from '../spaceSuit';
 import Pane from '../pane';
-import { modalFromLocation, stubFromSearch } from '../../utils/navigation';
-import { getChatChannels } from '../../services/chat';
-import { InfoCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
-import ModalEditChannel from '../modalEditChannel';
-import ModalCreateChannel from '../modalCreateChannel';
+import IdActions from '../idActions';
+import { colors } from '../../constants/defaults';
+import { getFriends, makeFriend } from '../../services/user';
+import { modalFromLocation } from '../../utils/navigation';
+import { UserAddOutlined } from '@ant-design/icons';
+
+const {primaryCyan, primaryIndigo, primaryMagenta, primaryColor } = colors;
 
 const StyledP = styled.p`
     display:block;
@@ -25,39 +25,6 @@ const StyledP = styled.p`
     margin: 1vh 1.25vh;
     font-family: Roboto, sans-serif;
     font-weight: 100;
-`;
-
-const Styledlabel = styled.span`
-    font-family: Orbitron, sans-serif;
-    display: inline-block;
-    min-width: 10vh;
-    text-transform: uppercase;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-right: 2vh;
-    color: #00b8ff;
-`;
-const StyledValue = styled.span`
-    display: inline-block;
-    width: auto;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-`;
-const StyledBlurb = styled.span`
-    margin-left: 1.5vh;
-    display: block;
-`;
-
-const MiniIconBtn = styled.div`
-    fontSize: '28px';
-`;
-
-const EditBtnHolder = styled.div`
-    position: absolute;
-    bottom: 1.75vh;
-    right: 2vh;
 `;
 
 const StyledCol = styled(Col)`
@@ -103,34 +70,73 @@ const StyledModal = styled(Modal)`
     }
 `;
 
+const ContactList = styled.div`
+    min-height: 70vh;
+    &.pitch-mixin {
+        --aug-inlay-all: 4px;
+        --aug-inlay-bg: radial-gradient(ellipse at top, #41c5ff, rgba(122, 4, 235, 0))  50% 50% / 100% 100%;
+        --aug-border-all: 1px;
+        --aug-border-bg: radial-gradient(#41c5ff, #41c5ff) 100% 100% / 100% 100%;
+      }
+`;
+
+const Contact =  styled.div`
+display:block;
+position: absolute;
+z-index: 10;
+text-align: left;
+font-size: 1rem;
+padding: 6px 20px;
+margin: 10px 16px;
+max-width: 75vw;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+color: ${primaryColor};
+cursor: pointer;
+&.pitch-mixin {
+    --aug-inlay: initial;
+    --aug-inlay-all: 3px;
+    --aug-inlay-bg: radial-gradient(ellipse at top, ${primaryCyan},  rgba(122, 4, 235, .5))  50% 50% / 100% 100%;
+    --aug-border-all: 3px;
+    --aug-border-bg: radial-gradient(${primaryMagenta}, ${primaryCyan}) 100% 100% / 100% 100%;
+    color: ${primaryColor};
+}
+span {
+    color: ${primaryColor};
+    padding: 0;
+    margin: 0;
+    filter: drop-shadow(0 0 5px ${primaryColor});
+    white-space: nowrap;
+    & span {
+        font-weight: 200;
+        opacity: .5;
+    }
+}
+`;
 
 export default function Contacts({ location }) {
     const userStub = <>Contacts</>;
     const defaultModal = modalFromLocation(location);
     const [modal, setModal] = useState(defaultModal);
     const [contacts, setChatContacts] = useState([]);
-    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' });
 
     const closeModal = () => {
         setModal(null);
-        navigate('/?p=channels');
+        navigate('/?p=contacts');
     }
 
-    const setProfileObjKey = objKey => {
-        if(objKey !== 'create') {
-            navigate(`/?p=channels&k=${objKey}#editChannel`);
-        } else {
-            navigate(`/?p=channels#createChannel`);
-        }
-    };
-
-    const fetchChatChannels = async () => {
-        const response = getChatChannels();
+    const fetchFriends = async () => {
+        const response = getFriends();
         return await response;
     };
 
+    const addFriendByID = id => {
+        makeFriend(id);
+    }
+
     useEffect(() => {
-        fetchChatChannels().then(res => {
+        fetchFriends().then(res => {
             const myChannels = res.data;
             setChatContacts(myChannels);
         }).catch(err => {
@@ -145,14 +151,22 @@ export default function Contacts({ location }) {
         <Pane
             title={userStub}
             back={'/'}
-            offset={isTabletOrMobile ? '128' : '160'}
+            offset={100}
             footer={
-                <MiniIconBtn />
+                <IdActions title="Add User to Friends List" successHandler={addFriendByID} icon={<UserAddOutlined />} />
             }
         >
         <Row justify="space-between" align="middle">
             <StyledCol span={24}>
-                Your momma
+                <ContactList className='pitch-mixin'>
+                    {contacts.map(contact => {
+                        return (
+                            <Contact className='pitch-mixin' data-augmented-ui="tr-round br-round bl-clip tl-round inlay" key={`contact_${contact.id}`}>
+                                <span>{contact.username && `${contact.username} ⇋ `}<span>[{contact.id}]</span></span>
+                            </Contact>
+                        )
+                    })}
+                </ContactList>
             </StyledCol>
         </Row>
         </Pane>

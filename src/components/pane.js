@@ -83,7 +83,7 @@ const PaneTitle = styled.div`
 
 const PaneFooter = styled.div`
   display:block;  
-  height: 60px;
+  height: ${props => props.height ? props.height : 60}px;
   min-width: calc(100% - 80px);
   margin: 0 40px;
   & div {
@@ -125,8 +125,9 @@ function Pane(props) {
   const frameTheme = frameId ? frames[frameId] : frames[0];
   const { height } = useWindowDimensions();
   const totesOffset = footer ? offset : 40;
-  const paneHeight = offset ? (height - offset) : height;
-  
+  const paneHeight = height;
+  const scrollheight = height - totesOffset - 200;
+
   return (
     <>
     <StyledPaneDiv
@@ -148,11 +149,11 @@ function Pane(props) {
       >
         <PaneTitle><h2>{title}</h2></PaneTitle>
         <Content>
-          <SimpleBar style={{ maxHeight: `${paneHeight - totesOffset}px`}}>
+          <SimpleBar style={{ maxHeight: `${scrollheight}px`}}>
             {children}
           </SimpleBar>
         </Content>
-        {footer && <PaneFooter>{footer}</PaneFooter>}
+        {footer && <PaneFooter height={offset}>{footer}</PaneFooter>}
       </div>
     </StyledPaneDiv>
     </>

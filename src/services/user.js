@@ -71,6 +71,102 @@ export const updateProfile = data => {
     });
 };
 
+
+export const getFriends = () => {
+  if (!isBrowser) return false;
+  axios.defaults.port = port;
+  const url = formatEnpoint('friends');
+  const nnUser = getUser();
+  const token = nnUser.accessToken;
+  return axios({
+      headers: {
+        'x-access-token': `${token}`,
+        'content-type': 'application/json'
+      },
+      method: 'get',
+      url
+  }).then(
+      function (response) {
+          return response;
+      }
+  ).catch(function (error) {
+      if (error.response) {
+        console.log('Error', error.response);
+        return error.response;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log('Error', error.config);
+      return error;
+    });
+};
+
+export const makeFriend = friend => {
+  if (!isBrowser) return false;
+  axios.defaults.port = port;
+  const url = formatEnpoint('friends') + `/${friend}`;
+  const nnUser = getUser();
+  const token = nnUser.accessToken;
+  return axios({
+      headers: {
+        'x-access-token': `${token}`,
+        'content-type': 'application/json'
+      },
+      method: 'post',
+      url
+  }).then(
+      function (response) {
+          return response;
+      }
+  ).catch(function (error) {
+      if (error.response) {
+        console.log('Error', error.response);
+        return error.response;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log('Error', error.config);
+      return error;
+    });
+};
+
+export const dropFriend = friend => {
+  if (!isBrowser) return false;
+  axios.defaults.port = port;
+  const url = formatEnpoint('friends') + `/${friend}`;
+  const nnUser = getUser();
+  const token = nnUser.accessToken;
+  return axios({
+      headers: {
+        'x-access-token': `${token}`,
+        'content-type': 'application/json'
+      },
+      method: 'delete',
+      url
+  }).then(
+      function (response) {
+          return response;
+      }
+  ).catch(function (error) {
+      if (error.response) {
+        console.log('Error', error.response);
+        return error.response;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log('Error', error.config);
+      return error;
+    });
+};
+
+
+
 export const fakeName = () => {
   if (!isBrowser) return false;
   axios.defaults.port = port;

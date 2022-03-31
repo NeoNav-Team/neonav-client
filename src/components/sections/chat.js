@@ -134,7 +134,7 @@ export default function Chat({ location, lastMessage, setNotify }) {
     if (paramChannel) {
       myChannels = _.filter(chatChannels, ['id', paramChannel]);
     } else {
-      myChannels = chatChannels.filter(({scope}) => scope === 'global' || scope === 'group');
+      myChannels = chatChannels.filter(({scope}) => scope === 'global' || scope === 'group' || scope === 'public');
     }
     setChatChannels(myChannels);
     setSelectedChannel(selected);

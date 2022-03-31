@@ -36,7 +36,7 @@ const CashButton = styled(Button)`
     margin: 0 8px;
     font-size: 1em;
     min-height: 40px;
-`
+`;
 
 function CashActions(props) {
     const [errCount, setErrCount ] = useState(0);

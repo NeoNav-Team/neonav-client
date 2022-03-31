@@ -58,6 +58,7 @@ export default function TinyForm(props) {
       break;
       default:
         element =  <Input />;
+      break;
     }
     return element;
   }
@@ -74,7 +75,7 @@ export default function TinyForm(props) {
               style={{padding: 0, margin: 0, width: 'calc(100% - 64px)', display: 'inline-block'}}
               name={`${name || label || 'itemValue'}`}
             >
-              {type && inputFieldbyType(type, data)}
+              {inputFieldbyType(type, data)}
             </Form.Item>
             <Form.Item
               style={{padding: 0, margin: 0, width: '64px', display: 'inline-block'}}
