@@ -26,6 +26,7 @@ function PopoverInputField(props) {
 
     return (
         <Popover
+        overlayStyle={{position: 'absolute', top: '0px !important'}}
         content={
             <SyledDiv>
             {isVisible && (<TinyForm

@@ -43,6 +43,12 @@ export default function TinyForm(props) {
   const { data, label, name, type, successHandler } = props;
   const [form] = Form.useForm();
 
+  const fixViewOnFocus = () =>
+  {
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0;
+  }
+
   const inputFieldbyType  = (type, data) =>{
     let element = null;
     switch (type) {
@@ -57,7 +63,7 @@ export default function TinyForm(props) {
         );
       break;
       default:
-        element =  <Input />;
+        element =  <Input onFocus={fixViewOnFocus} />;
       break;
     }
     return element;
