@@ -164,13 +164,13 @@ export default function Id({ location }) {
     const [identity, setIdentity] = useState({});
     const [isDrawer, setIsDrawer] = useState(false);
 
-    const username = _.get(identity, 'profile.username', 'N/A');
-    const occupation = _.get(identity, 'profile.occupation', 'N/A');
-    const skills = _.get(identity, 'profile.skills', 'N/A');
-    const bio = _.get(identity, 'profile.bio', 'N/A');
-    const firstName = _.get(identity, 'profile.firstname', 'N/A');
-    const lastName = _.get(identity, 'profile.firstname', null);
-    const avatar =_.get(identity, 'profile.avatar', null);
+    const username = _.get(identity, 'username', 'N/A');
+    const occupation = _.get(identity, 'occupation', 'N/A');
+    const skills = _.get(identity, 'skills', 'N/A');
+    const bio = _.get(identity, 'bio', 'N/A');
+    const firstName = _.get(identity, 'firstname', 'N/A');
+    const lastName = _.get(identity, 'firstname', null);
+    const avatar =_.get(identity, 'avatar', null);
 
     const goToId = id => {
         navigate(`/?p=identification&id=${id}`);
@@ -193,7 +193,7 @@ export default function Id({ location }) {
     useEffect(() => {
         if (f && f === 'y') {
             id && fetchFriend(id).then(res => {
-                const person = res.data;
+                const person = res.data.profile;
                 setIdentity(person);
                 console.log('friend', person);
             }).catch(err => {
@@ -208,7 +208,7 @@ export default function Id({ location }) {
                 console.log('err', err);
             });
         }
-    }, [location, id, f, identity]);
+    }, [location]);
 
   return (
     <SpaceSuit>
