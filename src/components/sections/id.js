@@ -169,7 +169,7 @@ export default function Id({ location }) {
     const skills = _.get(identity, 'skills', 'N/A');
     const bio = _.get(identity, 'bio', 'N/A');
     const firstName = _.get(identity, 'firstname', 'N/A');
-    const lastName = _.get(identity, 'firstname', null);
+    const lastName = _.get(identity, 'lastname', null);
     const avatar =_.get(identity, 'avatar', null);
 
     const goToId = id => {

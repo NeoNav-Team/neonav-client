@@ -16,6 +16,12 @@ const setUser = user => {
   window.localStorage.setItem('nnUser', JSON.stringify(user));
 }
 
+const setUserToken = accessToken => {
+  const nnUser = getUser()
+  nnUser.accessToken = accessToken;
+  window.localStorage.setItem('nnUser', JSON.stringify(nnUser));
+}
+
 export const userRegister = data => {
   if (!isBrowser) return false;
   axios.defaults.port = port;
@@ -165,11 +171,44 @@ export const userLogin = data => {
       });
 };
 
+
+export const userUpdateToken = () => {
+  if (!isBrowser) return false;
+  axios.defaults.port = port;
+  const nnUser = getUser();
+  const token = nnUser.accessToken;
+  const url = formatEnpoint('validate');
+  return axios({
+      headers: {
+        'x-access-token': `${token}`,
+        'content-type': 'application/json'
+      },
+      method: 'patch',
+      url
+  }).then(
+      function (response) {
+        const accessToken = response.data.accessToken;
+        setUserToken(accessToken);
+          return response;
+      }
+  ).catch(function (error) {
+      if (error.response) {
+        return error.response;
+      } else if (error.request) {
+        console.log('Error', error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log('Error', error.config);
+      
+      return error;
+    });
+};
+
 export const userVerifyEmail = data => {
   if (!isBrowser) return false;
   axios.defaults.port = port;
   const url = formatEnpoint('verify');
-  console.log('data', data);
   return axios({
       method: 'post',
       url,

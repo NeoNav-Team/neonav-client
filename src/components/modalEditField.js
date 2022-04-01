@@ -9,6 +9,7 @@ import {
     Select
 } from 'antd';
 import { updateProfile } from '../services/user';
+import { userUpdateToken } from '../services/auth';
 import { formatDoc } from '../utils/format';
 import { statusIcons } from '../constants/defaults';
 
@@ -55,6 +56,7 @@ function ModalEditField({fieldKey}) {
             if (res.status !== 200 && res.data.message) {
                 setErrMsg(res.data.message || res.statusText);
             } else {
+                userUpdateToken();
                 navigate('/?p=profile', { replace: true });
             }
         }).catch(err => {
