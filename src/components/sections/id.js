@@ -208,7 +208,7 @@ export default function Id({ location }) {
                 console.log('err', err);
             });
         }
-    }, [location, id, person]);
+    }, [location, id, f, identity]);
 
   return (
     <SpaceSuit>
