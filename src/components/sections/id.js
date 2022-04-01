@@ -200,7 +200,7 @@ export default function Id({ location }) {
                 console.log('err', err);
             });
         } else {
-        id && fetchIdentity(id).then(res => {
+            id && fetchIdentity(id).then(res => {
                 const person = res.data;
                 setIdentity(person);
                 console.log('person', person);
@@ -208,7 +208,7 @@ export default function Id({ location }) {
                 console.log('err', err);
             });
         }
-    }, [location, id]);
+    }, [location, id, person]);
 
   return (
     <SpaceSuit>
