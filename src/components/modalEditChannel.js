@@ -88,7 +88,7 @@ function ModalCreateChannel(props) {
             <Title level={4} style={{color:'#fff'}}>Admin Options</Title>
             <IdActions title="Add User to Channel" successHandler={onAddUser} icon={<UserAddOutlined />} />
             <IdActions title="Remove User from Channel" successHandler={onRemoveUser} icon={<UserDeleteOutlined />} />
-            <IdActions title="Reassign Admin to Channel" successHandler={onRemoveUser} icon={<UserSwitchOutlined />} />
+            <IdActions title="Reassign Admin to Channel" successHandler={onChangeAdmin} icon={<UserSwitchOutlined />} />
           </>
         )}
         <Title level={4} style={{color:'#fff'}}>Active Users</Title>
