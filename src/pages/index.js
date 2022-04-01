@@ -11,6 +11,7 @@ import Channels from '../components/sections/channels';
 import Contacts from '../components/sections/contacts';
 import Notes from '../components/sections/notes';
 import Security from '../components/sections/security';
+import Id from '../components/sections/id';
 import Profile from '../components/sections/profile'; 
 import FooterNav from '../components/footerNav';
 import HeaderBar from '../components/headerBar';
@@ -116,10 +117,11 @@ export default function Index({ location }) {
           {p === 'cash' && <PrivateRoute location={location} lastMessage={lastMessage} component={Cash} />}
           {p === 'profile' && <PrivateRoute location={location} component={Profile} />}
           {p === 'security' && <PrivateRoute location={location} component={Security} />}
+          {p === 'identification' && <PrivateRoute location={location} component={Id} />}
           {p === 'channels' && <PrivateRoute location={location} recentChannels={recentChannels} component={Channels} />}
           {p === 'contacts' && <PrivateRoute location={location} lastMessage={lastMessage} component={Contacts} />}
           {p === 'notes' && <PrivateRoute location={location} component={Notes} />}
-          {p !== 'chat' && p !== 'cash' &&<FooterNav />}
+          {p !== 'chat' && p !== 'cash' && <FooterNav />}
     </SpaceSuit>
   )
 }

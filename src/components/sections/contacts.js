@@ -13,7 +13,8 @@ import IdActions from '../idActions';
 import { colors } from '../../constants/defaults';
 import { getFriends, makeFriend } from '../../services/user';
 import { modalFromLocation } from '../../utils/navigation';
-import { UserAddOutlined } from '@ant-design/icons';
+import { UserAddOutlined, EyeInvisibleTwoTone} from '@ant-design/icons';
+import { statusIcons }  from '../../constants/defaults';
 
 const {primaryCyan, primaryIndigo, primaryMagenta, primaryColor } = colors;
 
@@ -120,6 +121,7 @@ export default function Contacts({ location }) {
     const defaultModal = modalFromLocation(location);
     const [modal, setModal] = useState(defaultModal);
     const [contacts, setChatContacts] = useState([]);
+    
 
     const closeModal = () => {
         setModal(null);
@@ -133,17 +135,22 @@ export default function Contacts({ location }) {
 
     const addFriendByID = id => {
         makeFriend(id);
+        navigate(`/?p=contacts&id=${id}`);
+    }
+    
+    const getIDCard = id => {
+        navigate(`/?p=identification&f=y&id=${id}`);
     }
 
     useEffect(() => {
         fetchFriends().then(res => {
-            const myChannels = res.data;
-            setChatContacts(myChannels);
+            const myContacts = res.data;
+            setChatContacts(myContacts);
+            console.log(myContacts)
         }).catch(err => {
             console.log('err', err);
         });
         setModal(modalFromLocation(location));
-        console.log('contacts', contacts);
       }, [location]);
 
   return (
@@ -159,13 +166,16 @@ export default function Contacts({ location }) {
         <Row justify="space-between" align="middle">
             <StyledCol span={24}>
                 <ContactList className='pitch-mixin'>
-                    {contacts.map(contact => {
-                        return (
-                            <Contact className='pitch-mixin' data-augmented-ui="tr-round br-round bl-clip tl-round inlay" key={`contact_${contact.id}`}>
-                                <span>{contact.username && `${contact.username} ⇋ `}<span>[{contact.id}]</span></span>
-                            </Contact>
-                        )
-                    })}
+                    {contacts && contacts.map(contact => (
+                        <Contact
+                            className='pitch-mixin'
+                            data-augmented-ui="tr-round br-round bl-clip tl-round inlay"
+                            key={`contact_${contact.id}`}
+                            onClick={_.partial(getIDCard, contact.id)}
+                        >
+                            <span>{contact.status ? statusIcons[contact.status] : <EyeInvisibleTwoTone />} {contact.username && `${contact.username} ⇋ `}<span>[{contact.id}]</span></span>
+                        </Contact>
+                    ))}
                 </ContactList>
             </StyledCol>
         </Row>

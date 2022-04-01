@@ -134,6 +134,37 @@ export const makeFriend = friend => {
     });
 };
 
+export const viewFriend = friend => {
+  if (!isBrowser) return false;
+  axios.defaults.port = port;
+  const url = formatEnpoint('friends') + `/${friend}`;
+  const nnUser = getUser();
+  const token = nnUser.accessToken;
+  return axios({
+      headers: {
+        'x-access-token': `${token}`,
+        'content-type': 'application/json'
+      },
+      method: 'get',
+      url
+  }).then(
+      function (response) {
+          return response;
+      }
+  ).catch(function (error) {
+      if (error.response) {
+        console.log('Error', error.response);
+        return error.response;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log('Error', error.config);
+      return error;
+    });
+};
+
 export const dropFriend = friend => {
   if (!isBrowser) return false;
   axios.defaults.port = port;
@@ -165,6 +196,40 @@ export const dropFriend = friend => {
     });
 };
 
+
+
+export const viewIdentity = id => {
+  if (!isBrowser) return false;
+  axios.defaults.port = port;
+  const url = formatEnpoint('id');
+  const nnUser = getUser();
+  const token = nnUser.accessToken;
+  const data = {requestId: `${id}`};
+  return axios({
+      headers: {
+        'x-access-token': `${token}`,
+        'content-type': 'application/json'
+      },
+      method: 'post',
+      url,
+      data
+  }).then(
+      function (response) {
+          return response;
+      }
+  ).catch(function (error) {
+      if (error.response) {
+        console.log('Error', error.response);
+        return error.response;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log('Error', error.config);
+      return error;
+    });
+};
 
 
 export const fakeName = () => {

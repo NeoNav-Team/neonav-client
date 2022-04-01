@@ -1,8 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import Qrcode from './icons/qrcode';
-import Contacts from './icons/contacts';
+import Scan from './icons/scan';
+import IdCard from './icons/idCard';
 import ButtonIcon from './buttonIcon';
+import { getUser } from '../services/auth';
+import { 
+    Row,
+    Col,
+} from 'antd';
 
 const StyledFooterDiv  = styled.div`
     display: block;
@@ -44,17 +50,38 @@ const StyledFooterDiv  = styled.div`
 `;
 
 function FooterNav(props) {
-    const { children } = props;
+    const nnUser = getUser();
+    const userId = nnUser.userid;
 
     return (
         <StyledFooterDiv>
             <div className="grid-container" />
-                <ButtonIcon
-                    navTo='/#myQRCode'
-                >
-                    <Qrcode fill={'#00b8ff'} />
-                </ButtonIcon>
-                {children}
+
+            <Row gutter={[18, 24]} justify="space-around" align="middle">
+              <Col span={6}>
+              <ButtonIcon
+                        navTo='/?p=identification'
+                        isEven="even"
+                    >
+                        <Scan fill={'#00b8ff'} />
+                    </ButtonIcon>
+                </Col>
+                <Col span={6}>
+                    <ButtonIcon
+                        navTo='/#myQRCode'
+                    >
+                        <Qrcode fill={'#00b8ff'} />
+                    </ButtonIcon>
+                </Col>
+                <Col span={6}>
+                    <ButtonIcon
+                        navTo={`/?p=identification&f=y&id=${userId}`}
+                        isEven="even"
+                    >
+                        <IdCard fill={'#00b8ff'} />
+                    </ButtonIcon>
+              </Col>
+            </Row>
         </StyledFooterDiv>
     )
 }
