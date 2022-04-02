@@ -42,7 +42,7 @@ const StyledCol = styled(Col)`
 `;
 
 const Wrapper = styled.div`
-    height: calc(100vh - ${props => props.offset}px);
+    height: calc(${props => props.height}px - ${props => props.offset}px);
     margin: 0 auto;
 `;
 
@@ -241,7 +241,7 @@ export default function Id({ location }) {
         <Row justify="space-between" align="middle">
             <StyledCol span={24}>
                 {id ? (
-                    <Wrapper ref={idCardRef} offset={totalOffset}>
+                    <Wrapper ref={idCardRef} offset={totalOffset} height={viewport.height}>
                         <IdCard
                             width={cardWidth}
                             height={cardHeight}
