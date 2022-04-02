@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { navigate } from 'gatsby';
 import { useMediaQuery } from 'react-responsive';
+import { useWindowDimensions } from '../utils/responsive';
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
 
@@ -14,8 +15,7 @@ const StyledPaneDiv = styled.div`
   z-index: 100;
   filter: drop-shadow(0px 0px 6px ${props => props.colors[0]});
   .pitch-mixin-pane {
-    ${props => props.offset && `height: calc(100vh - ${props.offset}px);`}
-    max-height: calc(100vh - ${props => props.offset}px);
+    ${props => props.offset && `height: calc(${props.height}px - ${props.offset}px);`}
     --aug-tr: 25px;
     --aug-b-extend1: 50%;
     --aug-border-all: 1px;
@@ -127,15 +127,16 @@ function Pane(props) {
   const { title, children, frameId, back, footer, offset } = props;
   const frameTheme = frameId ? frames[frameId] : frames[0];
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1024px)' });
+  const { height } = useWindowDimensions();
   const headerOffset = isTabletOrMobile ? 64 : 96;
   const subMargins = 70;
   const submenuOffSet = headerOffset + subMargins + (footer ? offset : 0);
 
   return (
-    <>
     <StyledPaneDiv
       colors={frameTheme.colors}
-      opacity={frameTheme.opacity} 
+      opacity={frameTheme.opacity}
+      height={height}
       offset={offset && headerOffset}
     >
       {back && (
@@ -159,7 +160,6 @@ function Pane(props) {
         {footer && <PaneFooter height={offset}>{footer}</PaneFooter>}
       </div>
     </StyledPaneDiv>
-    </>
   )
 }
 export default Pane;

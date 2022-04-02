@@ -72,7 +72,7 @@ const IdCard =  styled.div`
 display:block;
 position: relative;
 text-align: left;
-font-size: 1rem;
+font-size: 2.5vh;
 width: ${props => props.width}px;
 min-height: 100%;
 left: 50%;
@@ -96,7 +96,7 @@ const UserName = styled.div`
     margin: 10px;
     text-indent: 10px;
     color: white;
-    font-size: 24px;
+    font-size: 2.5vh;
     filter: drop-shadow(0px 0px 5px ${primaryIndigo});
     padding: 4px;
     &.pitch-mixin {
@@ -113,7 +113,7 @@ const Number = styled.div`
     min-width: 100%;
     text-align: center;
     color: ${primaryColor};
-    font-size: 32px;
+    font-size: 3vh;
     filter: drop-shadow(0 0 3px #000);
     white-space: nowrap;
     & span {
@@ -126,7 +126,7 @@ const FullName = styled.div`
     width: 100%;
     text-align: center;
     color: ${primaryCyan};
-    font-size: 2rem;
+    font-size: 3.25vh;
     filter: drop-shadow(0 0 5px #000);
     white-space: nowrap;
     & span {
