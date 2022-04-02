@@ -76,7 +76,7 @@ export default function Channels({ location }) {
     const defaultModal = modalFromLocation(location);
     const [modal, setModal] = useState(defaultModal);
     const [channels, setChatChannels] = useState([]);
-    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' });
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1024px)' });
 
     const closeModal = () => {
         setModal(null);

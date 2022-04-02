@@ -1,10 +1,12 @@
-import React, { useEffect, useState }from 'react';
+import React, { useEffect, useState, useRef }from 'react';
+import { useWindowDimensions } from '../../utils/responsive';
 import _ from 'lodash';
 import queryString from 'query-string';
 import { navigate } from 'gatsby';
 import styled from 'styled-components';
 import { QrReader } from 'react-qr-reader';
 import { getUser } from '../../services/auth';
+import { useMediaQuery } from 'react-responsive';
 import { 
         Row,
         Col,
@@ -40,13 +42,13 @@ const StyledCol = styled(Col)`
 `;
 
 const Wrapper = styled.div`
-    max-width: 350px;
+    height: calc(100vh - ${props => props.offset}px);
     margin: 0 auto;
 `;
 
 const PhotoWrapper = styled.div`
-    width: 330px;
-    height: 350px;
+    width: ${props => props.width - 20}px;
+    height: ${props => (props.width - 20) * 1.15}px;
     padding: 4px;
     margin: 10px;
     background-image: url("${props => props.image ? props.image : defaultImg}");
@@ -71,9 +73,10 @@ display:block;
 position: relative;
 text-align: left;
 font-size: 1rem;
-width: 100%
-max-width: 350px;
-min-height: 500px;
+width: ${props => props.width}px;
+min-height: 100%;
+left: 50%;
+margin-left: -${props => props.width / 2}px;
 white-space: nowrap;
 overflow: hidden;
 text-overflow: ellipsis;
@@ -106,14 +109,12 @@ const UserName = styled.div`
 
 const Number = styled.div`
     position: absolute;
-    bottom: 90px;
-    left: 50%;
-    width: 350px;
+    bottom: 1.5%;
+    min-width: 100%;
     text-align: center;
-    margin-left: -50%;
-    color: ${primaryCyan};
+    color: ${primaryColor};
     font-size: 32px;
-    filter: drop-shadow(0 0 5px ${primaryColor});
+    filter: drop-shadow(0 0 3px #000);
     white-space: nowrap;
     & span {
         font-weight: 200;
@@ -122,11 +123,11 @@ const Number = styled.div`
 `;
 
 const FullName = styled.div`
-    width: 350px;
+    width: 100%;
     text-align: center;
-    color: ${primaryColor};
-    font-size: 20px;
-    filter: drop-shadow(0 0 5px ${primaryColor});
+    color: ${primaryCyan};
+    font-size: 2rem;
+    filter: drop-shadow(0 0 5px #000);
     white-space: nowrap;
     & span {
         font-weight: 200;
@@ -152,10 +153,16 @@ const MiniTitle = styled(Title)`
 `;
 
 export default function Id({ location }) {
+    const viewport = useWindowDimensions();
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1024px)' });
+    const totalOffset = isTabletOrMobile ? 236 : 276;
     const userStub = <>Identification</>;
-
+    
     const nnUser = getUser();
     const userId = nnUser.userid;
+    const idCardRef = useRef(null);
+    const [cardHeight, setCardHeight] = useState(0);
+    const [cardWidth, setCardWidth] = useState(0);
 
     const params = queryString && queryString.parse(_.get(location, 'search', ''));
     const id = params && params.id;
@@ -210,19 +217,34 @@ export default function Id({ location }) {
         }
     }, [location]);
 
+    useEffect(() => {
+        if (idCardRef) {
+            let idHeight = _.get(idCardRef, 'current.clientHeight', 0);
+            let idWidth = _.get(idCardRef, 'current.clientWidth', 0);
+            if (viewport.width > viewport.height * 0.75 || idHeight < idWidth / .571) {
+                idWidth = idHeight * .571;
+            }
+
+            setCardHeight(idHeight);
+            setCardWidth(idWidth);
+        }
+    })    
+
   return (
     <SpaceSuit>
         <Pane
             title={userStub}
             back={'/'}
-            offset={100}
-            footer={id && id !== userId ? <FriendActions id={id} f={f} /> : <div style={{height: '30px', width: '64px'}}/>}
+            offset={totalOffset}
+            footer={id && id !== userId ? <FriendActions id={id} f={f} /> : <div style={{height: `${totalOffset}px`, width: '64px'}}/>}
         >
         <Row justify="space-between" align="middle">
             <StyledCol span={24}>
                 {id ? (
-                    <Wrapper>
+                    <Wrapper ref={idCardRef} offset={totalOffset}>
                         <IdCard
+                            width={cardWidth}
+                            height={cardHeight}
                             className='pitch-mixin'
                             data-augmented-ui="tr-clip br-clip-x b-rect bl-2-clip-y both"
                             onClick={toggleDrawer}
@@ -234,8 +256,10 @@ export default function Id({ location }) {
                                 data-augmented-ui="tl-clip-x tr-rect br-2-clip-x bl-clip-x both"
                                 className='pitch-mixin'
                                 image={avatar}
-                            /> 
-                            <Number>{id}</Number>
+                                width={cardWidth}
+                            >
+                                <Number>{id}</Number>
+                            </PhotoWrapper> 
                             <FullName>{lastName && `${lastName}, `}{firstName}</FullName>
                             <Drawer
                                 placement="right"
@@ -243,8 +267,8 @@ export default function Id({ location }) {
                                 onClose={toggleDrawer}
                                 visible={isDrawer}
                                 getContainer={false}
-                                width='350'
-                                style={{ position: 'absolute', width: '300px'}}
+                                width={cardWidth}
+                                style={{ position: 'absolute', width: `${cardWidth}px`}}
                                 >
                                 <Deets>
                                     {f ? (

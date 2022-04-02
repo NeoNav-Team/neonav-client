@@ -35,11 +35,11 @@ const ReponsiveContainer = styled.div`
     min-height: 100vh;
     /* laptop and tablets
     @media screen and (max-width: 1200px) {
-        max-width: 900px;
+        max-width: 1024px;
     }
 
     /* phones */
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1024px) {
         max-width: 800px;
     }
 `;

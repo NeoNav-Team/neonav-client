@@ -16,7 +16,7 @@ const StyledInputDiv = styled.div`
     padding-top: 10px;
     text-align: center;
     overflow: hidden;
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1024px) {
         min-height: 64px;
     }
     &.pitch-mixin {

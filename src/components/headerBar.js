@@ -14,7 +14,7 @@ const Title  = styled.h1`
     & span {
         font-size: 0.66rem;
     }
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1024px) {
         line-height: 64px;
         font-size: 16px;
     }
@@ -31,7 +31,7 @@ const RightMenu  = styled.div`
       margin-top: 6px;
       height: 68px;
   }
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1024px) {
         height: 64px;
         svg {
             height: 40px;
@@ -45,7 +45,7 @@ const Bar = styled.div`
     margin: 0;
     padding: 0 16px;
     /* phones */
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1024px) {
         height: 64px;
     }
 `;

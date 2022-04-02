@@ -97,7 +97,7 @@ const IconWrap = styled.div`
         }
     }
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1024px) {
         height: 60px;
         width: 60px;
         .augment, .abg {
@@ -141,7 +141,7 @@ const IconName = styled.div`
         text-overflow: ellipsis;
         max-width: 96px;
     }
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1024px) {
         span {
             font-size: 10px;
             max-width: 48px;

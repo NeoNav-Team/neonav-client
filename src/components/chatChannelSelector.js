@@ -18,7 +18,7 @@ const StyledSelect = styled.select`
     font-size: 18px;
     text-align-last:center; 
     color: #fff;
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1024px) {
         min-height: 64px;
     }
 `;

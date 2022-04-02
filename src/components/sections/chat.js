@@ -102,7 +102,7 @@ const StyledModal = styled(Modal)`
 
 export default function Chat({ location, lastMessage, setNotify }) {
   // sizing values
-  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' });
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1024px)' });
   const { height } = useWindowDimensions();
   const headerBarHeight = isTabletOrMobile ? 64 : 96;
   const chatChannelHeight = isTabletOrMobile ? 64 : 96;

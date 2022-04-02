@@ -126,7 +126,7 @@ export default function Profile({ location }) {
     const avatar =_.get(profileData, 'profile.avatar', null);
     const defaultModal = modalFromLocation(location);
     const [modal, setModal] = useState(defaultModal);
-    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' });
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1024px)' });
 
     const closeModal = () => {
         setModal(null);

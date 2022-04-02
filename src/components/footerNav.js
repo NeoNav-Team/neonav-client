@@ -44,7 +44,7 @@ const StyledFooterDiv  = styled.div`
         linear-gradient(to bottom, #7a04eb 1px, transparent 2px);
     }
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1024px) {
         height: 64px;
     }
 `;

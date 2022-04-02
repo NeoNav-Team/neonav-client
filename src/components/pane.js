@@ -1,27 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
 import { navigate } from 'gatsby';
-import { useWindowDimensions } from '../utils/responsive';
 import { useMediaQuery } from 'react-responsive';
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
 
 const StyledPaneDiv = styled.div`
   background: transparent;
-  margin: 0 auto 16px;
+  margin: 0 auto;
   padding: 0;
   overflow: hidden;
   position: relative;
   z-index: 100;
   filter: drop-shadow(0px 0px 6px ${props => props.colors[0]});
-  .pitch-mixin {
-    max-height: ${props => props.height}px;
+  .pitch-mixin-pane {
+    ${props => props.offset && `height: calc(100vh - ${props.offset}px);`}
+    max-height: calc(100vh - ${props => props.offset}px);
     --aug-tr: 25px;
     --aug-b-extend1: 50%;
-
     --aug-border-all: 1px;
     --aug-border-bg: radial-gradient(${props => props.colors[0]}, ${props => props.colors[1]}) 100% 100% / 100% 100%;
-    
     --aug-inlay-all: 4px;
     --aug-inlay-bg: radial-gradient(ellipse at top, ${props => props.colors[1]}, transparent)  50% 50% / 100% 100%;
     --aug-inlay-opacity: ${props => props.opacity ? props.opacity : 0.5};
@@ -56,6 +54,7 @@ const StyledPaneDiv = styled.div`
 const Content = styled.div`
   padding: 10px 16px;
   filter: none;
+  ${props => props.offset && `min-height: calc(100vh - ${props.offset}px);`}
 `;
 
 
@@ -73,7 +72,7 @@ const PaneTitle = styled.div`
   }
 
     /* phones */
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1024px) {
       h2 {
         text-indent: 20px;
         font-size: 20px;
@@ -98,7 +97,9 @@ const BackButton = styled.div`
   right: 1.75vh;
   border: 1px solid ${props => props.colors[1]};
   height: 2vh;
+  min-height: 20px;
   width: 2vh;
+  min-width: 20px;
   cursor: pointer;
   user-select: none;
   & div {
@@ -125,19 +126,17 @@ const frames = [
 function Pane(props) {
   const { title, children, frameId, back, footer, offset } = props;
   const frameTheme = frameId ? frames[frameId] : frames[0];
-  const { height } = useWindowDimensions();
-  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' });
-  const headerFooterOffset = isTabletOrMobile ? 200 : 260;
-  const totesOffset = footer ? offset : 40;
-  const paneHeight = height;
-  const scrollheight = height - totesOffset - headerFooterOffset;
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1024px)' });
+  const headerOffset = isTabletOrMobile ? 64 : 96;
+  const subMargins = 70;
+  const submenuOffSet = headerOffset + subMargins + (footer ? offset : 0);
 
   return (
     <>
     <StyledPaneDiv
       colors={frameTheme.colors}
       opacity={frameTheme.opacity} 
-      height={paneHeight} 
+      offset={offset && headerOffset}
     >
       {back && (
         <BackButton
@@ -148,12 +147,12 @@ function Pane(props) {
           </BackButton>
       )}
       <div
-        className="pitch-mixin"
+        className="pitch-mixin-pane"
         data-augmented-ui={frameTheme.aguments}
       >
         <PaneTitle><h2>{title}</h2></PaneTitle>
-        <Content>
-          <SimpleBar style={{ maxHeight: `${scrollheight}px`}}>
+        <Content offset={offset && submenuOffSet}>
+          <SimpleBar>
             {children}
           </SimpleBar>
         </Content>
