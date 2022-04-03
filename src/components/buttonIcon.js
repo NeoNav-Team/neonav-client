@@ -150,14 +150,18 @@ const IconName = styled.div`
 `;
 
 function ButtonIcon(props) {
-    const { height, width, title, isEven, navTo, children } = props;
+    const { height, width, title, isEven, navTo, children, newWindow } = props;
     const navtoPage = route => {
         if (route === '/logout') {
             logout(() => {
                 navigate('/login#loggedOut');
             });
         } else {
-            navigate(route);
+            if (newWindow === true){
+                window.open(route, "_blank");
+            } else {
+             navigate(route);
+            }
         }
     };
 

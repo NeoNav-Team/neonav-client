@@ -13,6 +13,8 @@ import Cash from '../icons/cash';
 import EditPhoto from '../icons/editPhoto';
 import EditName from '../icons/editName';
 import Notify from '../icons/notify';
+import Info from '../icons/info';
+import NeoSites from '../icons/neoSites';
 import Announcements from '../icons/announcements';
 import Contacts from '../icons/contacts';
 import MenuUserSettings from '../menuUserSettings';
@@ -173,12 +175,35 @@ export default function Home({ location, notices, recentChannels }) {
               </Col>
               <Col span={6}>
               <ButtonIcon
-                    navTo='/logout'
+                    navTo='https://sites.neonav.net/introduction.html'
                     isEven="even"
+                    title="Help"
+                    newWindow={true}
+                  >
+                    <Info />
+                </ButtonIcon>
+              </Col>
+            </Row>
+            <Row gutter={[18, 24]} justify="space-around" align="middle">
+                <Col span={6}>
+                <ButtonIcon
+                    navTo='https://sites.neonav.net'
+                    title="NeoSites"
+                    newWindow={true}
+                  >
+                    <NeoSites />
+                </ButtonIcon>
+              </Col>
+              <Col span={6}>
+                <ButtonIcon
+                    navTo='/logout'
                     title="Exit"
+                    isEven="even"
                   >
                     <Logout />
                 </ButtonIcon>
+              </Col>
+              <Col span={6}>
               </Col>
             </Row>
         </StyledAntLayout>
