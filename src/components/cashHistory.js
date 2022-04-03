@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { colors } from '../constants/defaults';
 import { List, Typography, Row, Col } from 'antd';
 import moment from 'moment';
+import { navigate } from 'gatsby';
+import _ from 'lodash';
 
 const { Text } = Typography;
 
@@ -30,10 +32,23 @@ const User = styled(Text)`
   font-weight: 300;
   margin-left: 10px;
   font-size: 12px
+  line-height: 1vh;
+`;
+
+const Id = styled.div`
+  font-size: 1.25vh;
+  color: white;
+  font-weight: 200;
+  position: absolute;
+  margin-top: -5vh;
+  opacity: 0.5;
 `;
 
 const Name = styled.span`
   font-size: 2vh;
+  line-height: 1vh;
+  nargin: 0;
+  padding: 0;
   color: #fff;
 `;
 
@@ -41,7 +56,6 @@ const Amount = styled.span`
   font-size: 3vh;
   filter: drop-shadow(0 0 5px #000);
 `;
-
 
 const StyledHistoryLabel = styled.div`
   font-size: 1.5vh;
@@ -58,6 +72,7 @@ const StyledHistoryLabel = styled.div`
 const StyledHistoryText = styled.div`
   padding: 1vh;
   min-width: 70vw;
+  max-height: 10vh;
   &.pitch-mixin {
     --aug-inlay-all: 4px;
     --aug-inlay-bg: radial-gradient(ellipse at top, #41c5ff, rgba(122, 4, 235, 0))  50% 50% / 100% 100%;
@@ -90,8 +105,10 @@ const Timestamp = styled(Text)`
 function CashHistory(props) {
     const { history, height } = props;
 
-    const displayOverfill = balance =>{
-        return balance > 10000000 ? 999999 : balance;
+    const getID = id => {
+      if (typeof id !== 'undefined') {
+        navigate(`/?p=identification&id=${id}`);
+      }
     }
 
     const timestamp = timestamp => {
@@ -110,8 +127,12 @@ function CashHistory(props) {
                         <Timestamp>{timestamp(item.ts)}</Timestamp>
                     </StyledHistoryLabel>
                     <StyledHistoryText className="pitch-mixin" data-augmented-ui="tr-clip br-round bl-round inlay">
-                    <Row align="middle">
-                      <Col span={11}><Name>{item.username || item.user}</Name></Col>
+                    <Row align="bottom">
+                      <Col span={11}><div onClick={_.partial(getID, item.user)}>
+                        <Name>{item.username || item.user}</Name>
+                        <Id>{<span>{item.user}</span>}</Id>
+                        
+                      </div></Col>
                       <Col span={2}>💸</Col>
                       <Col span={11} style={{textAlign: 'right', textIndent: '2.5vh'}}>
                         <Amount>{item.amount}</Amount>

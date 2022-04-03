@@ -167,7 +167,6 @@ export default function Chat({ location, lastMessage, setNotify }) {
     setMessages(orderMessagesbyTimestamp(collectedMessages));
   }
   const timestamp = timestamp => {
-    //let hours = timestamp.split('T').pop().split('.')[0];
     const formatedTimeStamp = moment(timestamp).format("ddd HH:mm:ss");
     return formatedTimeStamp;
   }
