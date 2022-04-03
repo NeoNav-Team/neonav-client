@@ -232,6 +232,33 @@ export const userVerifyEmail = data => {
     });
 };
 
+export const userForgot = data => {
+  if (!isBrowser) return false;
+  axios.defaults.port = port;
+  const url = formatEnpoint('reset');
+  return axios({
+      method: 'post',
+      url,
+      data
+  }).then(
+      function (response) {
+          logout(() => {
+            navigate('/login#verified');
+          });
+      }
+  ).catch(function (error) {
+      if (error.response) {
+        return error.response;
+      } else if (error.request) {
+        console.log('Error', error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log('Error', error.config);
+      return error;
+    });
+};
+
 export const isLoggedIn = () => {
   const user = getUser();
   const loginBool = _.get(user, 'userid', '').length >= 1;

@@ -13,6 +13,7 @@ export const apis = {
     verify: '/api/auth/verify',
     wallet: 'api/user/wallet',
     validate: '/api/auth/user',
+    reset: '/api/auth/reset',
     fakename: '/api/user/fake',
     changePass: '/api/auth/users',
     channels: '/api/chat/channels'

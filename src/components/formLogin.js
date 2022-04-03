@@ -22,6 +22,12 @@ const StyledForm = styled(Form)`
     }
 `;
 
+const Note = styled.p`
+    text-align: center;
+    color: white;
+    font-size: 0.75rem;
+`;
+
 const RegisterBtn = styled.div`
     left: 15%;
     margin: 0 auto;
@@ -85,7 +91,7 @@ function FormLogin(props) {
                 'loggedOut': 'You have been logged out.',
                 'changePass': 'Your password has been changed. Please login again.',
                 'newUser': 'Thank you for joining! Please login with your credentials.',
-                'verified': 'Thank you for verfying! Please login again.'
+                'verified': 'Thank you the update! Please login again.'
             };
             message.warning(messages[stub]);
         }
@@ -134,6 +140,10 @@ function FormLogin(props) {
                 Submit
                 </Button>
             </Form.Item>
+            <Note
+               onClick={() => {
+                navigate('/forgot', { replace: true });
+            }}>Forgot Password?</Note>
         </StyledForm>
     </Pane>
     <RegisterBtn
