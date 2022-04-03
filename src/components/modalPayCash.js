@@ -39,7 +39,6 @@ function ModalPayCash(props) {
 
 
     useEffect(() => {
-        console.log('useEffect', r, a);
         form.setFieldsValue({
             ['recipient']: r,
             ['amount']: a

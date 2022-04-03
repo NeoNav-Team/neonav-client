@@ -1,16 +1,18 @@
 import React  from 'react';
 import styled from 'styled-components';
 import { colors } from '../constants/defaults';
-import { List, Typography } from 'antd';
+import { List, Typography, Row, Col } from 'antd';
+import moment from 'moment';
+
 const { Text } = Typography;
 
-const { primaryCyan } = colors;
+const { primaryCyan, primaryIndigo, primaryMagenta } = colors;
 
 const StyledWrapperDiv  = styled.div`
     display: block;
     color: white;
-    min-height: ${props => props.height}px;
-    max-height: ${props => props.height}px;
+    height: ${props => props.height}px;
+    margin: 0;
     width: 100%;
     text-align: left;
     overflow: auto;
@@ -30,9 +32,19 @@ const User = styled(Text)`
   font-size: 12px
 `;
 
+const Name = styled.span`
+  font-size: 2vh;
+  color: #fff;
+`;
+
+const Amount = styled.span`
+  font-size: 3vh;
+  filter: drop-shadow(0 0 5px #000);
+`;
+
 
 const StyledHistoryLabel = styled.div`
-  font-size: 10px;
+  font-size: 1.5vh;
   padding: 2px;
   width: 70vw;
   &.pitch-mixin {
@@ -44,8 +56,7 @@ const StyledHistoryLabel = styled.div`
 `;
 
 const StyledHistoryText = styled.div`
-  font-size: 12px;
-  padding: 10px;
+  padding: 1vh;
   min-width: 70vw;
   &.pitch-mixin {
     --aug-inlay-all: 4px;
@@ -56,12 +67,14 @@ const StyledHistoryText = styled.div`
 `;
 
 const StyledHistoryMessage = styled.div`
-  padding: 3vw;
+  padding: 0;
+  margin: 2vh 1vh;
+  font-size: 3vh;
   &.pitch-mixin {
-    --aug-inlay-all: 4px;
-    --aug-inlay-bg: radial-gradient(ellipse at top, #7a04eb, rgba(122, 4, 235, 0))  50% 50% / 100% 100%;
+    --aug-inlay-all: 1px;
+    --aug-inlay-bg: radial-gradient(ellipse at top, ${primaryCyan}, rgba(122, 4, 235, 0))  50% 50% / 100% 100%;
     --aug-border-all: 1px;
-    --aug-border-bg: radial-gradient(#7a04eb, #7a04eb) 100% 100% / 100% 100%;
+    --aug-border-bg: radial-gradient(${primaryIndigo}, #7a04eb) 100% 100% / 100% 100%;
   }
 `;
 
@@ -77,10 +90,13 @@ const Timestamp = styled(Text)`
 function CashHistory(props) {
     const { history, height } = props;
 
-    console.log('history', history);
-
     const displayOverfill = balance =>{
-        return balance > 1000000000 ? 99999999 : balance;
+        return balance > 10000000 ? 999999 : balance;
+    }
+
+    const timestamp = timestamp => {
+      const formatedTimeStamp = moment(timestamp).format("ddd HH:mm:ss");
+      return formatedTimeStamp;
     }
 
     return (
@@ -91,10 +107,16 @@ function CashHistory(props) {
                 <StyledHistoryMessage>
                     <StyledHistoryLabel className="pitch-mixin" data-augmented-ui="tr-clip both">
                         <User>{item.from || item.fromid}</User>
-                        <Timestamp>{item.ts}</Timestamp>
+                        <Timestamp>{timestamp(item.ts)}</Timestamp>
                     </StyledHistoryLabel>
-                    <StyledHistoryText className="pitch-mixin" data-augmented-ui="tr-clip br-round bl-round both">
-                        <Text>{item.username || item.user} 💸 {item.amount}</Text>
+                    <StyledHistoryText className="pitch-mixin" data-augmented-ui="tr-clip br-round bl-round inlay">
+                    <Row align="middle">
+                      <Col span={11}><Name>{item.username || item.user}</Name></Col>
+                      <Col span={2}>💸</Col>
+                      <Col span={11} style={{textAlign: 'right', textIndent: '2.5vh'}}>
+                        <Amount>{item.amount}</Amount>
+                      </Col>
+                    </Row>
                     </StyledHistoryText>
                 </StyledHistoryMessage>
             )}

@@ -15,6 +15,7 @@ import {
 } from '../../services/wallet';
 import Pane from '../pane';
 import { useWindowDimensions } from '../../utils/responsive';
+import { useMediaQuery } from 'react-responsive';
 import { modalFromLocation, stubFromSearch } from '../../utils/navigation';
 import { Modal } from 'antd';
 
@@ -75,8 +76,9 @@ const StyledModal = styled(Modal)`
 
 export default function Cash({ location }) {
   // sizing values
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1024px)' });
   const { height } = useWindowDimensions();
-  const headerBarHeight = 64
+  const headerBarHeight = isTabletOrMobile ? 64 : 96;
   const chashActionsHeight = 170;
   const cashHistoryBoxHeight = height - headerBarHeight - chashActionsHeight;
 
