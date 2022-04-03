@@ -54,7 +54,7 @@ const StyledPaneDiv = styled.div`
 const Content = styled.div`
   padding: 10px 16px;
   filter: none;
-  ${props => props.offset && `min-height: calc(100vh - ${props.offset}px);`}
+  min-height: calc(${props => props.height}px - ${props => props.offset}px);
 `;
 
 
@@ -152,7 +152,7 @@ function Pane(props) {
         data-augmented-ui={frameTheme.aguments}
       >
         <PaneTitle><h2>{title}</h2></PaneTitle>
-        <Content offset={offset && submenuOffSet}>
+        <Content offset={offset && submenuOffSet} height={height}>
           <SimpleBar>
             {children}
           </SimpleBar>

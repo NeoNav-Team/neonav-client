@@ -115,7 +115,6 @@ const IconTitleWrap = styled.div`
 
 function IdActions(props) {
     const { successHandler, title, icon, data } = props;
-    console.log('data', data);
 
     return (
         <div>

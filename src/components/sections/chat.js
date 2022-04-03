@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { navigate } from 'gatsby';
 import _ from 'lodash';
+import moment from 'moment';
 import queryString from 'query-string';
 import ChatChannelSelector  from '../../components/chatChannelSelector';
 import ChatInfiniteDisplay from '../../components/chatInfiniteDisplay';
@@ -36,7 +37,7 @@ const StyledChatContainer = styled.div`
 `;
 
 const StyledChatMessage = styled.div`
-  padding: 3vw;
+  padding: 1vh;
   &.pitch-mixin {
     --aug-inlay-all: 4px;
     --aug-inlay-bg: radial-gradient(ellipse at top, #7a04eb, rgba(122, 4, 235, 0))  50% 50% / 100% 100%;
@@ -46,24 +47,30 @@ const StyledChatMessage = styled.div`
 `;
 
 const Timestamp = styled(Text)`
+  position: absolute;
   color: white;
+  margin-top: -2.75vh;
+  right: 5%;
+  text-transform: uppercase;
+  font-family: Roboto, sans-serif;
   font-weight: 100;
   margin-left: 10px;
-  font-size: 10px
-  opacity: 0.55;
+  font-size: 1.75vh;
+  opacity: 0.6;
 `;
 
 const User = styled(Text)`
   color: #41c5ff;
-  font-weight: 300;
+  font-weight: 700;
   margin-left: 10px;
-  font-size: 12px
+  font-size: 2vh;
 `;
 
 const StyledChatMessageLabel = styled.div`
-  font-size: 10px;
   padding: 2px;
-  width: 70vw;
+  max-width: 60%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   &.pitch-mixin {
     --aug-inlay-all: 4px;
     --aug-inlay-bg: radial-gradient(ellipse at top, #7a04eb, rgba(122, 4, 235, 0))  50% 50% / 100% 100%;
@@ -73,12 +80,13 @@ const StyledChatMessageLabel = styled.div`
 `;
 
 const StyledChatMessageText = styled.div`
-  font-size: 12px;
+  font-size: 1.75vh;
+  font-family: Roboto, sans-serif;
   padding: 10px;
   min-width: 70vw;
   &.pitch-mixin {
-    --aug-inlay-all: 4px;
-    --aug-inlay-bg: radial-gradient(ellipse at top, #41c5ff, rgba(122, 4, 235, 0))  50% 50% / 100% 100%;
+    --aug-inlay-all: 0;
+    --aug-inlay-bg: radial-gradient(ellipse at top, #41c5ff, rgba(122, 4, 235, 0))  80% 80% / 100% 100%;
     --aug-border-all: 1px;
     --aug-border-bg: radial-gradient(#41c5ff, #41c5ff) 100% 100% / 100% 100%;
   }
@@ -147,6 +155,11 @@ export default function Chat({ location, lastMessage, setNotify }) {
     const collectedMessages = _.unionBy(seededChannelMessages, oldMessages, 'id');
     setMessages(orderMessagesbyTimestamp(collectedMessages));
   }
+  const timestamp = timestamp => {
+    //let hours = timestamp.split('T').pop().split('.')[0];
+    const formatedTimeStamp = moment(timestamp).format("ddd HH:mm:ss");
+    return formatedTimeStamp;
+  }
 
   useEffect(() => {
     fetchChatChannels().then(res => {
@@ -188,9 +201,8 @@ export default function Chat({ location, lastMessage, setNotify }) {
                 <StyledChatMessage>
                   <StyledChatMessageLabel className="pitch-mixin" data-augmented-ui="tr-clip both">
                     <User>{item.from || item.fromid}</User>
-                    <Timestamp>{item.ts}</Timestamp>
-                  </StyledChatMessageLabel>
-                  <StyledChatMessageText className="pitch-mixin" data-augmented-ui="tr-clip br-round bl-round both">
+                  </StyledChatMessageLabel><Timestamp>{timestamp(item.ts)}</Timestamp>
+                  <StyledChatMessageText className="pitch-mixin" data-augmented-ui="tr-clip br-round bl-round inlay">
                     <Text> 》 {item.text}</Text>
                   </StyledChatMessageText>
                 </StyledChatMessage>
