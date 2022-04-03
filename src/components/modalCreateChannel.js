@@ -35,13 +35,6 @@ function ModalCreateChannel(props) {
         console.log('Failed:', errorInfo);
     };
 
-
-    // useEffect(() => {
-    //     form.setFieldsValue({
-    //         name
-    //     });
-    // }, [form, value]);
-
     return (
     <>
         <p>Create A Channel</p>
