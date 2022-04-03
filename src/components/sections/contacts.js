@@ -85,7 +85,7 @@ const ContactList = styled.div`
 const Wrapper = styled.div`
     height: calc(${props => props.height}px - ${props => props.offset}px);
     margin: 0 auto;
-    overflow: scroll;
+    overflow: auto;
 `;
 
 const Contact =  styled.div`
