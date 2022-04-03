@@ -65,10 +65,10 @@ const IconName = styled.div`
 const IconWrap = styled.div`
     position: relative;
     display: inline-block;
-    margin: 0 0.5rem;
-    min-width: 4rem;
-    min-height: 4rem;
-    font-size: 2rem;
+    margin: 0 0.125vh;
+    min-width: 8vh;
+    min-height: 8vh;
+    font-size: 8vh;
     color: white;
     cursor: pointer;
     opacity: 1;
@@ -76,14 +76,16 @@ const IconWrap = styled.div`
         --aug-inlay: initial;
         --aug-inlay-all: 4px;
         --aug-inlay-bg: radial-gradient(ellipse at top, ${primaryCyan}, rgba(122, 4, 235, 0))  20% 20% / 100% 100%;
-        --aug-border-all: 1px;
+        --aug-border-all: 2px;
         --aug-border-bg: radial-gradient(${primaryIndigo}, ${primaryCyan}) 100% 100% / 100% 100%;
         color: ${primaryCyan};
     }
     & svg {
+        position: absolute;
         color: white;
         font-size: 5vh;
-        margin-top: 1.25vh;
+        top: 1.5vh;
+        left: 1.5vh;
     }
 `;
 
