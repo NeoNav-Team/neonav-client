@@ -1,4 +1,6 @@
 import React, { useEffect, useState }from 'react';
+import { useMediaQuery } from 'react-responsive';
+import { useWindowDimensions } from '../../utils/responsive';
 import _ from 'lodash';
 import { navigate } from 'gatsby';
 import styled from 'styled-components';
@@ -80,6 +82,10 @@ const ContactList = styled.div`
         --aug-border-bg: radial-gradient(#41c5ff, #41c5ff) 100% 100% / 100% 100%;
       }
 `;
+const Wrapper = styled.div`
+    height: calc(${props => props.height}px - ${props => props.offset}px);
+    margin: 0 auto;
+`;
 
 const Contact =  styled.div`
 display:block;
@@ -118,6 +124,9 @@ span {
 
 export default function Contacts({ location }) {
     const userStub = <>Contacts</>;
+    const viewport = useWindowDimensions();
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1024px)' });
+    const totalOffset = isTabletOrMobile ? 236 : 276;
     const defaultModal = modalFromLocation(location);
     const [modal, setModal] = useState(defaultModal);
     const [contacts, setChatContacts] = useState([]);
@@ -157,14 +166,14 @@ export default function Contacts({ location }) {
         <Pane
             title={userStub}
             back={'/'}
-            offset={100}
+            offset={isTabletOrMobile ? '128' : '160'}
             footer={
                 <IdActions title="Add User to Friends List" successHandler={addFriendByID} icon={<UserAddOutlined />} />
             }
         >
         <Row justify="space-between" align="middle">
             <StyledCol span={24}>
-                <ContactList className='pitch-mixin'>
+                <Wrapper offset={totalOffset} height={viewport.height}>
                     {contacts && contacts.map(contact => (
                         <Contact
                             className='pitch-mixin'
@@ -175,7 +184,7 @@ export default function Contacts({ location }) {
                             <span>{contact.status ? statusIcons[contact.status] : <EyeInvisibleTwoTone />} {contact.username && `${contact.username} ⇋ `}<span>[{contact.id}]</span></span>
                         </Contact>
                     ))}
-                </ContactList>
+                </Wrapper>
             </StyledCol>
         </Row>
         </Pane>

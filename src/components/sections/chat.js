@@ -141,7 +141,9 @@ export default function Chat({ location, lastMessage, setNotify }) {
   };
 
   const getID = id => {
-    navigate(`/?p=identification&id=${id}`);
+    if (typeof id !== 'undefined') {
+      navigate(`/?p=identification&id=${id}`);
+    }
   }
 
   const setInitalStateFromResponse = (res) => {
