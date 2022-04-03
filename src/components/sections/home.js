@@ -10,6 +10,8 @@ import Kitty from '../icons/kitty';
 import TanChat from '../icons/tanchat';
 import Chat from '../icons/chat';
 import Cash from '../icons/cash';
+import EditPhoto from '../icons/editPhoto';
+import EditName from '../icons/editName';
 import Notify from '../icons/notify';
 import Announcements from '../icons/announcements';
 import Contacts from '../icons/contacts';
@@ -136,6 +138,7 @@ export default function Home({ location, notices, recentChannels }) {
                   <ButtonIcon
                     navTo="/?p=chat&c=22c6fec7b63257ca0d7b743946090fa9"
                     title="Anouncements"
+                    isEven="even"
                   >
                     <Notice count={_.get(notices, '22c6fec7b63257ca0d7b743946090fa9', false) ? 1 : 0}><Announcements /></Notice>
                   </ButtonIcon>
@@ -152,18 +155,30 @@ export default function Home({ location, notices, recentChannels }) {
             <Row gutter={[18, 24]} justify="space-around" align="middle">
                 <Col span={6}>
                   <ButtonIcon
+                    navTo='/?p=profile&#editAvatar'
+                    isEven="even"
+                    title="Edit Avatar"
+                  >
+                    <EditPhoto />
+                </ButtonIcon>
+              </Col>
+              <Col span={6}>
+              <ButtonIcon
+                    navTo='/?p=profile&k=fullname#editField'
+                    title="Edit Name"
+                    style={{transform: 'scale(-1, 1)'}}
+                  >
+                    <EditName />
+                </ButtonIcon>
+              </Col>
+              <Col span={6}>
+              <ButtonIcon
                     navTo='/logout'
                     isEven="even"
                     title="Exit"
                   >
                     <Logout />
                 </ButtonIcon>
-              </Col>
-              <Col span={6}>
-
-              </Col>
-              <Col span={6}>
-
               </Col>
             </Row>
         </StyledAntLayout>
