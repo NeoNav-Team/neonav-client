@@ -7,7 +7,7 @@ import {
     Col
 } from 'antd';
 import AddChannel from './icons/addChannel';
-import Chat from './icons/Chat';
+import Chat from './icons/chat';
 
 
 const {primaryCyan, primaryIndigo, primaryMagenta, primaryColor } = colors;
