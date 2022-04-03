@@ -175,7 +175,7 @@ export default function Home({ location, notices, recentChannels }) {
               </Col>
               <Col span={6}>
               <ButtonIcon
-                    navTo='https://sites.neonav.net/introduction.html'
+                    navTo='https://sites.neonav.net/help.html'
                     isEven="even"
                     title="Help"
                     newWindow={true}
