@@ -12,6 +12,7 @@ import {
     } from 'antd';
 import SpaceSuit from '../spaceSuit';
 import Pane from '../pane';
+import { getFriends } from '../../services/user';
 import { modalFromLocation, stubFromSearch } from '../../utils/navigation';
 import { getChatChannels } from '../../services/chat';
 import { ToolOutlined } from '@ant-design/icons';
@@ -164,6 +165,7 @@ export default function Channels({ location, recentChannels, }) {
     const defaultModal = modalFromLocation(location);
     const [modal, setModal] = useState(defaultModal);
     const [channels, setChatChannels] = useState([]);
+    const [contacts, setChatContacts] = useState([]);
 
     const closeModal = () => {
         setModal(null);
@@ -182,10 +184,21 @@ export default function Channels({ location, recentChannels, }) {
         return await response;
     };
 
+    const fetchFriends = async () => {
+        const response = getFriends();
+        return await response;
+    };
+
     useEffect(() => {
         fetchChatChannels().then(res => {
             const myChannels = _.filter(res.data, ['scope', 'group']);
             setChatChannels(myChannels);
+        }).catch(err => {
+            console.log('err', err);
+        });
+        fetchFriends().then(res => {
+            const myContacts = res.data;
+            setChatContacts(myContacts);
         }).catch(err => {
             console.log('err', err);
         });
@@ -246,7 +259,7 @@ const ChannelItem = (channel, index) => {
             width="75vh"
             >
             <Pane frameId={1}>
-                {modal === 'editChannel' && <ModalEditChannel fieldKey={stubFromSearch(location, 'k')} myChannels={channels} />}
+                {modal === 'editChannel' && <ModalEditChannel fieldKey={stubFromSearch(location, 'k')} myChannels={channels} myFriends={contacts} />}
                 {modal === 'createChannel' && <ModalCreateChannel />}
             </Pane>
         </StyledModal>

@@ -146,7 +146,6 @@ export default function Contacts({ location }) {
         fetchFriends().then(res => {
             const myContacts = res.data;
             setChatContacts(myContacts);
-            console.log(myContacts)
         }).catch(err => {
             console.log('err', err);
         });

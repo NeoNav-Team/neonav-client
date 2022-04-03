@@ -57,7 +57,7 @@ export default function TinyForm(props) {
     switch (type) {
       case 'select':
         element =  (
-          <Select ref={inputElement} key={`select_${label}`}>
+          <Select ref={inputElement} key={`select_${label}`} style={{minWidth: '200px'}}>
             {data && data.map((item, index) => {
               return <Option key={`item_${label}_${index}`} value={item.value}>{item.name}</Option>
               }
@@ -66,7 +66,7 @@ export default function TinyForm(props) {
         );
       break;
       default:
-        element =  <Input ref={inputElement} />;
+        element =  <Input ref={inputElement} style={{minWidth: '200px'}}/>;
       break;
     }
     return element;
