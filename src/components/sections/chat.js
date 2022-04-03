@@ -64,11 +64,16 @@ const User = styled(Text)`
   font-weight: 700;
   margin-left: 10px;
   font-size: 2vh;
+  & span {
+    font-size: 1.25vh;
+    color: white;
+    font-weight: 200;
+  }
 `;
 
 const StyledChatMessageLabel = styled.div`
   padding: 2px;
-  max-width: 60%;
+  max-width: 70%;
   white-space: nowrap;
   text-overflow: ellipsis;
   &.pitch-mixin {
@@ -135,6 +140,10 @@ export default function Chat({ location, lastMessage, setNotify }) {
     return await response;
   };
 
+  const getID = id => {
+    navigate(`/?p=identification&id=${id}`);
+  }
+
   const setInitalStateFromResponse = (res) => {
     const chatChannels = _.get(res, 'data', false) ? res.data : [];
     let selected = selectedChannel ||  paramChannel || chatChannels.find(x => x.name === '谈.global')['id'] || null;
@@ -199,8 +208,8 @@ export default function Chat({ location, lastMessage, setNotify }) {
             dataSource={_.filter(messages, {channel: selectedChannel})}
             renderItem={item => (
                 <StyledChatMessage>
-                  <StyledChatMessageLabel className="pitch-mixin" data-augmented-ui="tr-clip both">
-                    <User>{item.from || item.fromid}</User>
+                  <StyledChatMessageLabel className="pitch-mixin" data-augmented-ui="tr-clip both" onClick={_.partial(getID, item.fromid)}>
+                    <User>{item.from || item.fromid}{item.from && <span> ❯ {item.fromid}</span>}</User>
                   </StyledChatMessageLabel><Timestamp>{timestamp(item.ts)}</Timestamp>
                   <StyledChatMessageText className="pitch-mixin" data-augmented-ui="tr-clip br-round bl-round inlay">
                     <Text> 》 {item.text}</Text>
