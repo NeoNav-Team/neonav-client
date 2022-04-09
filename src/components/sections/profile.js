@@ -1,5 +1,6 @@
 import React, { useEffect, useState }from 'react';
 import { useMediaQuery } from 'react-responsive';
+import { useWindowDimensions } from '../../utils/responsive';
 import { statusIcons }  from '../../constants/defaults';
 import { profileSchema } from '../../constants/schemas';
 import _ from 'lodash';
@@ -62,6 +63,12 @@ const MiniIconBtn = styled.div`
     }
 `;
 
+const Wrapper = styled.div`
+    height: calc(${props => props.height}px - ${props => props.offset}px);
+    margin: 0 auto;
+    overflow: auto;
+`;
+
 const EditBtnHolder = styled.div`
     position: absolute;
     bottom: 1.75vh;
@@ -115,6 +122,7 @@ const StyledModal = styled(Modal)`
 export default function Profile({ location }) {
     const [profileData, setProfile] = useState({});
     const [locked, setLock] = useState(true);
+    const viewport = useWindowDimensions();
     const userId = _.get(profileData, 'auth.userid', '----------');
     const firstname = _.get(profileData, 'profile.firstname', 'N/A');
     const lastname = _.get(profileData, 'profile.lastname', 'N/A');
@@ -127,6 +135,7 @@ export default function Profile({ location }) {
     const defaultModal = modalFromLocation(location);
     const [modal, setModal] = useState(defaultModal);
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1024px)' });
+    const totalOffset = isTabletOrMobile ? 196 : 236;
 
     const closeModal = () => {
         setModal(null);
@@ -170,45 +179,47 @@ export default function Profile({ location }) {
         <Pane
             title={userStub}
             back={'/#userSettings'}
-            offset={isTabletOrMobile ? '64' : '64'}
+            offset={isTabletOrMobile ? '128' : '160'}
             footer={
                 <MiniIconBtn style={{width:'40px', right:'16px'}} onClick={toggleLock}>
                     {locked ? <Lock /> : <Unlock />}
                 </MiniIconBtn>
             }
         >
-        <Row justify="space-between" align="middle">
-            <Col span={8}  {...(!locked && { onClick: changeAvatar })}>
-                <UserAvatar data={avatar} alt={username} />
-                <EditBtnHolder>
-                <EBtn style={{color: 'pink', width: '40px', height:'40px', fontSize:'4vh'}}/>
-                </EditBtnHolder>
-            </Col>
-            <StyledCol span={15}>
-                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'fullname'), style:{cursor:'pointer'}})}>
-                    <Styledlabel>Name</Styledlabel>
-                    <StyledValue>{lastname && `${lastname}, `}<EBtn />{firstname}<EBtn /></StyledValue>
-                </StyledP>
-                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'username'), style:{cursor:'pointer'} })}>
-                    <Styledlabel>Alias</Styledlabel>
-                    <StyledValue>{username}<EBtn /></StyledValue>
-                </StyledP>
-                <StyledP style={{cursor: 'pointer'}} onClick={_.partial(setProfileObjKey, 'status')}>
-                    <Styledlabel>Status</Styledlabel>
-                    <StyledValue>{statusIcons[status]} {status} <EditOutlined style={{opacity: 0.6}}/></StyledValue>
-                </StyledP>
-            </StyledCol>
-        </Row>
-        <Row>
-            <StyledCol span={24}>
-                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'occupation'), style:{cursor:'pointer'}})}><Styledlabel>Occupation</Styledlabel></StyledP>
-                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'occupation'), style:{cursor:'pointer'}})}><StyledBlurb>{occupation}<EBtn /></StyledBlurb></StyledP>
-                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'skills'), style:{cursor:'pointer'}})}><Styledlabel>Skills</Styledlabel></StyledP>
-                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'skills'), style:{cursor:'pointer'}})}><StyledBlurb>{skills}<EBtn /></StyledBlurb></StyledP>
-                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'bio'), style:{cursor:'pointer'}})}><Styledlabel>Bio</Styledlabel></StyledP>
-                <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'bio'), style:{cursor:'pointer'}})}><StyledBlurb>{bio}<EBtn /></StyledBlurb></StyledP>
-            </StyledCol>
-        </Row>
+        <Wrapper offset={totalOffset} height={viewport.height}>
+            <Row justify="space-between" align="middle">
+                <Col span={8}  {...(!locked && { onClick: changeAvatar })}>
+                    <UserAvatar data={avatar} alt={username} />
+                    <EditBtnHolder>
+                    <EBtn style={{color: 'pink', width: '40px', height:'40px', fontSize:'4vh'}}/>
+                    </EditBtnHolder>
+                </Col>
+                <StyledCol span={15}>
+                    <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'fullname'), style:{cursor:'pointer'}})}>
+                        <Styledlabel>Name</Styledlabel>
+                        <StyledValue>{lastname && `${lastname}, `}<EBtn />{firstname}<EBtn /></StyledValue>
+                    </StyledP>
+                    <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'username'), style:{cursor:'pointer'} })}>
+                        <Styledlabel>Alias</Styledlabel>
+                        <StyledValue>{username}<EBtn /></StyledValue>
+                    </StyledP>
+                    <StyledP style={{cursor: 'pointer'}} onClick={_.partial(setProfileObjKey, 'status')}>
+                        <Styledlabel>Status</Styledlabel>
+                        <StyledValue>{statusIcons[status]} {status} <EditOutlined style={{opacity: 0.6}}/></StyledValue>
+                    </StyledP>
+                </StyledCol>
+            </Row>
+            <Row>
+                <StyledCol span={24}>
+                    <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'occupation'), style:{cursor:'pointer'}})}><Styledlabel>Occupation</Styledlabel></StyledP>
+                    <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'occupation'), style:{cursor:'pointer'}})}><StyledBlurb>{occupation}<EBtn /></StyledBlurb></StyledP>
+                    <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'skills'), style:{cursor:'pointer'}})}><Styledlabel>Skills</Styledlabel></StyledP>
+                    <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'skills'), style:{cursor:'pointer'}})}><StyledBlurb>{skills}<EBtn /></StyledBlurb></StyledP>
+                    <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'bio'), style:{cursor:'pointer'}})}><Styledlabel>Bio</Styledlabel></StyledP>
+                    <StyledP {...(!locked && { onClick: _.partial(setProfileObjKey, 'bio'), style:{cursor:'pointer'}})}><StyledBlurb>{bio}<EBtn /></StyledBlurb></StyledP>
+                </StyledCol>
+            </Row>
+        </Wrapper>
         </Pane>
         <StyledModal
             title={null}

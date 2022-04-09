@@ -73,15 +73,6 @@ const StyledModal = styled(Modal)`
     }
 `;
 
-const ContactList = styled.div`
-    min-height: 70vh;
-    &.pitch-mixin {
-        --aug-inlay-all: 4px;
-        --aug-inlay-bg: radial-gradient(ellipse at top, #41c5ff, rgba(122, 4, 235, 0))  50% 50% / 100% 100%;
-        --aug-border-all: 1px;
-        --aug-border-bg: radial-gradient(#41c5ff, #41c5ff) 100% 100% / 100% 100%;
-      }
-`;
 const Wrapper = styled.div`
     height: calc(${props => props.height}px - ${props => props.offset}px);
     margin: 0 auto;
