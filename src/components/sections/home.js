@@ -139,7 +139,7 @@ export default function Home({ location, notices, recentChannels }) {
               <Col span={6}>
                   <ButtonIcon
                     navTo="/?p=chat&c=22c6fec7b63257ca0d7b743946090fa9"
-                    title="Anouncements"
+                    title="Announcements"
                     isEven="even"
                   >
                     <Notice count={_.get(notices, '22c6fec7b63257ca0d7b743946090fa9', false) ? 1 : 0}><Announcements /></Notice>
@@ -148,7 +148,7 @@ export default function Home({ location, notices, recentChannels }) {
                 <Col span={6}>
                 <ButtonIcon
                     navTo="/?p=chat&c=d6993467030d7398f0415badd9186aa0"
-                    title="Notifcations"
+                    title="Notifications"
                   >
                     <Notice count={_.get(notices, 'd6993467030d7398f0415badd9186aa0', false) ? 1 : 0}><Notify /></Notice>
                 </ButtonIcon>
