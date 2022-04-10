@@ -7,12 +7,14 @@ import queryString from 'query-string';
 import ChatChannelSelector  from '../../components/chatChannelSelector';
 import ChatInfiniteDisplay from '../../components/chatInfiniteDisplay';
 import ChatInputBar from '../../components/chatInputBar';
+import { getUser } from '../../services/auth';
 import ModalEditField from '../../components/modalEditField';
 import { 
   getChatChannels,
   orderMessagesbyTimestamp,
   postMessage,
   seedChannel,
+  joinPublicChannel,
 } from '../../services/chat';
 import { useWindowDimensions } from '../../utils/responsive';
 import { useMediaQuery } from 'react-responsive';
@@ -124,11 +126,14 @@ export default function Chat({ location, lastMessage, setNotify }) {
 
   const params = queryString && queryString.parse(_.get(location, 'search', ''));
   const paramChannel = params && params.c ? params.c : null;
+  const isAddingChannel = params && params.a ? params.a : null;
 
   const [chatChannels, setChatChannels] = useState([]);
   const [selectedChannel, setSelectedChannel] = useState(null);
   const [messages, setMessages] = useState([]);
   const [modal, setModal] = useState(null);
+  const nnUser = getUser();
+  const userId = nnUser.userid;
 
   const closeModal = () => {
       setModal(null);
@@ -144,6 +149,11 @@ export default function Chat({ location, lastMessage, setNotify }) {
     if (typeof id !== 'undefined') {
       navigate(`/?p=identification&id=${id}`);
     }
+  }
+
+  const addChannel = async () => {
+    const response = joinPublicChannel(paramChannel, userId);
+    return await response;
   }
 
   const setInitalStateFromResponse = (res) => {
@@ -172,11 +182,19 @@ export default function Chat({ location, lastMessage, setNotify }) {
   }
 
   useEffect(() => {
-    fetchChatChannels().then(res => {
-      setInitalStateFromResponse(res);
-    }).catch(err => {
-        console.log('err', err);
-    });
+    if (isAddingChannel) {
+      addChannel().then(res => {
+        navigate(`/?p=chat&c=${paramChannel}`);
+      }).catch(err => {
+        navigate(`/?p=chat`);
+      });
+    } else {
+      fetchChatChannels().then(res => {
+        setInitalStateFromResponse(res);
+      }).catch(err => {
+          console.log('err', err);
+      });
+    }
   }, [location]);
 
   useEffect(() => {

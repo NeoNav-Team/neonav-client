@@ -36,8 +36,6 @@ function ModalCreateChannel(props) {
     const isChannelAdmin = channelAdmin === userId;
     const defaultScope = _.get(channel, 'scope', 'group') === 'group';
 
-    console.log('channel', channel);
-
 
     const selectionUsers = channelUsers => {
       const selectItems = []
