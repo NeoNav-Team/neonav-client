@@ -5,13 +5,25 @@ import {
     Typography,
     Tag,
     Button,
+    Switch,
 } from 'antd';
+import styled from 'styled-components';
 import IdActions from '../components/idActions';
 import { UserOutlined, UserAddOutlined, UserDeleteOutlined, UserSwitchOutlined} from '@ant-design/icons';
 import { getUser } from '../services/auth';
-import { getChannelUsers, addUserToChannel, removeUserToChannel, changeAdminToChannel } from '../services/chat';
+import { getChannelUsers, addUserToChannel, removeUserToChannel, toggleChannelScope, changeAdminToChannel } from '../services/chat';
+
 
 const { Text, Title } = Typography;
+
+const StyledSwitch = styled(Switch)`
+  backgroundColor: #ff00a0;
+  fontSize: 12px;
+  margin-left: 10px;
+  &.ant-switch-checked {
+    background: rgba(255,255,255, 0.5);
+  }
+`
 
 function ModalCreateChannel(props) {
     const [channelUsers, setChannelUsers] = useState([]);
@@ -22,6 +34,9 @@ function ModalCreateChannel(props) {
     const channelAdmin = _.get(channel, 'admin', '');
     const userId = nnUser.userid;
     const isChannelAdmin = channelAdmin === userId;
+    const defaultScope = _.get(channel, 'scope', 'group') === 'group';
+
+    console.log('channel', channel);
 
 
     const selectionUsers = channelUsers => {
@@ -75,6 +90,14 @@ function ModalCreateChannel(props) {
       });
     }
 
+    const handleChangeScope = () => {
+      toggleChannelScope(channelId).then(res => {
+        navigate('/?p=channels', { replace: true });
+      }).catch(err => {
+          console.log('err', err);
+      });
+    }
+
     useEffect(() => {
       channelId && updateChannelUsers(channelId);
     }, [channelId]);
@@ -86,6 +109,7 @@ function ModalCreateChannel(props) {
         {isChannelAdmin && (
           <>
             <Title level={4} style={{color:'#fff'}}>Admin Options</Title>
+            <p><StyledSwitch checkedChildren="Private" unCheckedChildren="Public" defaultChecked={defaultScope} onClick={handleChangeScope} /></p>
             <IdActions title="Add User to Channel" successHandler={onAddUser} data={selectionUsers(myFriends)} icon={<UserAddOutlined />} />
             <IdActions title="Remove User from Channel" successHandler={onRemoveUser} data={selectionUsers(channelUsers)} icon={<UserDeleteOutlined />} />
             <IdActions title="Reassign Admin to Channel" successHandler={onChangeAdmin} data={selectionUsers(channelUsers)} icon={<UserSwitchOutlined />} />

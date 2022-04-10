@@ -192,7 +192,7 @@ export default function Channels({ location, recentChannels, }) {
 
     useEffect(() => {
         fetchChatChannels().then(res => {
-            const myChannels = _.filter(res.data, ['scope', 'group']);
+            const myChannels = res.data;
             setChatChannels(myChannels);
         }).catch(err => {
             console.log('err', err);

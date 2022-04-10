@@ -16,5 +16,6 @@ export const apis = {
     reset: '/api/auth/reset',
     fakename: '/api/user/fake',
     changePass: '/api/auth/users',
-    channels: '/api/chat/channels'
+    channels: '/api/chat/channels',
+    scope: '/api/chat/public',
 };
