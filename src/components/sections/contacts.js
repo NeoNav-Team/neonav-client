@@ -145,7 +145,7 @@ export default function Contacts({ location }) {
 
     useEffect(() => {
         fetchFriends().then(res => {
-            const myContacts = res.data;
+            const myContacts =  _.orderBy(res.data, 'username', 'asc');
             setChatContacts(myContacts);
         }).catch(err => {
             console.log('err', err);

@@ -19,7 +19,7 @@ import { ToolOutlined } from '@ant-design/icons';
 import ChannelActions from '../channelActions';
 import ModalEditChannel from '../modalEditChannel';
 import ModalCreateChannel from '../modalCreateChannel';
-import { colors } from '../../constants/defaults';
+import { colors, restrictedChannels } from '../../constants/defaults';
 
 const {primaryCyan, primaryIndigo, primaryMagenta, primaryColor } = colors;
 
@@ -168,6 +168,9 @@ export default function Channels({ location, recentChannels, }) {
     const [channels, setChatChannels] = useState([]);
     const [contacts, setChatContacts] = useState([]);
 
+    let specialChannels = _.clone(restrictedChannels);
+    specialChannels.push('22c6fec7b63257ca0d7b74394605813e') //global chat
+
     const closeModal = () => {
         setModal(null);
         navigate('/?p=channels');
@@ -243,9 +246,11 @@ const ChannelItem = (channel, index) => {
         <Row justify="space-between" align="middle">
             <StyledCol span={24}>
                 <Wrapper offset={totalOffset} height={viewport.height}>
-                {channels.map((channel, index) => { return (
-                    ChannelItem(channel, index)
-                )})}
+                {channels.map((channel, index) => {
+                    if (specialChannels.indexOf(channel.id) === -1) {
+                        return ChannelItem(channel, index);
+                    }
+                })}
                 </Wrapper>
             </StyledCol>
         </Row>
