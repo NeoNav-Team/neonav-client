@@ -26,6 +26,7 @@ export default function Eula() {
         <Title style={{color: 'white'}} level={4}>Summary</Title>
         <Text>You must agree to all of the terms of this EULA to use this Software.</Text>
         <Text>With the exception of your email and password, EVERYTHING YOU TYPE OR SEND THROUGH THIS APP SHOULD BE CONSIDERED PUBLIC. DO NOT SHARE REAL-WORLD CREDIT CARD INFORMATION OR SIMILAR CONFIDENTIAL INFORMATION THROUGH NeoNav. There are role-playing based "hacking" interfaces, and public displays, which may show everything you send through NeoNav, including, but not limited to, chat messages, wallet history, and private messages.</Text>
+        <Text>This does not give you permission to attempt to actually hack this system by modifying pages or sending spurious requests to the API. Everything is logged, and if you attempt such things, it will result in removal from the platform. You are allowed to create multiple accounts, within reason, to facilitate role play. Malicious use of that freedom will result in removal from the platform. You also take full responsibility for any and all content you post on this platform, as it functions as an open and public forum.</Text>
         <Text>This Software automatically communicates with its server in order to perform its functions.</Text>
         <Text>This Software is provided "as-is" with no warranties, and you agree that Wayward Communication Corporation is not liable for anything you do with it.</Text>
         <Text>You really ought to just go ahead and read the whole EULA. It's not all that long. You should not only rely on this summary.</Text>
@@ -41,6 +42,7 @@ export default function Eula() {
         <Text>You may not sell, resell, rent, lease or exchange the Software for anything of value.</Text>
         <Text>You may redistribute the software, but it must include this EULA and you may not repackage or bundle the Software with any other software.</Text>
         <Text>You may not remove or alter any proprietary notices or marks on the Software.</Text>
+        <Text>You must not use this software to engage in non-fictitious commerce. You must not attempt to alter this system or its behavior in any way through external software.</Text>
 
         <Title style={{color: 'white'}} level={4}>Privacy Notices</Title>
         <Text>The Software automatically communicates with its server in order to perform its functions. Please note that only two things are intended to be private in the Software, your email address and your password. Any other information you provide to the Software, including but not limited to private messages, tan/chat messages, transactions, and profile information, can and will be shared with other users, and displayed in public places.</Text>
