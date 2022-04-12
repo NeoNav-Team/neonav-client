@@ -5,6 +5,7 @@ import styled from 'styled-components';
 const StyledWrapperDiv  = styled.div`
     display: block;
     color: white;
+    margin-top: 64px;
     min-height: ${props => props.height}px;
     max-height: ${props => props.height}px;
     width: 100%;
