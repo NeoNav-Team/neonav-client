@@ -81,8 +81,6 @@ const Wrapper = styled.div`
 
 const Contact =  styled.div`
 display:block;
-position: absolute;
-z-index: 10;
 text-align: left;
 font-size: 1rem;
 padding: 6px 20px;

@@ -48,8 +48,6 @@ const Notice = styled(Badge)`
 
 const Channel =  styled.div`
 display:inline-block;
-position: absolute;
-z-index: 10;
 text-align: left;
 font-size: 2vh;
 padding: 1vh;
