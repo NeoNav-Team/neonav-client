@@ -300,7 +300,7 @@ export default function Id({ location }) {
                         onResult={(result, error) => {
                         if (!!result) {
                             let cleanId = result?.text;
-                            cleanId = cleanId.replace(/[^0-9\.]+/g, '');
+                            cleanId = cleanId.replace(/[^0-9]+/g, '');
                             goToId(cleanId);
                         }
                         if (!!error) {
