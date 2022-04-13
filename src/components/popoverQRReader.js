@@ -33,7 +33,9 @@ function PopoverQRReader(props) {
                 onResult={(result, error) => {
                 if (!!result) {
                     setIsVisible(false);
-                    successHandler(result?.text);
+                    let cleanId = result?.text;
+                    cleanId = cleanId.replace(/[^0-9\.]+/g, '');
+                    successHandler(cleanId);
                 }
                 if (!!error) {
                     console.info(error);

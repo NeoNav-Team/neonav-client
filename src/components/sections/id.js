@@ -299,7 +299,9 @@ export default function Id({ location }) {
                         constraints={{facingMode: 'environment'}}
                         onResult={(result, error) => {
                         if (!!result) {
-                            goToId(result?.text);
+                            let cleanId = result?.text;
+                            cleanId = cleanId.replace(/[^0-9\.]+/g, '');
+                            goToId(cleanId);
                         }
                         if (!!error) {
                             console.info(error);
