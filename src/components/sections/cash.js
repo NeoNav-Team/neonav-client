@@ -26,7 +26,7 @@ const StyledChatContainer = styled.div`
   padding: 0;
   overflow: hidden;
   position: relative;
-  min-height: 100%;
+  min-height: calc(100vh - 64px);
   &.pitch-mixin {
     --aug-border-all: 1px;
     --aug-border-bg: radial-gradient(#7a04eb, #7a04eb) 100% 100% / 100% 100%;

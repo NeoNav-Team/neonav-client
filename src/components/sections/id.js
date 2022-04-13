@@ -171,13 +171,16 @@ export default function Id({ location }) {
     const [identity, setIdentity] = useState({});
     const [isDrawer, setIsDrawer] = useState(false);
 
+    console.log('identity', identity);
+
     const username = _.get(identity, 'username', 'N/A');
     const occupation = _.get(identity, 'occupation', 'N/A');
     const skills = _.get(identity, 'skills', 'N/A');
     const bio = _.get(identity, 'bio', 'N/A');
     const firstName = _.get(identity, 'firstname', 'N/A');
     const lastName = _.get(identity, 'lastname', null);
-    const avatar =_.get(identity, 'avatar', null);
+    const avatar = _.get(identity, 'avatar', null);
+    const idNum = _.get(identity, 'userid', null) || f && id;
 
     const goToId = id => {
         navigate(`/?p=identification&id=${id}`);
@@ -202,7 +205,6 @@ export default function Id({ location }) {
             id && fetchFriend(id).then(res => {
                 const person = res.data.profile;
                 setIdentity(person);
-                console.log('friend', person);
             }).catch(err => {
                 console.log('err', err);
             });
@@ -258,7 +260,7 @@ export default function Id({ location }) {
                                 image={avatar}
                                 width={cardWidth}
                             >
-                                <Number>{id}</Number>
+                                <Number>{idNum}</Number>
                             </PhotoWrapper> 
                             <FullName>{lastName && `${lastName}, `}{firstName}</FullName>
                             <Drawer
@@ -281,7 +283,7 @@ export default function Id({ location }) {
                                             <p>{bio}</p>
                                         </>
                                     ) : (
-                                        <div style={{marginTop: '100px', textAlign: 'center', overflow: 'auto'}}>
+                                        <div style={{width: `${cardWidth}px`, marginTop: '100px', textAlign: 'center', overflow: 'auto'}}>
                                             <MiniTitle level={4}>⚠️ACCESS RESTRICTED⚠️</MiniTitle>
                                             <MiniTitle level={4}>SECURTY LEVEL</MiniTitle>
                                             <MiniTitle level={5}>CONTACT</MiniTitle>

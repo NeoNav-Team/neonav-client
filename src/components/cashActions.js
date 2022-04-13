@@ -16,9 +16,10 @@ const StyledInputDiv = styled.div`
     display: block;
     position: relative;
     left: 0;
-    top: -10px;
+    top: 0;
     height: 64px;
     width: 98%;
+    left: 1%;
     margin : 0px;
     padding: 0 4px;
     text-align:center;
@@ -36,7 +37,7 @@ const StyledInputDiv = styled.div`
 const IconName = styled.div`
     display:block;
     position: absolute;
-    z-index: 10;
+    z-index: 11;
     text-align: left;
     font-size: 1rem;
     padding: 0 12px;
