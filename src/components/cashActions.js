@@ -16,7 +16,7 @@ const StyledInputDiv = styled.div`
     display: block;
     position: relative;
     left: 0;
-    top: 0;
+    top: 10px;
     height: 64px;
     width: 98%;
     left: 1%;
