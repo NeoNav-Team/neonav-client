@@ -16,8 +16,7 @@ const {primaryCyan, primaryIndigo, primaryMagenta, primaryColor } = colors;
 const StyledInputDiv = styled.div`
     display: block;
     position: relative;
-    left: 0;
-    top: 10px;
+    top: 16px;
     height: 64px;
     width: 98%;
     margin : 0px;
