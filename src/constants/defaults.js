@@ -16,6 +16,7 @@ export const colors = {
 export const modals = [
     'kitty',
     'userSettings',
+    'map',
     'myQRCode',
     'editField',
     'editAvatar',

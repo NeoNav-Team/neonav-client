@@ -17,6 +17,7 @@ import Info from '../icons/info';
 import NeoSites from '../icons/neoSites';
 import Announcements from '../icons/announcements';
 import Contacts from '../icons/contacts';
+import Globe from '../icons/globe';
 import MenuUserSettings from '../menuUserSettings';
 import { 
     Layout as AntLayout,
@@ -28,6 +29,7 @@ import {
 import ButtonIcon from '../buttonIcon';
 import UserSettings from '../icons/userSettings';
 import ModalKitty from '../modalKitty';
+import ModalMap from '../modalMap';
 import ModalQRCode from '../modalQRCode';
 
 const StyledAntLayout = styled(AntLayout)`
@@ -196,14 +198,20 @@ export default function Home({ location, notices, recentChannels }) {
               </Col>
               <Col span={6}>
                 <ButtonIcon
-                    navTo='/logout'
-                    title="Exit"
+                    navTo='/#map'
+                    title="Map"
                     isEven="even"
                   >
-                    <Logout />
+                    <Globe />
                 </ButtonIcon>
               </Col>
               <Col span={6}>
+              <ButtonIcon
+                    navTo='/logout'
+                    title="Exit"
+                  >
+                    <Logout />
+                </ButtonIcon>
               </Col>
             </Row>
         </StyledAntLayout>
@@ -218,6 +226,7 @@ export default function Home({ location, notices, recentChannels }) {
             >
                 {modal === 'myQRCode' && <ModalQRCode value={userId} />}
                 {modal === 'kitty' && <ModalKitty />}
+                {modal === 'map' && <ModalMap />}
                 {modal === 'userSettings' && <MenuUserSettings />}
             </StyledModal>
       </>
