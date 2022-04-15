@@ -198,9 +198,10 @@ export default function Home({ location, notices, recentChannels }) {
               </Col>
               <Col span={6}>
                 <ButtonIcon
-                    navTo='/#map'
+                    navTo='https://sites.neonav.net/neomap.png'
                     title="Map"
                     isEven="even"
+                    newWindow={true}
                   >
                     <Globe />
                 </ButtonIcon>
