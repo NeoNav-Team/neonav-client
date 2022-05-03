@@ -146,7 +146,6 @@ function FormLogin(props) {
             }}>Forgot Password?</Note>
         </StyledForm>
     </Pane>
-    {/* DISABLED FOR THE EVENT
     <RegisterBtn
         type="primary"
         onClick={() => {
@@ -154,7 +153,7 @@ function FormLogin(props) {
         }}
     >
     <span>☢  R E G I S T E R 	☢</span>
-    </RegisterBtn> */}
+    </RegisterBtn>
     </>
   )
 }
