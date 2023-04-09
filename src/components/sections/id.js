@@ -304,6 +304,11 @@ export default function Id({ location }) {
                             if (cleanId.length === 10) {
                                 goToId(cleanId);
                             }
+                            else { //check if it's the other kinds of ID and let it through if the last 10 characters are a letter followed by 9 numbers
+                                if (/^[A-Z][0-9]{9}?$/.test(result?.text.slice(-10))) {
+                                    goToId(result?.text.slice(-10));
+                                };
+                            }
                         }
                         if (!!error) {
                             console.info(error);
