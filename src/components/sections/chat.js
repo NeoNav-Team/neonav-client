@@ -177,7 +177,10 @@ export default function Chat({ location, lastMessage, setNotify }) {
     setMessages(orderMessagesbyTimestamp(collectedMessages));
   }
   const timestamp = timestamp => {
-    const formatedTimeStamp = moment(timestamp).format("ddd HH:mm:ss");
+    let formatedTimeStamp = moment(timestamp).format("ddd MM-DD HH:mm");
+    if (moment(timestamp).format("YYYY") == "2022") {
+      formatedTimeStamp = moment(timestamp).format("-YY MM-DD HH:mm");
+    }
     return formatedTimeStamp;
   }
 
