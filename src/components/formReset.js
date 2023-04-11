@@ -101,7 +101,7 @@ function FormReset(props) {
             >
                 <Input />
             </Form.Item>
-            <Note>Requires 10 characters with numbers and symbols.</Note>
+            <Note>Requires 10 characters.</Note>
             <Form.Item
                 name="email"
                 label="Provide your email"

@@ -99,7 +99,7 @@ function FormRegister(props) {
             >
                 <Input />
             </Form.Item>
-            <Note>Requires 10 characters with numbers and symbols.</Note>
+            <Note>Requires 10 characters.</Note>
             {errMsg && 
               <Form.Item {...tailLayout}>
                   <Alert message={errMsg} type="error" />
