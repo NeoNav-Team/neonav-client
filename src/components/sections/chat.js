@@ -57,7 +57,7 @@ const Timestamp = styled(Text)`
   font-family: Roboto, sans-serif;
   font-weight: 100;
   margin-left: 10px;
-  font-size: 1.75vh;
+  font-size: 1.5vh;
   opacity: 0.6;
 `;
 
